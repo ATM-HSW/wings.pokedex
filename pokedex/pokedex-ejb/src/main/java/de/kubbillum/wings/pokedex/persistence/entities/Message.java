@@ -1,4 +1,4 @@
-package de.kubbillum.wings.pokedex.persistende.entities;
+package de.kubbillum.wings.pokedex.persistence.entities;
 
 import java.io.Serializable;
 

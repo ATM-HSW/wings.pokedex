@@ -1,10 +1,14 @@
-package de.kubbillum.wings.pokedex.persistende.entities;
+package de.kubbillum.wings.pokedex.persistence.entities;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.security.Timestamp;
+import java.util.List;
 
-import de.kubbillum.wings.pokedex.persistende.enums.Family;
-import de.kubbillum.wings.pokedex.persistende.enums.Type;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import de.kubbillum.wings.pokedex.persistence.enums.Type;
 
 /**
  * Entity implementation class for Entity: Pokemon
@@ -20,23 +24,40 @@ public class Pokemon implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long dex;
 	
+	@NotNull
+	@Size(min=1, max=100)
     private String nameDe;
-    
+	
+	@NotNull
+	@Size(min=1, max=100)
     private String nameEn;
     
+	@NotNull
+	@Size(min=1, max=100)
     private String nameFr;
     
+	@NotNull
+	@Size(min=1, max=100)
     private String nameJa;
     
+	@NotNull
+	@Size(min=1, max=100)
     private String nameKr;
     
+	@NotNull
+	@Size(min=1, max=100)
     private String nameZh;   
     
-	private Type type;
+    @Size(min = 1, max = 2)
+	private List<Type> types;
     
     private Boolean shinyReleased;
     
+    @NotNull
     private Family family;
+    
+    @Version
+	private Timestamp lastChanged;
 
 	public Long getDex() {
 		return dex;
@@ -96,15 +117,7 @@ public class Pokemon implements Serializable {
 
 	public Pokemon() {
 		super();
-	}
-	
-	public Type getType() {
-		return type;
-	}
-
-	public void setType(Type type) {
-		this.type = type;
-	}
+	}	
 
 	public Boolean getShinyReleased() {
 		return shinyReleased;
@@ -120,5 +133,13 @@ public class Pokemon implements Serializable {
 
 	public void setFamily(Family family) {
 		this.family = family;
+	}
+
+	public List<Type> getTypes() {
+		return types;
+	}
+
+	public void setTypes(List<Type> types) {
+		this.types = types;
 	}
 }

@@ -1,4 +1,4 @@
-package de.kubbillum.wings.pokedex.persistende.enums;
+package de.kubbillum.wings.pokedex.persistence.enums;
 
 public enum Type {
 	dragon,
