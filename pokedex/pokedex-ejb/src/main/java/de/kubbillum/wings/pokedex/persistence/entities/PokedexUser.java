@@ -17,15 +17,15 @@ import de.kubbillum.wings.pokedex.persistence.enums.Gender;
  */
 
 @Entity
-@NamedQuery(name = User.QUERY_GETALL, query = "SELECT c FROM User c")
-public class User implements Serializable {
+@NamedQuery(name = PokedexUser.QUERY_GETALL, query = "SELECT c FROM PokedexUser c")
+public class PokedexUser implements Serializable {
 	
-	public static final String QUERY_GETALL = "User.GetAll";
+	public static final String QUERY_GETALL = "PokedexUser.GetAll";
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
 	@NotNull
@@ -45,11 +45,13 @@ public class User implements Serializable {
 
 	private Date birthday;
 
-	@OneToMany(cascade = CascadeType.ALL)
-	private List<Pokemon> userPokedex;
+	//@OneToMany(cascade = CascadeType.ALL)
+	//private List<Pokemon> userPokedex;
 
+	//@Version
 	@Version
-	private Timestamp lastChanged;
+    @Column(name = "version")
+    private int version;
 
 	public int getId() {
 		return id;
@@ -83,7 +85,7 @@ public class User implements Serializable {
 		this.birthday = birthday;
 	}
 
-	public User() {
+	public PokedexUser() {
 		super();
 	}
 
@@ -94,14 +96,14 @@ public class User implements Serializable {
 	public void setGender(Gender gender) {
 		this.gender = gender;
 	}
-
-	public List<Pokemon> getUserPokedex() {
-		return userPokedex;
-	}
-
-	public void setUserPokedex(List<Pokemon> userPokedex) {
-		this.userPokedex = userPokedex;
-	}
+//
+//	public List<Pokemon> getUserPokedex() {
+//		return userPokedex;
+//	}
+//
+//	public void setUserPokedex(List<Pokemon> userPokedex) {
+//		this.userPokedex = userPokedex;
+//	}
 
 	public String getUserName() {
 		return userName;

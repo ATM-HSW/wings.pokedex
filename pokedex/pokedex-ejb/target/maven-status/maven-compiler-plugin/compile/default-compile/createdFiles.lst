@@ -1,0 +1,5 @@
+de\kubbillum\wings\pokedex\ejb\interfaces\UserDAO.class
+de\kubbillum\wings\pokedex\persistence\entities\User.class
+de\kubbillum\wings\pokedex\persistence\enums\Type.class
+de\kubbillum\wings\pokedex\ejb\beans\UserBean.class
+de\kubbillum\wings\pokedex\persistence\enums\Gender.class

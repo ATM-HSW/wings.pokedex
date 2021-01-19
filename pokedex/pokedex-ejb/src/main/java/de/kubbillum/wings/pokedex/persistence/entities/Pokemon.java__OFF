@@ -53,8 +53,8 @@ public class Pokemon implements Serializable {
     
     private Boolean shinyReleased;
     
-    @NotNull
-    private Family family;
+//    @NotNull
+//    private Family family;
     
     @Version
 	private Timestamp lastChanged;
@@ -127,13 +127,13 @@ public class Pokemon implements Serializable {
 		this.shinyReleased = shinyReleased;
 	}
 
-	public Family getFamily() {
-		return family;
-	}
-
-	public void setFamily(Family family) {
-		this.family = family;
-	}
+//	public Family getFamily() {
+//		return family;
+//	}
+//
+//	public void setFamily(Family family) {
+//		this.family = family;
+//	}
 
 	public List<Type> getTypes() {
 		return types;
