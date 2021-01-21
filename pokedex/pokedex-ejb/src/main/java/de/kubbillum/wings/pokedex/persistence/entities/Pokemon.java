@@ -1,13 +1,10 @@
 package de.kubbillum.wings.pokedex.persistence.entities;
 
 import java.io.Serializable;
-import java.security.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import de.kubbillum.wings.pokedex.persistence.enums.Type;
 
 /**
  * Entity implementation class for Entity: Pokemon
@@ -30,12 +27,12 @@ public class Pokemon implements Serializable {
 	@Id
 	private Boolean shiny;
 
-	@Version
-	@Column(name = "version")
-	private int version;
+//	@Version
+//	@Column(name = "version")
+//	private int version;
 
 	@ManyToMany(mappedBy = "pokemons")
-	Set<PokedexUser> users;
+	List<PokedexUser> users = new ArrayList<PokedexUser>();
 	
 	public int getDex() {
 		return dex;
@@ -55,5 +52,13 @@ public class Pokemon implements Serializable {
 
 	public void setShiny(Boolean shiny) {
 		this.shiny = shiny;
+	}
+	
+	public List<PokedexUser> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<PokedexUser> users) {
+		this.users = users;
 	}
 }

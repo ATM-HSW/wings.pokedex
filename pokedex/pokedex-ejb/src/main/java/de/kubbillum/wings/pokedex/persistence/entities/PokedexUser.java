@@ -1,11 +1,9 @@
 package de.kubbillum.wings.pokedex.persistence.entities;
 
 import java.io.Serializable;
-import java.security.Timestamp;
 import java.time.LocalDate;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -22,6 +20,14 @@ import de.kubbillum.wings.pokedex.persistence.enums.Gender;
 @NamedQuery(name = PokedexUser.QUERY_GETALL, query = "SELECT c FROM PokedexUser c")
 @Table(name = "PokedexUser", uniqueConstraints = @UniqueConstraint(columnNames = { "userName" }))
 public class PokedexUser implements Serializable {
+
+	public List<Pokemon> getPokemons() {
+		return pokemons;
+	}
+
+	public void setPokemons(List<Pokemon> pokemons) {
+		this.pokemons = pokemons;
+	}
 
 	public static final String QUERY_GETALL = "PokedexUser.GetAll";
 
@@ -61,7 +67,7 @@ public class PokedexUser implements Serializable {
 	  name = "user_pokemons", 
 	  joinColumns = @JoinColumn(name = "pokedexuser_id"),
 	  inverseJoinColumns = {@JoinColumn(name = "dex"), @JoinColumn(name = "shiny")})
-	Set<Pokemon> pokemons;
+	List<Pokemon> pokemons = new ArrayList<Pokemon>();
 
 	public int getId() {
 		return id;
