@@ -5,6 +5,7 @@ import java.security.Timestamp;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -47,13 +48,20 @@ public class PokedexUser implements Serializable {
 
 	private LocalDate birthday;
 
-	@OneToMany(cascade = CascadeType.ALL)
-	private List<Pokemon> userPokedex;
+	// @OneToMany(cascade = CascadeType.ALL)
+	// private List<Pokemon> userPokedex;
 
 	// @Version
 	@Version
 	@Column(name = "version")
 	private int version;
+
+	@ManyToMany
+	@JoinTable(
+	  name = "user_pokemons", 
+	  joinColumns = @JoinColumn(name = "pokedexuser_id"),
+	  inverseJoinColumns = {@JoinColumn(name = "dex"), @JoinColumn(name = "shiny")})
+	Set<Pokemon> pokemons;
 
 	public int getId() {
 		return id;
