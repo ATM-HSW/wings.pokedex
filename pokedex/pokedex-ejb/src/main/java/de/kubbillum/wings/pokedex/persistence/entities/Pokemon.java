@@ -14,50 +14,55 @@ import de.kubbillum.wings.pokedex.persistence.enums.Type;
  * Entity implementation class for Entity: Pokemon
  *
  */
-@Entity
 
+@Entity
+@NamedQuery(name = Pokemon.QUERY_GETALL, query = "SELECT c FROM Pokemon c")
+@Table(name = "Pokemon")
 public class Pokemon implements Serializable {
+
+	public static final String QUERY_GETALL = "Pokemon.GetAll";
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long dex;
-	
+
 	@NotNull
-	@Size(min=1, max=100)
-    private String nameDe;
-	
+	@Size(min = 1, max = 100)
+	private String nameDe;
+
 	@NotNull
-	@Size(min=1, max=100)
-    private String nameEn;
-    
+	@Size(min = 1, max = 100)
+	private String nameEn;
+
 	@NotNull
-	@Size(min=1, max=100)
-    private String nameFr;
-    
+	@Size(min = 1, max = 100)
+	private String nameFr;
+
 	@NotNull
-	@Size(min=1, max=100)
-    private String nameJa;
-    
+	@Size(min = 1, max = 100)
+	private String nameJa;
+
 	@NotNull
-	@Size(min=1, max=100)
-    private String nameKr;
-    
+	@Size(min = 1, max = 100)
+	private String nameKr;
+
 	@NotNull
-	@Size(min=1, max=100)
-    private String nameZh;   
-    
-    @Size(min = 1, max = 2)
-	private List<Type> types;
-    
-    private Boolean shinyReleased;
-    
+	@Size(min = 1, max = 100)
+	private String nameZh;
+
+//	@Size(min = 1, max = 2)
+//	private List<Type> types;
+
+	private Boolean shinyReleased;
+
 //    @NotNull
 //    private Family family;
-    
-    @Version
-	private Timestamp lastChanged;
+
+	@Version
+	@Column(name = "version")
+	private int version;
 
 	public Long getDex() {
 		return dex;
@@ -117,7 +122,7 @@ public class Pokemon implements Serializable {
 
 	public Pokemon() {
 		super();
-	}	
+	}
 
 	public Boolean getShinyReleased() {
 		return shinyReleased;
@@ -135,11 +140,11 @@ public class Pokemon implements Serializable {
 //		this.family = family;
 //	}
 
-	public List<Type> getTypes() {
-		return types;
-	}
-
-	public void setTypes(List<Type> types) {
-		this.types = types;
-	}
+//	public List<Type> getTypes() {
+//		return types;
+//	}
+//
+//	public void setTypes(List<Type> types) {
+//		this.types = types;
+//	}
 }

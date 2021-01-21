@@ -2,6 +2,7 @@ package de.kubbillum.wings.pokedex.persistence.entities;
 
 import java.io.Serializable;
 import java.security.Timestamp;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -18,8 +19,9 @@ import de.kubbillum.wings.pokedex.persistence.enums.Gender;
 
 @Entity
 @NamedQuery(name = PokedexUser.QUERY_GETALL, query = "SELECT c FROM PokedexUser c")
+@Table(name = "PokedexUser", uniqueConstraints = @UniqueConstraint(columnNames = { "userName" }))
 public class PokedexUser implements Serializable {
-	
+
 	public static final String QUERY_GETALL = "PokedexUser.GetAll";
 
 	private static final long serialVersionUID = 1L;
@@ -43,15 +45,15 @@ public class PokedexUser implements Serializable {
 	@NotNull
 	private Gender gender;
 
-	private Date birthday;
+	private LocalDate birthday;
 
-	//@OneToMany(cascade = CascadeType.ALL)
-	//private List<Pokemon> userPokedex;
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Pokemon> userPokedex;
 
-	//@Version
+	// @Version
 	@Version
-    @Column(name = "version")
-    private int version;
+	@Column(name = "version")
+	private int version;
 
 	public int getId() {
 		return id;
@@ -75,14 +77,6 @@ public class PokedexUser implements Serializable {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
-	}
-
-	public Date getBirthday() {
-		return birthday;
-	}
-
-	public void setBirthday(Date birthday) {
-		this.birthday = birthday;
 	}
 
 	public PokedexUser() {
@@ -111,5 +105,13 @@ public class PokedexUser implements Serializable {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public LocalDate getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(LocalDate birthday) {
+		this.birthday = birthday;
 	}
 }

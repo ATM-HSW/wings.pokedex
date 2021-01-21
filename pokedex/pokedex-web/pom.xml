@@ -117,7 +117,7 @@
 			 a non versioned name is required e.g. when building a deployable artifact using the ShrinkWrap API -->
 		<finalName>${project.artifactId}</finalName>
 
-        <plugins>
+        <plugins> 
 			<!--Build configuration for the WAR plugin: -->
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>

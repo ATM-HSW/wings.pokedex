@@ -84,6 +84,10 @@
 			<name>JBoss Enterprise Maven Repository</name>
 			<url>https://maven.repository.redhat.com/ga/</url>
 		</repository>
+		<repository>
+		    <id>jitpack.io</id>
+		    <url>https://jitpack.io</url>
+		</repository>	
 	</repositories>
 	<pluginRepositories>
 		<pluginRepository>
