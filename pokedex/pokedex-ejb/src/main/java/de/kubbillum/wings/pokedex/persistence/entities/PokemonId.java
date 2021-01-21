@@ -17,6 +17,10 @@ public class PokemonId implements Serializable {
 		this.dex = dex;
 		this.shiny = shiny;
 	}
+	
+	public PokemonId() {
+		super();
+	}
 
 	public int getDex() {
 		return dex;

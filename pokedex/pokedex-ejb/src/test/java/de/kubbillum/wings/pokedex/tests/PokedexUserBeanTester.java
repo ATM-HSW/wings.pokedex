@@ -65,8 +65,8 @@ public class PokedexUserBeanTester {
 
 //
 			Pokemon pokemon = new Pokemon();
-			pokemon.setDex(3);
-			pokemon.setShiny(false);
+			pokemon.setDex(13);
+			pokemon.setShiny(true);
 
 			 result = pokemonDAO.create(pokemon);
 		} catch (Exception e) {
