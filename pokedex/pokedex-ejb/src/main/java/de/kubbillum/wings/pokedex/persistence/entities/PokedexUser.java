@@ -66,8 +66,8 @@ public class PokedexUser implements Serializable {
 	@JoinTable(
 	  name = "user_pokemons", 
 	  joinColumns = @JoinColumn(name = "pokedexuser_id"),
-	  inverseJoinColumns = {@JoinColumn(name = "dex"), @JoinColumn(name = "shiny")})
-	List<Pokemon> pokemons = new ArrayList<Pokemon>();
+	  inverseJoinColumns = {@JoinColumn(name = "pokemon_dex"), @JoinColumn(name = "pokemon_shiny")})
+	List<Pokemon> pokemons = new ArrayList<Pokemon>(); 
 
 	public int getId() {
 		return id;

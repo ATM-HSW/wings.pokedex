@@ -9,6 +9,7 @@ import javax.persistence.PersistenceContext;
 
 import de.kubbillum.wings.pokedex.ejb.interfaces.PokemonDAO;
 import de.kubbillum.wings.pokedex.persistence.entities.Pokemon;
+import de.kubbillum.wings.pokedex.persistence.entities.PokemonId;
 
 @Stateless
 @Remote(PokemonDAO.class)
@@ -29,13 +30,13 @@ public class PokemonBean implements PokemonDAO {
 	}
 
 	@Override
-	public void remove(int id) {
+	public void remove(PokemonId id) {
 		Pokemon toBeDeleted = getPokemon(id);
 		em.remove(toBeDeleted);
 	}
 
 	@Override
-	public Pokemon getPokemon(int id) {
+	public Pokemon getPokemon(PokemonId id) {
 		return em.find(Pokemon.class, id);
 	}
 

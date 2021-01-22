@@ -37,7 +37,7 @@ public class Pokemon implements Serializable {
 	public int getDex() {
 		return dex;
 	}
-
+ 
 	public void setDex(int dex) {
 		this.dex = dex;
 	}

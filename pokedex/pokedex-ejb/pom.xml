@@ -110,10 +110,10 @@
 		<dependency>
 			<groupId>org.jboss</groupId>
 			<artifactId>jboss-ejb-client</artifactId>
-			<version>4.0.33.Final</version>
+			<version>4.0.37.Final</version>
 		</dependency>
 
-		<dependency>
+		<!-- <dependency>
 			<groupId>javax.json</groupId>
 			<artifactId>javax.json-api</artifactId>
 			<version>1.1</version>
@@ -123,13 +123,10 @@
 			<groupId>org.glassfish</groupId>
 			<artifactId>javax.json</artifactId>
 			<version>1.1</version>
-		</dependency>
+		</dependency> -->
 
-		<dependency>
-			<groupId>com.github.PokeAPI</groupId>
-			<artifactId>pokekotlin</artifactId>
-			<version>2.3.1</version>
-		</dependency>
+		<!-- <dependency> <groupId>com.github.PokeAPI</groupId> <artifactId>pokekotlin</artifactId> 
+			<version>2.3.1</version> </dependency> -->
 
 		<!-- <dependency> <groupId>org.postgresql</groupId> <artifactId>postgresql</artifactId> 
 			<version>42.2.18</version> </dependency> -->
