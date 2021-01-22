@@ -41,6 +41,7 @@ public class PokedexUserBean implements PokedexUserDAO {
 
 	@Override
 	public List<PokedexUser> getAllPokedexUsers() {
-		return em.createQuery(PokedexUser.QUERY_GETALL, PokedexUser.class).getResultList();
+//		return em.createQuery("SELECT c FROM PokedexUser c", PokedexUser.class).getResultList();//
+		return em.createNamedQuery(PokedexUser.QUERY_GETALL, PokedexUser.class).getResultList();//
 	}
 }

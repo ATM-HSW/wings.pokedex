@@ -42,6 +42,6 @@ public class PokemonBean implements PokemonDAO {
 
 	@Override
 	public List<Pokemon> getAllPokemons() {
-		return em.createQuery(Pokemon.QUERY_GETALL, Pokemon.class).getResultList();
+		return em.createNamedQuery(Pokemon.QUERY_GETALL, Pokemon.class).getResultList();
 	}
 }

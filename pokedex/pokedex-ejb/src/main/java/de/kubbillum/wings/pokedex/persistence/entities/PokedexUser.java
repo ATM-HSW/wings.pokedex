@@ -21,14 +21,13 @@ import de.kubbillum.wings.pokedex.persistence.enums.Gender;
 @Table(name = "PokedexUser", uniqueConstraints = @UniqueConstraint(columnNames = { "userName" }))
 public class PokedexUser implements Serializable {
 
+	
+
 	public static final String QUERY_GETALL = "PokedexUser.GetAll";
 
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	PokemonId pokemonId;
-
-	//@Id
+	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
@@ -57,20 +56,20 @@ public class PokedexUser implements Serializable {
 	@Column(name = "version")
 	private int version;
 
-//	@ManyToMany
-//	@JoinTable(
-//	  name = "user_pokemons", 
-//	  joinColumns = @JoinColumn(name = "pokedexuser_id"),
-//	  inverseJoinColumns = {@JoinColumn(name = "pokemon_dex"), @JoinColumn(name = "pokemon_shiny")})
-//	List<Pokemon> pokemons = new ArrayList<Pokemon>(); 
-//	
-//	public List<Pokemon> getPokemons() {
-//		return pokemons;
-//	}
-//
-//	public void setPokemons(List<Pokemon> pokemons) {
-//		this.pokemons = pokemons;
-//	}
+	@ManyToMany
+	@JoinTable(
+	  name = "user_pokemons", 
+	  joinColumns = @JoinColumn(name = "pokedexuser_id"),
+	  inverseJoinColumns = {@JoinColumn(name = "pokemon_dex"), @JoinColumn(name = "pokemon_shiny")})
+	List<Pokemon> pokemons = new ArrayList<Pokemon>(); 
+	
+	public List<Pokemon> getPokemons() {
+		return pokemons;
+	}
+
+	public void setPokemons(List<Pokemon> pokemons) {
+		this.pokemons = pokemons;
+	}
 
 	public int getId() {
 		return id;
