@@ -12,7 +12,7 @@ import javax.persistence.*;
  */
 
 @Entity
-@IdClass(PokemonId.class)
+//@IdClass(PokemonId.class)
 @NamedQuery(name = Pokemon.QUERY_GETALL, query = "SELECT c FROM Pokemon c")
 @Table(name = "Pokemon")
 public class Pokemon implements Serializable {
@@ -22,23 +22,23 @@ public class Pokemon implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	private int dex;
+	private Integer dex;
 
-	@Id
+	//@Id
 	private Boolean shiny;
 
 //	@Version
 //	@Column(name = "version")
 //	private int version;
 
-	@ManyToMany(mappedBy = "pokemons")
-	List<PokedexUser> users = new ArrayList<PokedexUser>();
+//	@ManyToMany(mappedBy = "pokemons")
+//	List<PokedexUser> users = new ArrayList<PokedexUser>();
 	
-	public int getDex() {
+	public Integer getDex() {
 		return dex;
 	}
  
-	public void setDex(int dex) {
+	public void setDex(Integer dex) {
 		this.dex = dex;
 	}
 	
@@ -54,11 +54,11 @@ public class Pokemon implements Serializable {
 		this.shiny = shiny;
 	}
 	
-	public List<PokedexUser> getUsers() {
-		return users;
-	}
-
-	public void setUsers(List<PokedexUser> users) {
-		this.users = users;
-	}
+//	public List<PokedexUser> getUsers() {
+//		return users;
+//	}
+//
+//	public void setUsers(List<PokedexUser> users) {
+//		this.users = users;
+//	}
 }

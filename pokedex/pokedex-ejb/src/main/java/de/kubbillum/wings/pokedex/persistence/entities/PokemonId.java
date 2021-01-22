@@ -2,6 +2,9 @@ package de.kubbillum.wings.pokedex.persistence.entities;
 
 import java.io.Serializable;
 
+import javax.persistence.Embeddable;
+
+@Embeddable
 public class PokemonId implements Serializable {
 
 	/**
@@ -9,9 +12,9 @@ public class PokemonId implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public int dex;
+	Integer dex;
 
-	public Boolean shiny;
+	Boolean shiny;
 
 	public PokemonId(int dex, Boolean shiny) {
 		this.dex = dex;
@@ -22,11 +25,11 @@ public class PokemonId implements Serializable {
 		super();
 	}
 
-	public int getDex() {
+	public Integer getDex() {
 		return dex;
 	}
 
-	public void setDex(int dex) {
+	public void setDex(Integer dex) {
 		this.dex = dex;
 	}
 
@@ -48,7 +51,7 @@ public class PokemonId implements Serializable {
 		if (!(other instanceof PokemonId))
 			return false;
 		PokemonId castOther = (PokemonId) other;
-		return (new Integer(this.dex)).equals(castOther.getDex()) && shiny.equals(castOther.shiny);
+		return (this.dex).equals(castOther.getDex()) && shiny.equals(castOther.shiny);
 	}
 
 	public int hashCode() {
