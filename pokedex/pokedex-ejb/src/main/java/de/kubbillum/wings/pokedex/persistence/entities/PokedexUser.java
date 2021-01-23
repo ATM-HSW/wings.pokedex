@@ -56,7 +56,7 @@ public class PokedexUser implements Serializable {
 	@Column(name = "version")
 	private int version;
 
-	@ManyToMany
+	@ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)	
 	@JoinTable(
 	  name = "user_pokemons", 
 	  joinColumns = @JoinColumn(name = "pokedexuser_id"),

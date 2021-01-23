@@ -13,6 +13,8 @@ import org.junit.Test;
 import de.kubbillum.wings.pokedex.ejb.interfaces.PokedexUserDAO;
 import de.kubbillum.wings.pokedex.ejb.interfaces.PokemonDAO;
 import de.kubbillum.wings.pokedex.persistence.entities.PokedexUser;
+import de.kubbillum.wings.pokedex.persistence.entities.Pokemon;
+import de.kubbillum.wings.pokedex.persistence.entities.PokemonId;
 import de.kubbillum.wings.pokedex.persistence.enums.Gender;
 //import me.sargunvohra.lib.pokekotlin.client.PokeApi;
 //import me.sargunvohra.lib.pokekotlin.client.PokeApiClient;
@@ -37,16 +39,16 @@ public class PokedexUserBeanTester {
 			final String lookupName = "ejb:pokedex/pokedex-ejb/PokedexUserBean!de.kubbillum.wings.pokedex.ejb.interfaces.PokedexUserDAO";
 			pokedexUserDAO = (PokedexUserDAO) context.lookup(lookupName);
 
-//			final Hashtable<String, Comparable> jndiProperties2 = new Hashtable<String, Comparable>();
-//			jndiProperties2.put(Context.INITIAL_CONTEXT_FACTORY,
-//					"org.wildfly.naming.client.WildFlyInitialContextFactory");
-//			jndiProperties2.put("jboss.naming.client.ejb.context", true); // EJB Context aktivieren
-//			jndiProperties2.put(Context.PROVIDER_URL, "http-remoting://localhost:8080");
-//			jndiProperties2.put(Context.SECURITY_PRINCIPAL, "admin");
-//			jndiProperties2.put(Context.SECURITY_CREDENTIALS, "a");
-//			final Context context2 = new InitialContext(jndiProperties2);
-//			final String lookupName2 = "ejb:pokedex/pokedex-ejb/PokemonBean!de.kubbillum.wings.pokedex.ejb.interfaces.PokemonDAO";
-//			pokemonDAO = (PokemonDAO) context2.lookup(lookupName2);
+			final Hashtable<String, Comparable> jndiProperties2 = new Hashtable<String, Comparable>();
+			jndiProperties2.put(Context.INITIAL_CONTEXT_FACTORY,
+					"org.wildfly.naming.client.WildFlyInitialContextFactory");
+			jndiProperties2.put("jboss.naming.client.ejb.context", true); // EJB Context aktivieren
+			jndiProperties2.put(Context.PROVIDER_URL, "http-remoting://localhost:8080");
+			jndiProperties2.put(Context.SECURITY_PRINCIPAL, "admin");
+			jndiProperties2.put(Context.SECURITY_CREDENTIALS, "a");
+			final Context context2 = new InitialContext(jndiProperties2);
+			final String lookupName2 = "ejb:pokedex/pokedex-ejb/PokemonBean!de.kubbillum.wings.pokedex.ejb.interfaces.PokemonDAO";
+			pokemonDAO = (PokemonDAO) context2.lookup(lookupName2);
 
 		} catch (Exception e) {
 			throw e;
@@ -55,56 +57,40 @@ public class PokedexUserBeanTester {
 
 	@Test
 	public void test() {
-//		Pokemon result = null;
-//		try {
-//			assertNotNull(pokedexUserDAO);
+
+//		PokedexUser user = new PokedexUser();
+//		user.setFirstName("Martin");
+//		user.setLastName("Mustermann");
+//		user.setGender(Gender.Male);
+//		user.setUserName("m.kubbillum22");
+//		user.setBirthday(LocalDate.parse("1984-05-12"));
 //
-////
-//			Pokemon pokemon = new Pokemon();
-//			pokemon.setDex(132);
-//			pokemon.setShiny(true);
-//
-//			 result = pokemonDAO.create(pokemon);
-//		} catch (Exception e) {
-//			System.out.println(e.getMessage());
-//
-//			
-//		}
-//		assertNotNull(result);
-		//
-		//pokedexUserDAO.remove(5);
+//		Pokemon pokemon = new Pokemon();
+//		pokemon.setDex(132);
+//		pokemon.setShiny(true);
+//		//Pokemon resultPokemon = pokemonDAO.create(pokemon);
+//	
+//		user.getPokemons().add(pokemon);
+//		PokedexUser resultUser = pokedexUserDAO.create(user);
+//		System.out.println("user: " + resultUser.getUserName());
+//		assertNotEquals(resultUser.getId(), 0);
 
-		PokedexUser user = new PokedexUser();
-		user.setFirstName("Martin");
-		user.setLastName("Mustermann");
-		user.setGender(Gender.Male);
-		user.setUserName("m.kubbillum");
-		user.setBirthday(LocalDate.parse("1984-05-12"));
-		PokedexUser result = pokedexUserDAO.create(user);
-		assertNotEquals(result.getId(), 0);
-		
-	
-		List<PokedexUser> results = pokedexUserDAO.getAllPokedexUsers(); 
-	//pokedexUserDAO.remove(3);
-		assertNotEquals(results.size(), 0);
-//		
-		
-		
-		
-		
-		
-////		user.setPokemons(Arrays.asList(pokemon));
+		PokedexUser user = pokedexUserDAO.getPokedexUser(1);
+//		Pokemon pokemon = pokemonDAO.getPokemon(id);
 
-//		user = new PokedexUser();
-//		user.setFirstName("Irina");
-//		user.setLastName("Wolfram");
-//		user.setGender(Gender.Female);
-//		user.setUserName("irina73");
-//		user.setBirthday(LocalDate.parse("1973-03-06"));	
+		PokemonId id = new PokemonId(132, Boolean.TRUE);
+		Pokemon p2 = new Pokemon();
+		p2.setDex(132);
+		p2.setShiny(false);
+//		Pokemon pokemon = pokemonDAO.create(p2);
+		user.getPokemons().add(p2);
+		PokedexUser resultUser  = pokedexUserDAO.update(user);
+		//user.getPokemons().add(pokemon);
+		//PokedexUser resultUser = pokedexUserDAO.update(user);
+//System.out.println(pokemon.getDex());
+//System.out.println(pokemon.getUsers().get(0).getPokemons().get(0).getDex());
 
 
-		//PokedexUser result = pokedexUserDAO.getPokedexUser(1);
-//		assertNotNull(result);
-
+		assertNotNull(resultUser);
 	}
 }

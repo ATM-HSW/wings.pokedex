@@ -32,9 +32,7 @@ public class Pokemon implements Serializable {
 //	private int version;
 
 	//@ManyToMany(mappedBy = "pokemons",  fetch = FetchType.EAGER);
-	@ManyToMany(mappedBy = "pokemons", fetch = FetchType.LAZY)
-	
-	
+	@ManyToMany(cascade=CascadeType.ALL, mappedBy = "pokemons", fetch = FetchType.EAGER)
 	List<PokedexUser> users = new ArrayList<PokedexUser>();
 	
 	public Integer getDex() {
