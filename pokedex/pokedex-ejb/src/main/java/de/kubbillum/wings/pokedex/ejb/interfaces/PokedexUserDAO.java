@@ -15,5 +15,7 @@ public interface PokedexUserDAO {
 	
 	public PokedexUser getPokedexUser(int id);
 	
-	public List<PokedexUser> getAllPokedexUsers();	
+	public List<PokedexUser> getAllPokedexUsers();
+
+	public List<PokedexUser> getUsersHavingBirthday();	
 }

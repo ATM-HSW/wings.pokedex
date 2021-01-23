@@ -1,5 +1,7 @@
 package de.kubbillum.wings.pokedex.ejb.beans;
 
+import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.ejb.Remote;
@@ -43,5 +45,11 @@ public class PokedexUserBean implements PokedexUserDAO {
 	public List<PokedexUser> getAllPokedexUsers() {
 //		return em.createQuery("SELECT c FROM PokedexUser c", PokedexUser.class).getResultList();//
 		return em.createNamedQuery(PokedexUser.QUERY_GETALL, PokedexUser.class).getResultList();//
+	}
+
+	@Override
+	public List<PokedexUser> getUsersHavingBirthday() {
+		LocalDate today = LocalDate.now();
+		return em.createNamedQuery(PokedexUser.QUERY_GETBIRTHDAYS, PokedexUser.class).setParameter(1, today.getDayOfMonth()).setParameter(2, today.getMonthValue()).getResultList();
 	}
 }

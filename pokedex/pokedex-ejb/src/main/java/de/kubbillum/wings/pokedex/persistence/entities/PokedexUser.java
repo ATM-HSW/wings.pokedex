@@ -18,12 +18,13 @@ import de.kubbillum.wings.pokedex.persistence.enums.Gender;
 
 @Entity
 @NamedQuery(name = PokedexUser.QUERY_GETALL, query = "SELECT c FROM PokedexUser c")
+@NamedNativeQuery(name = PokedexUser.QUERY_GETBIRTHDAYS, query = "SELECT * FROM PokedexUser WHERE EXTRACT(day from birthday) = ? AND EXTRACT(month from birthday) = ?", resultClass = PokedexUser.class)
+
 @Table(name = "PokedexUser", uniqueConstraints = @UniqueConstraint(columnNames = { "userName" }))
 public class PokedexUser implements Serializable {
 
-	
-
 	public static final String QUERY_GETALL = "PokedexUser.GetAll";
+	public static final String QUERY_GETBIRTHDAYS = "PokedexUser.GetByBirthday";
 
 	private static final long serialVersionUID = 1L;
 
@@ -56,13 +57,11 @@ public class PokedexUser implements Serializable {
 	@Column(name = "version")
 	private int version;
 
-	@ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)	
-	@JoinTable(
-	  name = "user_pokemons", 
-	  joinColumns = @JoinColumn(name = "pokedexuser_id"),
-	  inverseJoinColumns = {@JoinColumn(name = "pokemon_dex"), @JoinColumn(name = "pokemon_shiny")})
-	List<Pokemon> pokemons = new ArrayList<Pokemon>(); 
-	
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(name = "user_pokemons", joinColumns = @JoinColumn(name = "pokedexuser_id"), inverseJoinColumns = {
+			@JoinColumn(name = "pokemon_dex"), @JoinColumn(name = "pokemon_shiny") })
+	List<Pokemon> pokemons = new ArrayList<Pokemon>();
+
 	public List<Pokemon> getPokemons() {
 		return pokemons;
 	}
