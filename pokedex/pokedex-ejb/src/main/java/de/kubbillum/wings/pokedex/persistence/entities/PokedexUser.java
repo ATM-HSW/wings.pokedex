@@ -48,6 +48,8 @@ public class PokedexUser implements Serializable {
 	private Gender gender;
 
 	private LocalDate birthday;
+	
+	private String emailAdress;
 
 	// @OneToMany(cascade = CascadeType.ALL)
 	// private List<Pokemon> userPokedex;
@@ -128,5 +130,13 @@ public class PokedexUser implements Serializable {
 
 	public void setBirthday(LocalDate birthday) {
 		this.birthday = birthday;
+	}
+
+	public String getEmailAdress() {
+		return emailAdress;
+	}
+
+	public void setEmailAdress(String emailAdress) {
+		this.emailAdress = emailAdress;
 	}
 }

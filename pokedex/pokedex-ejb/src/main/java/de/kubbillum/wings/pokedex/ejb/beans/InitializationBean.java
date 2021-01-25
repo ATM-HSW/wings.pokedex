@@ -32,7 +32,7 @@ public class InitializationBean {
 			user.setLastName("Mustermann");
 			user.setGender(Gender.Male);
 			user.setUserName("m.kubbillum");
-			user.setBirthday(LocalDate.parse("1984-05-12"));
+			user.setBirthday(LocalDate.parse("1984-01-25"));
 			PokedexUser resultUser = pokedexUserDAO.create(user);
 			
 			Pokemon pokemon = new Pokemon();

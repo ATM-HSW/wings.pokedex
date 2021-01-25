@@ -19,7 +19,7 @@ import de.kubbillum.wings.pokedex.persistence.entities.PokedexUser;
 @Singleton
 @Startup
 @JMSDestinationDefinitions({
-		@JMSDestinationDefinition(name = "java:global/jms/birthdayMailQueue", interfaceName = "javax.jms.Queue") })
+		@JMSDestinationDefinition(name = "java:global/jms/BirthdayMailQueue", interfaceName = "javax.jms.Queue") }) 
 public class BirthdayNotificationBean {
 
 	@EJB
@@ -28,12 +28,14 @@ public class BirthdayNotificationBean {
 	@Inject
 	private JMSContext context;
 	
-	@Resource(mappedName="java:global/jsm/birthdayMailQueue")
+	@Resource(mappedName="java:global/jms/BirthdayMailQueue")
 	private Destination birthdayDestination;
 
-	@Schedule(hour = "9")
+	@Schedule(hour = "21", minute="34")
 	private void checkBirthday() {
-		List<PokedexUser> birthdays = pokedexUserDAO.getUsersHavingBirthday();
+		//List<PokedexUser> birthdays = pokedexUserDAO.getUsersHavingBirthday();
+		List<PokedexUser> birthdays = pokedexUserDAO.getAllPokedexUsers();
+
 		for(PokedexUser user : birthdays) {
 			context.createProducer().send(birthdayDestination, user);
 		}
