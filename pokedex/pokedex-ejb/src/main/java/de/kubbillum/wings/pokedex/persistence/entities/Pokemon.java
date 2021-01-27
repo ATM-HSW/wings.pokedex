@@ -32,8 +32,8 @@ public class Pokemon implements Serializable {
 //	private int version;
 
 	//@ManyToMany(mappedBy = "pokemons",  fetch = FetchType.EAGER);
-	@ManyToMany(cascade=CascadeType.ALL, mappedBy = "pokemons", fetch = FetchType.EAGER)
-	List<PokedexUser> users = new ArrayList<PokedexUser>();
+//	@ManyToMany(cascade=CascadeType.ALL, mappedBy = "pokemons", fetch = FetchType.EAGER)
+//	List<PokedexUser> users = new ArrayList<PokedexUser>();
 	
 	public Integer getDex() {
 		return dex;
@@ -55,11 +55,11 @@ public class Pokemon implements Serializable {
 		this.shiny = shiny;
 	}
 	
-	public List<PokedexUser> getUsers() {
-		return users;
-	}
-
-	public void setUsers(List<PokedexUser> users) {
-		this.users = users;
-	}
+//	public List<PokedexUser> getUsers() {
+//		return users;
+//	}
+//
+//	public void setUsers(List<PokedexUser> users) {
+//		this.users = users;
+//	}
 }
