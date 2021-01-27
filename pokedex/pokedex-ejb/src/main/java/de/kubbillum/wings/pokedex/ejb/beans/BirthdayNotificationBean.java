@@ -36,11 +36,11 @@ public class BirthdayNotificationBean {
 	private JMSContext context;
 
 	@Schedule(hour = "*", minute = "*", second = "*/30", persistent = false)
-	public void sendStockInformation() {
-		System.out.println("BirthdayNotificationBean...");
-		TextMessage message;
-
+	public void sendStockInformation() {		
 		if (false) {
+			System.out.println("BirthdayNotificationBean...");
+			TextMessage message;
+
 			try (Connection connection = jmsFactory.createConnection();
 					Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 					MessageProducer producer = session.createProducer(jmsQueue)) {
