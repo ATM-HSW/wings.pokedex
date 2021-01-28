@@ -1,10 +1,4 @@
-de\kubbillum\wings\pokedex\ejb\beans\PokedexUserBean.class
 de\kubbillum\wings\pokedex\persistence\enums\Type.class
-de\kubbillum\wings\pokedex\ejb\beans\PokemonBean.class
-de\kubbillum\wings\pokedex\persistence\enums\Gender.class
-de\kubbillum\wings\pokedex\persistence\entities\Pokemon.class
-de\kubbillum\wings\pokedex\persistence\entities\PokemonId.class
-de\kubbillum\wings\pokedex\ejb\beans\InitializationBean.class
-de\kubbillum\wings\pokedex\ejb\interfaces\PokedexUserDAO.class
-de\kubbillum\wings\pokedex\ejb\interfaces\PokemonDAO.class
-de\kubbillum\wings\pokedex\persistence\entities\PokedexUser.class
+de\kubbillum\wings\pokedex\ejb\beans\BirthdayNotificationBean.class
+de\kubbillum\wings\pokedex\ejb\jms\BirthdayNotificationsReceiver.class
+de\kubbillum\wings\pokedex\ejb\beans\MessageSenderBean.class

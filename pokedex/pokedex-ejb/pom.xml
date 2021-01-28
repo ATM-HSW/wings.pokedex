@@ -123,14 +123,14 @@
 		<dependency>
 			<groupId>org.jboss.spec.javax.jms</groupId>
 			<artifactId>jboss-jms-api_2.0_spec</artifactId>
-			    <version>1.0.0.Final</version>
+			    <!-- <version>1.0.0.Final</version> -->
 			
 		</dependency>
 
 		<dependency>
 			<groupId>org.wildfly</groupId>
 			<artifactId>wildfly-jms-client-bom</artifactId>
-			<version>21.0.1.Final</version>
+			<!-- <version>21.0.1.Final</version> -->
 			<type>pom</type>
 		</dependency>
 
