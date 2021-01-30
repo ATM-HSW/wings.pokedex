@@ -26,9 +26,22 @@
             "assets": [
               "src/favicon.ico",
               "src/assets"
-            ],            
-            "styles": [  "src/styles.css",  "node_modules/bootstrap/dist/css/bootstrap.css"],
-            "scripts": []
+            ],
+            "styles": [
+              "src/styles.css",
+              "node_modules/bootstrap/dist/css/bootstrap.css",
+              "src/vendor/fontawesome-free/css/all.min.css",
+              "src/css/sb-admin-2.min.css"
+            ],
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "src/vendor/jquery-easing/jquery.easing.min.js",
+              "src/js/sb-admin-2.min.js",
+              "src/vendor/chart.js/Chart.min.js",
+              "src/js/demo/chart-area-demo.js",
+              "src/js/demo/chart-pie-demo.js"
+            ]
           },
           "configurations": {
             "production": {
