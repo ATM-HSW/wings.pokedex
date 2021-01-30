@@ -1,0 +1,17 @@
+{
+    "pokemons": [
+        {
+            "dex": 99,
+            "shiny": true
+        },
+        {
+            "dex": 99,
+            "shiny": false
+        }
+        ,
+        {
+            "dex": 123,
+            "shiny": false
+        }
+    ]
+}
