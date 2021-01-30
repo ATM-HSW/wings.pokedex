@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -21,7 +22,8 @@ import { RouterModule } from '@angular/router';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    RouterModule
+    RouterModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]
