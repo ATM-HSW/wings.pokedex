@@ -10,8 +10,11 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.jboss.resteasy.annotations.jaxrs.PathParam;
+
 import de.kubbillum.wings.pokedex.ejb.interfaces.PokedexUserDAO;
 import de.kubbillum.wings.pokedex.persistence.entities.PokedexUser;
+import de.kubbillum.wings.pokedex.persistence.entities.Pokemon;
 
 @Path("/users")
 @Stateless
@@ -27,6 +30,14 @@ public class UsersEndpoint {
 		List<PokedexUser> users = pokedexUserDAO.getAllPokedexUsers();
 		return users;
 
+	}
+	
+	@GET
+	@Path("/pokemons")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Pokemon> getPokemons() {
+		List<Pokemon> pokemons = pokedexUserDAO.getAllPokedexUsers().get(0).getPokemons();
+		return pokemons;
 	}
 //	public List<String> getAll() {
 //		List<String> users = new ArrayList<String>();//pokedexUserDAO.getAllPokedexUsers();

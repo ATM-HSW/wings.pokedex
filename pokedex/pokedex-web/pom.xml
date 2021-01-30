@@ -139,69 +139,194 @@
 		<finalName>${project.artifactId}</finalName>
 
 		<plugins>
+			<!-- <plugin> <artifactId>maven-resources-plugin </artifactId> <executions> 
+				<execution> <id>copy-angular2-dir</id> <phase>validate</phase> <goals> <goal>copy-resources</goal> 
+				</goals> <configuration> <outputDirectory>${basedir}/target/angular2</outputDirectory> 
+				<resources> <resource> <directory>src/main/frontend</directory> <includes> 
+				<include>pokedex-web/**/*.*</include> </includes> </resource> </resources> 
+				</configuration> </execution> </executions> </plugin> -->
+
 			<!--Build configuration for the WAR plugin: -->
-			<!--<plugin>
-				<groupId>com.github.eirslett</groupId>
-				<artifactId>frontend-maven-plugin</artifactId>
-				<version>1.8.0</version>
-				<executions>
-					<execution>
-						<id>install node and npm</id>
-						<goals>
-							<goal>install-node-and-npm</goal>
-						</goals>
-						<phase>generate-resources</phase>
-					</execution>
-					<execution>
-						<id>npm install</id>
-						<goals>
-							<goal>npm</goal>
-						</goals>
-						<phase>generate-resources</phase>
-						<configuration>
-							<arguments>install</arguments>
-						</configuration>
-					</execution>
-					<execution>
-						<id>npm test</id>
-						<goals>
-							<goal>npm</goal>
-						</goals>
-						<phase>generate-resources</phase>
-						<configuration>
-							<environmentVariables>
-								<CI>false</CI>
-							</environmentVariables>
-							<arguments>test</arguments>
-						</configuration>
-					</execution>
-					<execution>
-						<id>npm build</id>
-						<goals>
-							<goal>npm</goal>
-						</goals>
-						<phase>generate-resources</phase>
-						<configuration>
-							<environmentVariables>
-								<CI>false</CI>
-							</environmentVariables>
-							<arguments>run build</arguments>
-						</configuration>
-					</execution>
-				</executions>
-				<configuration>
-					<workingDirectory>src/main/frontend</workingDirectory>
-					<nodeVersion>v12.13.1</nodeVersion>
-				</configuration>
-			</plugin>-->
+			<!-- <plugin> <groupId>com.github.eirslett</groupId> <artifactId>frontend-maven-plugin</artifactId> 
+				<version>1.11.0</version> <configuration> <workingDirectory>src/main/frontend</workingDirectory> 
+				</configuration> <executions> <execution> <id>install-node-and-npm</id> <goals> 
+				<goal>install-node-and-npm</goal> </goals> <configuration> <nodeVersion>v10.16.1</nodeVersion> 
+				<nodeVersion>v14.15.4</nodeVersion> </configuration> </execution> <execution> 
+				<id>npm install</id> <goals> <goal>npm</goal> </goals> <configuration> <arguments>install</arguments> 
+				</configuration> </execution> <execution> <id>npm build</id> <goals> <goal>npm</goal> 
+				</goals> <configuration> <arguments>run buildProduction</arguments> </configuration> 
+				<phase>generate-resources</phase> </execution> </executions> </plugin>
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
 				<version>${version.war.plugin}</version>
 				<configuration>
-					<!-- Jakarta EE doesn't require web.xml, Maven needs to catch up! -->
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
 			</plugin>
+			-->
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>${version.war.plugin}</version>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+					 <webResources>
+						<resource>
+							<directory>${basedir}/target/ngfrontend/dist/ngfrontend</directory>
+							<includes>
+								<include>**/*.*</include>
+							</includes>
+						</resource>
+					</webResources> 
+				</configuration>
+			</plugin>
+			
+			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>3.0.0</version>
+				<configuration>
+					<failOnError>false</failOnError>
+					<filesets>
+						<fileset>
+							<directory>src/ngfrontend/dist</directory>
+							<followSymlinks>false</followSymlinks>
+						</fileset>
+						<fileset>
+							<directory>src/ngfrontend/node_modules</directory>
+							<followSymlinks>false</followSymlinks>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.0.2</version>
+				<executions>
+					<execution>
+						<id>copy-ngfrontend-dir</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/target</outputDirectory>
+							<resources>
+								<resource>
+									<directory>src</directory>
+									<includes>
+										<include>ngfrontend/**/*.*</include>
+									</includes>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<artifactId>exec-maven-plugin</artifactId>
+				<groupId>org.codehaus.mojo</groupId>
+				<version>1.4.0</version>
+				<executions>
+					<execution>
+						<id>npm install</id>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<phase>generate-sources</phase>
+						<configuration>
+							<executable>npm</executable>
+							<arguments>
+								<argument>install</argument>
+							</arguments>
+							<workingDirectory>${basedir}/target/ngfrontend</workingDirectory>
+							<target>
+								<echo message="Npm install" />
+							</target>
+						</configuration>
+					</execution>
+					<execution>
+						<id>angular-cli build</id>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<executable>npm</executable>
+							<arguments>
+								<argument>run</argument>
+								<argument>build</argument>
+							</arguments>
+							<workingDirectory>${basedir}/target/ngfrontend</workingDirectory>
+						</configuration>
+					</execution>
+					<!-- <execution>
+						<id>angular-cli test</id>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<phase>test</phase>
+						<configuration>
+							<executable>npm</executable>
+							<arguments>
+								<argument>run</argument>
+								<argument>test</argument>
+								<argument>test-chromium</argument>
+							</arguments>
+							<workingDirectory>${basedir}/target/ngfrontend</workingDirectory>
+						</configuration>
+					</execution> -->
+				</executions>
+			</plugin>
+
+
+			<!-- <plugin> <artifactId>maven-resources-plugin</artifactId> <version>3.0.2</version> 
+				<executions> <execution> <id>copy-angular-dir</id> <phase>validate</phase> 
+				<goals> <goal>copy-resources</goal> </goals> <configuration> <outputDirectory>${basedir}/target/frontend</outputDirectory> 
+				<resources> <resource> <directory>src/frontend</directory> <includes> <include>*</include> 
+				</includes> </resource> </resources> </configuration> </execution> </executions> 
+				</plugin> -->
 		</plugins>
+
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>lifecycle-mapping</artifactId>
+					<groupId>org.eclipse.m2e</groupId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<artifactId>exec-maven-plugin</artifactId>
+										<groupId>org.codehaus.mojo</groupId>
+										<versionRange>[1.4.0,)</versionRange>
+										<goals>
+											<goal>exec</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<artifactId>maven-resources-plugin</artifactId>
+										<groupId>org.apache.maven.plugins</groupId>
+										<versionRange>[3.0.0,)</versionRange>
+										<goals>
+											<goal>copy-resources</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 </project>
