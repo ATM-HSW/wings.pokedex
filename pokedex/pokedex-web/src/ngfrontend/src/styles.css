@@ -1,2 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 
+.sidebar .sidebar-brand {
+    height: 4.375rem;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 800;
+    padding: 1.5rem 1rem;
+    text-align: left;
+    /* text-transform: uppercase; */
+    letter-spacing: .15rem;
+    z-index: 1;
+} 

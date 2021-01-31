@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { UserEditComponent } from './user-edit/user-edit.component';
 import { UserPokemonsComponent } from './user-pokemons/user-pokemons.component';
 import { RouterModule } from '@angular/router';
+import { FullPokedexComponent } from './full-pokedex/full-pokedex.component';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import { RouterModule } from '@angular/router';
     AppComponent,
     UserEditComponent,
     UserPokemonsComponent,
+    FullPokedexComponent,
   ],
   imports: [
     BrowserModule,
