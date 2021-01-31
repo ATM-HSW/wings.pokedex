@@ -1,1 +1,9 @@
- 
+@import url(https://fonts.googleapis.com/css?family=Sigmar+One);
+@import url(//db.onlinewebfonts.com/c/f4d1593471d222ddebd973210265762a?family=Pokemon);
+@import url(https://fonts.googleapis.com/css?family=Sigmar+One);
+.pokemon-font {
+    font: 20px 'Pokemon'
+    /**;
+    font-weight:normal;**/
+  
+  }

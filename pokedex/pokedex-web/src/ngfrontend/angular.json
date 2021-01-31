@@ -31,7 +31,8 @@
               "src/styles.css",
               "node_modules/bootstrap/dist/css/bootstrap.css",
               "src/vendor/fontawesome-free/css/all.min.css",
-              "src/css/sb-admin-2.min.css"
+              "src/css/sb-admin-2.min.css",
+              "src/fonts/pokemon-font-master/dist/css/pokemon-iconfont.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
