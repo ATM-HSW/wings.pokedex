@@ -11,3 +11,7 @@
     letter-spacing: .15rem;
     z-index: 1;
 } 
+
+.shadow.pokemon-selected {
+    box-shadow: 0px 0px 8px 12px #f27373  !important;
+}
