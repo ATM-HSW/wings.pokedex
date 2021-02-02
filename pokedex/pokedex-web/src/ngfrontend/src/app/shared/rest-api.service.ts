@@ -2,9 +2,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 //import { Pokemon } from '../shared/employee';
-import { Observable, throwError } from 'rxjs';
-import { retry, catchError } from 'rxjs/operators';
+
+//import { retry, catchError } from 'rxjs';
 import { Pokemon } from './pokemon';
+import { Observable } from 'rxjs';
+ 
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +19,7 @@ export class RestApiService {
   //apiURL = 'http://localhost:3000';
   //apiURL = 'http://localhost:8080/pokedex-web/api/v1/users';
 
-  constructor(private http: HttpClient) { }
+  constructor(private httpClient: HttpClient) { }
 
   /*========================================
     CRUD Methods for consuming RESTful API
@@ -30,14 +32,19 @@ export class RestApiService {
     })
   }  
 
-  // HttpClient API get() method => Fetch employees list
-  getPokemons(): Observable<Pokemon> {
-    return this.http.get<Pokemon>(this.apiURL + 'api/v1/users/pokemons')
-    .pipe(
-      retry(1),
-      catchError(this.handleError)
-    )
+  public getPokemons(){
+    return this.httpClient.get(this.apiURL + 'api/v1/users/pokemons');
   }
+
+
+  // HttpClient API get() method => Fetch employees list
+  // getPokemons(): Observable<Pokemon> {
+  //   return this.http.get<Pokemon>(this.apiURL + 'api/v1/users/pokemons');
+  //   // .pipe(
+  //   //   retry(1),
+  //   //   catchError(this.handleError)
+  //   )
+  
 
   // // HttpClient API get() method => Fetch employee
   // getUserPokemons(id): Observable<Employee> {
@@ -76,17 +83,16 @@ export class RestApiService {
   // }
 
   // Error handling 
-  handleError(error: { error: { message: string; }; status: any; message: any; }) {
-     let errorMessage = '';
-     if(error.error instanceof ErrorEvent) {
-       // Get client-side error
-       errorMessage = error.error.message;
-     } else {
-       // Get server-side error
-       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-     }
-     window.alert(errorMessage);
-     return throwError(errorMessage);
-  }
-
+  // handleError(error: { error: { message: string; }; status: any; message: any; }) {
+  //    let errorMessage = '';
+  //    if(error.error instanceof ErrorEvent) {
+  //      // Get client-side error
+  //      errorMessage = error.error.message;
+  //    } else {
+  //      // Get server-side error
+  //      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+  //    }
+  //    window.alert(errorMessage);
+  //    return throwError(errorMessage);
+  // }
 }
