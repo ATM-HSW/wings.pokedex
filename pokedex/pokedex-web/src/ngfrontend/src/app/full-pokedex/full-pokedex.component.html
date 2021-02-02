@@ -9,8 +9,8 @@
     <!-- Topbar Search -->
     <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
         <div class="input-group">
-            <input #textbox type="text" [(ngModel)]="textValue" required class="form-control bg-light border-0 small" placeholder="Suche nach Name oder Nummer"
-                aria-label="Search" aria-describedby="basic-addon2" id="searchNrName">
+            <input #textbox type="text" [(ngModel)]="textValue" required class="form-control bg-light border-2 small" placeholder="Suche nach Name oder Nummer"
+                aria-label="Search" aria-describedby="basic-addon2" id="searchNrName" (keyup.enter)="searchByNrName(textbox.value)">
             <div class="input-group-append">
                 <button class="btn btn-primary" type="button" (click)="searchByNrName(textbox.value)">
                     <i class="fas fa-search fa-sm"></i>

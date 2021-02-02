@@ -1,3 +1,4 @@
+import { HostListener } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -13,6 +14,13 @@ export class FullPokedexComponent implements OnInit {
 
   textValue = 'initial value';
 
+  @HostListener('window:keyup', ['$event'])
+  keyEvent(event: KeyboardEvent) {
+    if (event.key === "Escape") {
+      this.newSearch();
+    }  
+  }
+  
   ngOnInit(): void {
     const Pokedex = require('pokeapi-js-wrapper');
 
@@ -55,5 +63,12 @@ export class FullPokedexComponent implements OnInit {
       alert("Zu dem Namen oder der Nummer wurde keine Pokemon gefunden.")
     }
   }
+
+  newSearch() : void {
+    var element = document.getElementById("searchNrName");
+    const y = element!.getBoundingClientRect().top;
+    window.scrollTo({ top: y, behavior: 'smooth' })
+    element!.focus();
+  } 
   
 }
