@@ -23,9 +23,6 @@
   </div>
 </div> -->
 
-
-
-
 <!-- Page Wrapper -->
 <div id="wrapper">
 
@@ -33,12 +30,14 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" [routerLink]="['/full-pokedex']"  style="text-transform: none; letter-spacing: 0.25rem; height:5rem; ">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" [routerLink]="['/full-pokedex']"
+            style="text-transform: none; letter-spacing: 0.25rem; height:5rem; ">
             <div class="sidebar-brand-icon rotate-n-15">
                 <!-- <i class="fas fa-laugh-wink"></i>-->
-                <i style="font-size:50px" class="pkmn pkmn-025-pikachu" ></i>
+                <i style="font-size:50px" class="pkmn pkmn-025-pikachu"></i>
             </div>
-            <div class="sidebar-brand-text mx-3 pokemon-font" style="margin: 0 0 0 0rem !important; font-size:22px">MyPokédex</div>
+            <div class="sidebar-brand-text mx-3 pokemon-font" style="margin: 0 0 0 0rem !important; font-size:22px">
+                MyPokédex</div>
         </a>
 
 
@@ -68,8 +67,25 @@
                 <span>Einstellungen</span></a>
         </li>
 
-
-
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                aria-expanded="true" aria-controls="collapsePages">
+                <a class="collapse-item" href="javascript:void()"></a><img src="assets/img/de.png"  style="width:25px;" alt=""></a>
+           
+            <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div class="bg-white py-1 collapse-inner rounded" style="max-width:80px !important; min-width: 20px !important;">
+                    <a class="collapse-item" href="javascript:void()"><img src="assets/img/de.png"  style="width:25px;" alt=""></a>
+                    <a class="collapse-item" href="javascript:void()"><img src="assets/img/gb.png"  style="width:25px;" alt=""></a>
+                    <a class="collapse-item" href="javascript:void()"><img src="assets/img/fr.png"  style="width:25px;" alt=""></a>
+                    <a class="collapse-item" href="javascript:void()"><img src="assets/img/es.png"  style="width:25px;" alt=""></a>
+                    <a class="collapse-item" href="javascript:void()"><img src="assets/img/it.png"  style="width:25px;" alt=""></a>
+                    <a class="collapse-item" href="javascript:void()"><img src="assets/img/kr.png"  style="width:25px;" alt=""></a>
+                    <a class="collapse-item" href="javascript:void()"><img src="assets/img/ro.png"  style="width:25px;" alt=""></a>                    
+                </div>
+            </div>
+        </li>
     </ul>
     <!-- End of Sidebar -->
 
@@ -122,7 +138,7 @@
             <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-primary" href="login.html">Logout</a>
+                <a class="btn btn-primary" href="">Logout</a>
             </div>
         </div>
     </div>

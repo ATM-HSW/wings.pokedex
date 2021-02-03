@@ -1,6 +1,6 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AngularFaviconService } from 'angular-favicon';
-
+//declare const initSbAdmin2: any;
 
 @Component({
   selector: 'app-root',
@@ -8,15 +8,10 @@ import { AngularFaviconService } from 'angular-favicon';
   styleUrls: ['./app.component.css']
 })
 
-
-
 export class AppComponent implements OnInit {
-
-  constructor(private ngxFavicon: AngularFaviconService) {}
+  constructor(private ngxFavicon: AngularFaviconService) { }
   ngOnInit(): void {
     this.ngxFavicon.setFavicon("favicon.png");
   }
-    
   title = 'ngfrontend';
-
 }

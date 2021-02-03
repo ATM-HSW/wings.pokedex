@@ -5,13 +5,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 //import { retry, catchError } from 'rxjs';
 import { Pokemon } from './pokemon';
-import { Observable } from 'rxjs';
+//import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
+
  
 
 @Injectable({
   providedIn: 'root'
 })
-
 export class RestApiService {
   
   // Define API
@@ -35,6 +36,16 @@ export class RestApiService {
   public getPokemons(){
     return this.httpClient.get(this.apiURL + 'api/v1/users/pokemons');
   }
+
+  // public fetchPokemonFromPokeApi(pokemons: any) {
+  //   return this.httpClient.get('https://pokeapi.co/api/v2/pokemon/?limit=80&offset=0').toPromise().then((res: any) => {
+  //     pokemons = res[0];
+  //     // console.log("pokemons...");
+  //     // console.log( res[0]);
+  //     // return res[0];
+  //     resolve();
+  //   });
+  // }
 
 
   // HttpClient API get() method => Fetch employees list

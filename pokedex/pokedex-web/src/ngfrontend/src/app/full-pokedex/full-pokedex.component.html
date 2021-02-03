@@ -1,3 +1,11 @@
+<!-- <script>
+    $(document).ready(function () {
+        setTimeout(function () {
+            initSbAdmin2();
+            console.log("initSbAdmin2 !");
+        }, 3000);
+    });
+</script> -->
 <!-- Topbar -->
 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
@@ -7,15 +15,16 @@
     </button>
 
     <!-- Topbar Search -->
-    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" >
         <div class="input-group">
-            <input #textbox type="text" [(ngModel)]="textValue" required class="form-control bg-light border-2 small" placeholder="Suche nach Name oder Nummer"
-                aria-label="Search" aria-describedby="basic-addon2" id="searchNrName" (keyup.enter)="searchByNrName(textbox.value)">
+            <input #textbox type="text" [(ngModel)]="textValue" required class="form-control bg-light border-2 small"
+                placeholder="Suche nach Name oder Nummer" aria-label="Search" aria-describedby="basic-addon2" name="searchNrName"
+                id="searchNrName" (keyup.enter)="searchByNrName(textbox.value)">
             <div class="input-group-append">
                 <button class="btn btn-primary" type="button" (click)="searchByNrName(textbox.value)">
                     <i class="fas fa-search fa-sm"></i>
                 </button>
-            </div>            
+            </div>
         </div>
     </form>
 
@@ -55,24 +64,26 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Full Pokédex</h1>
-
     </div>
     <div class="row">
-
-
-        <div class="col-xl-2 col-md-6 mb-4" *ngFor="let pokemon of pokemons; index as i;">
-            <div class="card border-left-primary shadow h-100 py-2 pokemons pokemon-{{pokemon.name}} pokemon-{{i+1}}"> 
+        <div id="full-pokedex-spinner" _ngcontent-nct-c101="" role="status" class="spinner-border"
+            style="width: 5rem;height: 5rem;color: #4e73df; margin-left: 40px; margin-top:20px;"><span
+                _ngcontent-nct-c101="" class="sr-only">Loading...</span></div>               
+        <div class="col-xl-2 col-md-6 mb-4" *ngFor="let pokemon of pokemons; index as i;" (click)="markPokemon($event)">
+            <div class="card border-left-primary shadow h-100 py-2 pokemons pokemon-{{pokemon.name}} pokemon-{{i+1}}">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                 {{pokemon.name}}
                             </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800"><img style="width:120px" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{i+1}}.png" /></div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><img style="width:120px"
+                                    src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{i+1}}.png" />
+                            </div>
                         </div>
-                        <div class="col-auto">
+                        <div class="col-auto" style="text-align:right">
+                            #{{i+1}} <br><br>
                             <i class="fas fa-calendar fa-2x text-gray-300"></i><br><br>
-                             <i class="fas fa-calendar fa-2x text-gray-300"></i><br><br>
                             <i class="fas fa-calendar fa-2x text-gray-300"></i>
                         </div>
                     </div>
@@ -80,4 +91,4 @@
             </div>
         </div>
         <!-- {{this.pokemon}}</li> -->
-    </div>   
+    </div>
