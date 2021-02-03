@@ -4,7 +4,6 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { RestApiService } from "../shared/rest-api.service";
 
-
 @Component({
   selector: 'app-full-pokedex',
   templateUrl: './full-pokedex.component.html',
@@ -13,12 +12,12 @@ import { RestApiService } from "../shared/rest-api.service";
 
 export class FullPokedexComponent implements OnInit {
 
-
   constructor(private http: HttpClient) { }
   pokemons: any;
   pokemons2: any;
-  api: string = "https://pokeapi.co/api/v2/pokemon/?limit=898&offset=0"; //898
+  api: string = "https://pokeapi.co/api/v2/pokemon/?limit=10&offset=0"; //898
   textValue = ''; //initial value
+  //categories : any = [];
 
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
@@ -36,10 +35,7 @@ export class FullPokedexComponent implements OnInit {
         .then((res: any) => {
           // Success
           console.log("fetchPokemonsFromPokeApi..!");
-          //console.log(res);
           this.pokemons = res.results;
-          
-          
           resolve();
           document.getElementById("full-pokedex-spinner")!.style.display = "none";
         },
@@ -49,41 +45,64 @@ export class FullPokedexComponent implements OnInit {
           }
         ).then((pokemons: any) => {
           console.log("START then..!");
-
-          let i  = 0;
-          this.pokemons.forEach( (pokemon: any) => {
+          let i = 0;
+          this.pokemons.forEach((pokemon: any) => {
             i++;
             const promise = new Promise<void>((resolve, reject) => {
               const url = `https://pokeapi.co/api/v2/pokemon-species/${i}`;
-              //console.log(i);
               this.http
                 .get(url)
                 .toPromise()
                 .then((pokemonPokeApi: any) => {
+                  console.log(pokemonPokeApi);
                   // Success
-                  //console.log(url);
-                  //pokemon = pokemonPokeApi;//.names[3].name; 
-                  for(let n=0;n<pokemonPokeApi.names.length;n++) {
-                    pokemon[pokemonPokeApi.names[n].language.name]= pokemonPokeApi.names[n].name;
-                    if(pokemonPokeApi.names[n].language.name.indexOf('de') > -1) {
+                  //pokemon = pokemonPokeApi; 
+                  // pokemon.dex = i;
+                  for (let n = 0; n < pokemonPokeApi.names.length; n++) {
+                    pokemon[pokemonPokeApi.names[n].language.name] = pokemonPokeApi.names[n].name;
+                    if (pokemonPokeApi.names[n].language.name.indexOf('de') > -1) {
                       pokemon.name = pokemonPokeApi.names[n].name;
                     }
                   }
-                  console.log(pokemon);
-                  // this.pokemons = res.map((res: any) => {
-                  //   return res[0];
-                  // });
-                  //i++;
+
+                  //pokemon.de = pokemonPokeApi.weight;
                   resolve();
-                  //document.getElementById("full-pokedex-spinner")!.style.display = "none";
-                }, 
+                },
                   err => {
                     // Error
                     reject(err);
                   }
                 );
             });
-          
+          });
+        }).then((pokemons: any) => {
+          //console.log("START then..!");
+          let i = 0;
+          this.pokemons.forEach((pokemon: any) => {
+            i++;
+            const promise = new Promise<void>((resolve, reject) => {
+              const url = `https://pokeapi.co/api/v2/pokemon/${i}`; ///https://pokeapi.co/api/v2/pokemon-species/${i}`;
+              this.http
+                .get(url)
+                .toPromise()
+                .then((pokemonPokeApi: any) => {
+                 // console.log(pokemonPokeApi);
+                  var types = [];
+                  for (let n = 0; n < pokemonPokeApi.types.length; n++) {
+                   types[n] = pokemonPokeApi.types[n].type.name                   
+                  } 
+                  pokemon.types = types;
+                 // console.log("pokemon");
+                  //console.log(types);
+
+                  resolve();
+                },
+                  err => {
+                    // Error
+                    reject(err);
+                  }
+                );
+            });
           });
         });
     });
@@ -98,60 +117,12 @@ export class FullPokedexComponent implements OnInit {
 
   ngOnInit(): void {
     document.getElementById("full-pokedex-spinner")!.style.display = "block";
-    
-    //alert(213);
     this.fetchPokemonsFromPokeApi();
-    //setTimeout(this.test2(),2000);
-    //this.fetchPokemonDataFromPokeApi();
 
-
-    // fetch('https://pokeapi.co/api/v2/pokemon/?limit=80&offset=0')
-    //   .then(response => response.json())
-    //   .then(function (pokemonAr) {
-    //     console.log("pokemon: " + pokemonAr);
-    //     pokemons.push(pokemonAr);
-
-    //     fetch('https://pokeapi.co/api/v2/pokemon-species/1')
-    //       .then(response => response.json())
-    //       .then(function (pokemon) {
-    //         ththis.pokemons.push(pokemon);
-
-    //       })
-    //       .catch(error => console.error('error:', error));
-
-
-
-    // const Pokedex = require('pokeapi-js-wrapper');
-
-    // const P = new Pokedex.Pokedex();
-    // P.resource([
-    //   "https://pokeapi.co/api/v2/pokemon/?limit=898&offset=0"
-    // ]).then((response: any) => {
-    //   //console.log(response);
-    //   this.pokemons = response[0].results;
-    //   var i = 1;
-    //   //for(let pokemon of this.pokemons) {
-
-    //   document.getElementById("full-pokedex-spinner")!.style.display = "none";
-    // });
-
-    // for(let i=0; i<this.pokemons.length; i++){
-    //   console.log(this.pokemons[i]);
-    // P.resource([
-    //   'https://pokeapi.co/api/v2/pokemon-species/${i}'
-    // ]).then((response: any) => {
-    //   console.log("response: ${response}"); 
-    //   //console.log("start response2...");
-    //   //console.log(response2[0].names[3].name);
-    //   //this.pokemons[i].name = response2[0].names[3].name;
-    // });
-    // }
-
-    //this.fetchKantoPokemon();
   }
 
   fetchSpecies(pokemons: any) {
-    fetch('https://pokeapi.co/api/v2/pokemon/?limit=898&offset=0') //898 
+    fetch('https://pokeapi.co/api/v2/pokemon/?limit=898&offset=0') //898
       .then(response => response.json())
       .then(pokemon => console.log("pokemon: " + pokemon))
       .catch(error => console.error('error:', error));
@@ -159,13 +130,12 @@ export class FullPokedexComponent implements OnInit {
   searchByNrName(value: string): void {
     document.querySelectorAll('.pokemons').forEach(element => element.classList.remove('pokemon-selected'));
 
-    //console.log('value: ' + value);
     var searchNrName: HTMLElement;
     if (value.length == 0) {
       alert("Bitte geben Sie den Namen oder die Nummer des Pokemon ein!")
       return;
     }
-    value = value;//.toLocaleLowerCase();
+    value = value;
     var element;
 
     element = document.getElementsByClassName("pokemon-" + value)[0];
@@ -202,16 +172,4 @@ export class FullPokedexComponent implements OnInit {
         this.pokemons2.push(pokeData);
       })
   }
-  // fetchKantoPokemon() {
-  //   console.log("fetchKantoPokemon..");
-  //   fetch('https://pokeapi.co/api/v2/pokemon?limit=151')
-  //     .then(response => response.json())
-  //     .then((allpokemon) => {
-  //       allpokemon.results.forEach((pokemon: any) => {
-  //         this.fetchPokemonData(pokemon);
-
-  //       })
-  //     })
-  // }
-
 }

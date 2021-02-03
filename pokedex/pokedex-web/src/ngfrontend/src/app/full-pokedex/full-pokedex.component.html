@@ -15,11 +15,11 @@
     </button>
 
     <!-- Topbar Search -->
-    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" >
+    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
         <div class="input-group">
             <input #textbox type="text" [(ngModel)]="textValue" required class="form-control bg-light border-2 small"
-                placeholder="Suche nach Name oder Nummer" aria-label="Search" aria-describedby="basic-addon2" name="searchNrName"
-                id="searchNrName" (keyup.enter)="searchByNrName(textbox.value)">
+                placeholder="Suche nach Name oder Nummer" aria-label="Search" aria-describedby="basic-addon2"
+                name="searchNrName" id="searchNrName" (keyup.enter)="searchByNrName(textbox.value)">
             <div class="input-group-append">
                 <button class="btn btn-primary" type="button" (click)="searchByNrName(textbox.value)">
                     <i class="fas fa-search fa-sm"></i>
@@ -60,21 +60,24 @@
 
 <!-- Begin Page Content -->
 <div class="container-fluid">
-
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Full Pokédex</h1>
+        <h1 class="h3 mb-0 text-gray-800">Search:</h1>
     </div>
     <div class="row">
         <div id="full-pokedex-spinner" _ngcontent-nct-c101="" role="status" class="spinner-border"
             style="width: 5rem;height: 5rem;color: #4e73df; margin-left: 40px; margin-top:20px;"><span
-                _ngcontent-nct-c101="" class="sr-only">Loading...</span></div>               
-        <div class="col-xl-2 col-md-6 mb-4" *ngFor="let pokemon of pokemons; index as i;" (click)="markPokemon($event)">
-            <div class="card border-left-primary shadow h-100 py-2 pokemons pokemon-{{pokemon.de}} pokemon-{{pokemon.en}} pokemon-{{pokemon.es}} pokemon-{{pokemon.fr}} pokemon-{{pokemon.it}} pokemon-{{pokemon.ja}} pokemon-{{pokemon.ko}}  pokemon-{{i+1}}">
+                _ngcontent-nct-c101="" class="sr-only">Loading...</span></div>
+        <div *ngFor="let pokemon of pokemons; index as i;"
+            class="col-xl-2 col-md-6 mb-4 type-{{pokemon.types[0]}} type-{{pokemon.types[1]}}  type-{{pokemon.types[2]}} type-{{pokemon.types[3]}} type-{{pokemon.types[4]}} type-{{pokemon.types[5]}}"
+            (click)="markPokemon($event)">
+            <div
+                class="card border-left-primary shadow h-100 py-2 pokemons pokemon-{{pokemon.de}} pokemon-{{pokemon.en}} pokemon-{{pokemon.es}} pokemon-{{pokemon.fr}} pokemon-{{pokemon.it}} pokemon-{{pokemon.ja}} pokemon-{{pokemon.ko}}  pokemon-{{i+1}}">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="OFF__text-xs font-weight-bold text-primary OFF__text-uppercase mb-1" style="font-size:1.5rem;">
+                            <div class="OFF__text-xs font-weight-bold text-primary OFF__text-uppercase mb-1"
+                                style="font-size:1.5rem;">
                                 <span class="language language_de">{{pokemon.de}}</span>
                                 <span class="language language_en" style="display:none;">{{pokemon.en}}</span>
                                 <span class="language language_es" style="display:none;">{{pokemon.es}}</span>
