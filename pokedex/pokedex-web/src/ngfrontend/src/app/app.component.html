@@ -70,19 +70,38 @@
         <!-- Divider -->
         <hr class="sidebar-divider">
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+            <a id="langChange" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                 aria-expanded="true" aria-controls="collapsePages">
-                <a class="collapse-item" href="javascript:void()"></a><img src="assets/img/de.png"  style="width:25px;" alt=""></a>
-           
+                <img src="assets/img/de.png" class="collapse-item language language_de" style="width:35px;" alt="">
+                <img src="assets/img/en.png" class="collapse-item language language_en" style="display:none;width:35px;"
+                    alt="">
+                <img src="assets/img/es.png" class="collapse-item language language_es" style="display:none;width:35px;"
+                    alt="">
+                <img src="assets/img/fr.png" class="collapse-item language language_fr" style="display:none;width:35px;"
+                    alt="">
+                <img src="assets/img/it.png" class="collapse-item language language_it" style="display:none;width:35px;"
+                    alt="">
+                <img src="assets/img/ja.png" class="collapse-item language language_ja" style="display:none;width:35px;"
+                    alt="">
+                <img src="assets/img/ko.png" class="collapse-item language language_ko" style="display:none;width:35px;"
+                    alt=""></a>
             <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                <div class="bg-white py-1 collapse-inner rounded" style="max-width:80px !important; min-width: 20px !important;">
-                    <a class="collapse-item" href="javascript:void()"><img src="assets/img/de.png"  style="width:25px;" alt=""></a>
-                    <a class="collapse-item" href="javascript:void()"><img src="assets/img/gb.png"  style="width:25px;" alt=""></a>
-                    <a class="collapse-item" href="javascript:void()"><img src="assets/img/fr.png"  style="width:25px;" alt=""></a>
-                    <a class="collapse-item" href="javascript:void()"><img src="assets/img/es.png"  style="width:25px;" alt=""></a>
-                    <a class="collapse-item" href="javascript:void()"><img src="assets/img/it.png"  style="width:25px;" alt=""></a>
-                    <a class="collapse-item" href="javascript:void()"><img src="assets/img/kr.png"  style="width:25px;" alt=""></a>
-                    <a class="collapse-item" href="javascript:void()"><img src="assets/img/ro.png"  style="width:25px;" alt=""></a>                    
+                <div class="bg-white py-1 collapse-inner rounded"
+                    style="max-width:80px !important; min-width: 20px !important;">
+                    <a class="collapse-item" [routerLink]="" (click)="changeLanguage('de')"><img src="assets/img/de.png"
+                            style="width:25px;" alt=""></a>
+                    <a class="collapse-item" [routerLink]="" (click)="changeLanguage('en')"><img src="assets/img/en.png"
+                            style="width:25px;" alt=""></a>
+                    <a class="collapse-item" [routerLink]="" (click)="changeLanguage('es')"><img src="assets/img/es.png"
+                            style="width:25px;" alt=""></a>
+                    <a class="collapse-item" [routerLink]="" (click)="changeLanguage('fr')"><img src="assets/img/fr.png"
+                            style="width:25px;" alt=""></a>
+                    <a class="collapse-item" [routerLink]="" (click)="changeLanguage('it')"><img src="assets/img/it.png"
+                            style="width:25px;" alt=""></a>
+                    <a class="collapse-item" [routerLink]="" (click)="changeLanguage('ja')"><img src="assets/img/ja.png"
+                            style="width:25px;" alt=""></a>
+                    <a class="collapse-item" [routerLink]="" (click)="changeLanguage('ko')"><img src="assets/img/ko.png"
+                            style="width:25px;" alt=""></a>
                 </div>
             </div>
         </li>
@@ -138,7 +157,7 @@
             <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-primary" href="">Logout</a>
+                <a class="btn btn-primary" [routerLink]="">Logout</a>
             </div>
         </div>
     </div>

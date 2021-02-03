@@ -17,7 +17,7 @@ export class FullPokedexComponent implements OnInit {
   constructor(private http: HttpClient) { }
   pokemons: any;
   pokemons2: any;
-  api: string = "https://pokeapi.co/api/v2/pokemon/?limit=120&offset=0";
+  api: string = "https://pokeapi.co/api/v2/pokemon/?limit=898&offset=0"; //898
   textValue = ''; //initial value
 
   @HostListener('window:keyup', ['$event'])
@@ -151,7 +151,7 @@ export class FullPokedexComponent implements OnInit {
   }
 
   fetchSpecies(pokemons: any) {
-    fetch('https://pokeapi.co/api/v2/pokemon/?limit=80&offset=0')
+    fetch('https://pokeapi.co/api/v2/pokemon/?limit=898&offset=0') //898 
       .then(response => response.json())
       .then(pokemon => console.log("pokemon: " + pokemon))
       .catch(error => console.error('error:', error));
@@ -165,7 +165,7 @@ export class FullPokedexComponent implements OnInit {
       alert("Bitte geben Sie den Namen oder die Nummer des Pokemon ein!")
       return;
     }
-    value = value.toLocaleLowerCase();
+    value = value;//.toLocaleLowerCase();
     var element;
 
     element = document.getElementsByClassName("pokemon-" + value)[0];
@@ -190,7 +190,6 @@ export class FullPokedexComponent implements OnInit {
     document.querySelectorAll('.pokemons').forEach(element => element.classList.remove('pokemon-selected'));
     event.srcElement.closest(".pokemons").classList.add('pokemon-selected');
   }
-
 
   fetchPokemonData(pokemon: { url: any; }) {
     let url = pokemon.url // <--- this is saving the pokemon url to a      variable to us in a fetch.(Ex: https://pokeapi.co/api/v2/pokemon/1/)

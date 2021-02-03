@@ -14,4 +14,12 @@ export class AppComponent implements OnInit {
     this.ngxFavicon.setFavicon("favicon.png");
   }
   title = 'ngfrontend';
+
+  changeLanguage(lang: string) {
+    console.log("changeLanguage...");
+    document.querySelectorAll<HTMLElement>('.language').forEach(element => element.style.display = 'none');
+    document.querySelectorAll<HTMLElement>(`.language_${lang}`).forEach(element => element.style.display = 'inline');
+    document.getElementById("langChange")?.click();
+  }  
 }
+

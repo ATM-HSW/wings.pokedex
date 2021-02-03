@@ -70,12 +70,18 @@
             style="width: 5rem;height: 5rem;color: #4e73df; margin-left: 40px; margin-top:20px;"><span
                 _ngcontent-nct-c101="" class="sr-only">Loading...</span></div>               
         <div class="col-xl-2 col-md-6 mb-4" *ngFor="let pokemon of pokemons; index as i;" (click)="markPokemon($event)">
-            <div class="card border-left-primary shadow h-100 py-2 pokemons pokemon-{{pokemon.name}} pokemon-{{i+1}}">
+            <div class="card border-left-primary shadow h-100 py-2 pokemons pokemon-{{pokemon.de}} pokemon-{{pokemon.en}} pokemon-{{pokemon.es}} pokemon-{{pokemon.fr}} pokemon-{{pokemon.it}} pokemon-{{pokemon.ja}} pokemon-{{pokemon.ko}}  pokemon-{{i+1}}">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                {{pokemon.name}}
+                            <div class="OFF__text-xs font-weight-bold text-primary OFF__text-uppercase mb-1" style="font-size:1.5rem;">
+                                <span class="language language_de">{{pokemon.de}}</span>
+                                <span class="language language_en" style="display:none;">{{pokemon.en}}</span>
+                                <span class="language language_es" style="display:none;">{{pokemon.es}}</span>
+                                <span class="language language_fr" style="display:none;">{{pokemon.fr}}</span>
+                                <span class="language language_it" style="display:none;">{{pokemon.it}}</span>
+                                <span class="language language_ja" style="display:none;">{{pokemon.ja}}</span>
+                                <span class="language language_ko" style="display:none;">{{pokemon.ko}}</span>
                             </div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800"><img style="width:120px"
                                     src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{i+1}}.png" />
