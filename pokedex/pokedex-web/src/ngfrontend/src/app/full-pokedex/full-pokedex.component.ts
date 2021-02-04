@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { HostListener } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Pokemon } from '../shared/pokemon';
 import { RestApiService } from "../shared/rest-api.service";
 
 
@@ -14,11 +15,11 @@ import { RestApiService } from "../shared/rest-api.service";
 
 
 export class FullPokedexComponent implements OnInit {
-
   constructor(private http: HttpClient) { }
-  pokemons: any;
+ // pokemons = [{ "types": ['abc', 'xyz'], "height": "", weight: "", "de" : "", "en" : "", "es" : "", "fr" : "", "it" : "", "ja" : "", "ko" : "" }];
+  pokemons : Pokemon[] = [];
   pokemons2: any;
-  api: string = "https://pokeapi.co/api/v2/pokemon/?limit=400&offset=0"; //898
+  api: string = "https://pokeapi.co/api/v2/pokemon/?limit=898&offset=0"; //898
   textValue = ''; //initial value
   //categories : any = [];
 
@@ -40,8 +41,14 @@ export class FullPokedexComponent implements OnInit {
         .toPromise()
         .then((res: any) => {
           // Success
-          console.log("fetchPokemonsFromPokeApi..!");
-          this.pokemons = res.results;
+          //console.log("fetchPokemonsFromPokeApi..!");
+          //this.pokemons = res.results;
+          for (let n = 0; n < res.results.length; n++) {
+            var pokemon = new Pokemon();
+            pokemon.de = res.results[0].name;
+            pokemon.url = res.results[0].url;
+            this.pokemons.push(pokemon);
+          }
           document.getElementById("pokemonCounter")!.innerHTML = `${res.results.length}`;
 
           resolve();
@@ -52,7 +59,7 @@ export class FullPokedexComponent implements OnInit {
             reject(err);
           }
         ).then((pokemons: any) => {
-          console.log("START then..!");
+          //console.log("START then..!");
           let i = 0;
           this.pokemons.forEach((pokemon: any) => {
             i++;
@@ -97,8 +104,8 @@ export class FullPokedexComponent implements OnInit {
                 .get(url)
                 .toPromise()
                 .then((pokemonPokeApi: any) => {
-                  console.log("pokemonPokeApi 2");
-                  console.log(pokemonPokeApi);
+                  //console.log("pokemonPokeApi 2");
+                  //console.log(pokemonPokeApi);
                   let types: string[] = ['', '', '', '', '', ''];
 
                   for (let n = 0; n < pokemonPokeApi.types.length; n++) {
@@ -132,17 +139,23 @@ export class FullPokedexComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // var pokemon = Object();
+    // pokemon.types = [];
+    // pokemon.types.push = ["abc"];
+    // pokemon.types.push = ["efg"];
+    // this.pokemons.push(pokemon);
+
     document.getElementById("full-pokedex-spinner")!.style.display = "block";
     this.fetchPokemonsFromPokeApi();
     //this.buildRegions();
   }
 
-  fetchSpecies(pokemons: any) {
-    fetch('https://pokeapi.co/api/v2/pokemon/?limit=898&offset=0') //898
-      .then(response => response.json())
-      .then(pokemon => console.log("pokemon: " + pokemon))
-      .catch(error => console.error('error:', error));
-  }
+  // fetchSpecies(pokemons: any) {
+  //   fetch('https://pokeapi.co/api/v2/pokemon/?limit=898&offset=0') //898
+  //     .then(response => response.json())
+  //     .then(pokemon => console.log("pokemon: " + pokemon))
+  //     .catch(error => console.error('error:', error));
+  // }
   searchByNrName(value: string): void {
     document.querySelectorAll('.pokemons').forEach(element => element.classList.remove('pokemon-selected'));
 

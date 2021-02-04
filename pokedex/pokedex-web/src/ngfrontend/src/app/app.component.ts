@@ -15,7 +15,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.ngxFavicon.setFavicon("favicon.png");
     this.getTypes();
-    console.log("buildRegions");
+    //console.log("buildRegions");
     this.buildRegions();
   }
   title = 'ngfrontend';
@@ -46,7 +46,7 @@ export class AppComponent implements OnInit {
     document.querySelectorAll<HTMLElement>('.filter-all').forEach(element => element.classList.add("hidden")); //.style.display = 'none');
     document.querySelectorAll("#accordionSidebar a.filter.selected").forEach(element => {
       var filterClass = element.getAttribute("data-filterclass");
-      console.log("filterClass: " + filterClass);
+      //console.log("filterClass: " + filterClass);
       document.querySelectorAll<HTMLElement>('.' + filterClass).forEach(element => element.classList.remove("hidden")); //.style.display = 'block');
     });
     if (document.querySelectorAll("#accordionSidebar a.filter.selected").length == 0) {
@@ -64,8 +64,8 @@ export class AppComponent implements OnInit {
         .get(url)
         .toPromise()
         .then((types: any) => {
-          console.log("types...........................................");
-          console.log(types.results);
+          //console.log("types...........................................");
+          //console.log(types.results);
           for (let n = 0; n < types.results.length; n++) {
             var filterClass = Object();
             filterClass.name = types.results[n].name;
@@ -127,12 +127,12 @@ export class AppComponent implements OnInit {
           // Success
           document.querySelectorAll<HTMLElement>('.filter-all').forEach(element => element.classList.add("hidden")); //.style.display = 'none');
           for (let n = 0; n < res.pokemon_entries.length; n++) {
-            console.log(res.pokemon_entries[n].pokemon_species.name);
+            //console.log(res.pokemon_entries[n].pokemon_species.name);
             //var name = this.capitalizeFirstLetter(res.pokemon_entries[n].pokemon_species.name);
             //name = `pokemon-${name}`;            
             var dexAr = res.pokemon_entries[n].pokemon_species.url.split("/");
             var filterClass = `pokemon-${dexAr[dexAr.length - 2]}`;
-            console.log(filterClass);
+            //console.log(filterClass);
             if (document.getElementsByClassName(filterClass).length > 0) {
               document.getElementsByClassName(filterClass)[0].closest(".filter-all")!.classList.remove("hidden"); //.style.display = 'none');
             }

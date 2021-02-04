@@ -33,7 +33,7 @@
                 <span>Filter</span></a>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="buttons.html">My Collection</a>
+                    <a class="collapse-item" [routerLink]="">My Collection</a> 
                 </div>
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item" [routerLink]="" (click)="switchShinyAll($event)">Shiny</a>
@@ -42,13 +42,13 @@
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Type</h6>
                     <a *ngFor="let type of types; index as i;" class="collapse-item filter" [routerLink]=""
-                        (click)="filterPokemons($event, false)" [attr.data-filterclass]="type.class">{{type.name}}</a>
+                        (click)="filterPokemons($event, false)" [attr.data-filterclass]="type.class">{{type!.name}}</a>
                 </div>
 
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Region</h6>
                     <a *ngFor="let region of pokedexRegions; index as i;" class="collapse-item filter" [routerLink]=""
-                        (click)="filterByRegion($event)" [attr.data-filterclass]="region.url">{{region.name}}</a>
+                        (click)="filterByRegion($event)" [attr.data-filterclass]="region.url">{{region!.name}}</a>
                 </div>
             </div>
         </li>
@@ -145,6 +145,7 @@
 <!-- Scroll to Top Button-->
 <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
+    <div style="margin-top: -31px;font-size: 12px;">ESC</div>
 </a>
 
 <!-- Logout Modal-->
