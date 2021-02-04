@@ -19,7 +19,7 @@ export class FullPokedexComponent implements OnInit {
  // pokemons = [{ "types": ['abc', 'xyz'], "height": "", weight: "", "de" : "", "en" : "", "es" : "", "fr" : "", "it" : "", "ja" : "", "ko" : "" }];
   pokemons : Pokemon[] = [];
   pokemons2: any;
-  api: string = "https://pokeapi.co/api/v2/pokemon/?limit=898&offset=0"; //898
+  api: string = "https://pokeapi.co/api/v2/pokemon/?limit=400&offset=0"; //898
   textValue = ''; //initial value
   //categories : any = [];
 

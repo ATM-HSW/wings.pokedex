@@ -33,6 +33,10 @@ export class AppComponent implements OnInit {
     document.getElementById("a-filter")!.classList.add("collapsed");
     document.getElementById("collapseTwo")!.classList.remove("show");
     document.getElementById("pokemonCounter")!.innerHTML = `${document.querySelectorAll<HTMLElement>('.filter-all').length}`;
+    var element = document.getElementById("searchNrName");
+    const y = element!.getBoundingClientRect().top;
+    window.scrollTo({ top: y, behavior: 'smooth' })
+    element!.focus();
   }
 
   filterPokemons(event: any, removeOtherFilter: boolean) {
@@ -54,6 +58,10 @@ export class AppComponent implements OnInit {
     }
     var pokemonCounter = document.querySelectorAll<HTMLElement>('.filter-all').length - document.querySelectorAll<HTMLElement>('.filter-all.hidden').length;
     document.getElementById("pokemonCounter")!.innerHTML = `${pokemonCounter}`;
+    var element = document.getElementById("searchNrName");
+    const y = element!.getBoundingClientRect().top;
+    window.scrollTo({ top: y, behavior: 'smooth' })
+    element!.focus();
   }
 
 
@@ -139,6 +147,10 @@ export class AppComponent implements OnInit {
           }
           var pokemonCounter = document.querySelectorAll<HTMLElement>('.filter-all').length - document.querySelectorAll<HTMLElement>('.filter-all.hidden').length;
           document.getElementById("pokemonCounter")!.innerHTML = `${pokemonCounter}`;
+          var element = document.getElementById("searchNrName");
+          const y = element!.getBoundingClientRect().top;
+          window.scrollTo({ top: y, behavior: 'smooth' })
+          element!.focus();
         },
           err => {
             // Error
