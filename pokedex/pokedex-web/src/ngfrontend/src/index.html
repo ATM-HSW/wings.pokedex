@@ -14,11 +14,16 @@
         <link href="//db.onlinewebfonts.com/c/f4d1593471d222ddebd973210265762a?family=Pokemon" rel="stylesheet" type="text/css"/>
         <link rel='icon' href='favicon.ico' type='image/x-icon' sizes="16x16" />
         
-
+        <script>
+          function initTooltips() {
+              //jQuery vs. Angular2 Workaround :-(
+              $('[data-toggle="tooltip"]').tooltip();
+          }
+      </script>
     <base href="/">
 </head>
 
-<body id="page-top" onmouseover="initSbAdmin2()">
+<body id="page-top" onmouseover="initSbAdmin2(); initTooltips();">
   <app-root></app-root> 
 </body>
 <script src="https://unpkg.com/pokeapi-js-wrapper/dist/index.js"></script> 

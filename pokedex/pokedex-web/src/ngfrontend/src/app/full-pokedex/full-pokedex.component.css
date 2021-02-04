@@ -1,0 +1,7 @@
+.hidden {
+    display:none !important;
+}
+
+.col-xl-2 {
+    min-width: 19rem !important;
+}

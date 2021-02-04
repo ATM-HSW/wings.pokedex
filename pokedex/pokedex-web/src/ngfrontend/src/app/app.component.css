@@ -4,6 +4,15 @@
 .pokemon-font {
     font: 20px 'Pokemon'
     /**;
-    font-weight:normal;**/
-  
+    font-weight:normal;**/  
   }
+
+  .sidebar .nav-item .collapse .collapse-inner .collapse-item.selected, .sidebar .nav-item .collapsing .collapse-inner .collapse-item.selected {
+    background-color: #b3c4f7 !important;
+    font-weight: bold;
+    border: 2px solid white;
+}
+
+.col-xl-2 {
+    min-width: 19rem !important;
+}

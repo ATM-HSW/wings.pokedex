@@ -2,10 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AngularFaviconService } from 'angular-favicon';
 import { HttpClient } from '@angular/common/http';
 
-
-
-//declare const initSbAdmin2: any;
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -13,12 +9,14 @@ import { HttpClient } from '@angular/common/http';
 })
 
 export class AppComponent implements OnInit {
-  categories: any = [];
+  types: any = [];
 
   constructor(private ngxFavicon: AngularFaviconService, private http: HttpClient) { }
   ngOnInit(): void {
     this.ngxFavicon.setFavicon("favicon.png");
     this.getTypes();
+    console.log("buildRegions");
+    this.buildRegions();
   }
   title = 'ngfrontend';
 
@@ -29,14 +27,35 @@ export class AppComponent implements OnInit {
     document.getElementById("langChange")?.click();
   }
 
-
-
-  filterType(event: any, category: string) {
-    console.log("changeLanguage...");
-    document.querySelectorAll<HTMLElement>('.category-all').forEach(element => element.style.display = 'none');
-    document.querySelectorAll<HTMLElement>(`.category-${category}`).forEach(element => element.style.display = 'block');
-    //document.getElementById("langChange")?.click();
+  fullPokedex() {
+    document.querySelectorAll<HTMLElement>("#accordionSidebar a.filter.selected").forEach(element => element.classList.remove("selected"));
+    document.querySelectorAll<HTMLElement>('.filter-all').forEach(element => element.classList.remove("hidden")); //.display = 'block');
+    document.getElementById("a-filter")!.classList.add("collapsed");
+    document.getElementById("collapseTwo")!.classList.remove("show");
+    document.getElementById("pokemonCounter")!.innerHTML = `${document.querySelectorAll<HTMLElement>('.filter-all').length}`;
   }
+
+  filterPokemons(event: any, removeOtherFilter: boolean) {
+    document.querySelectorAll<HTMLElement>("#accordionSidebar a.filter.selected").forEach(element => element.classList.remove("selected"));
+    event.srcElement.classList.toggle("selected");
+
+    if (removeOtherFilter) {
+      document.querySelectorAll<HTMLElement>('.filter-all').forEach(element => element.classList.remove("selected"));
+    }
+
+    document.querySelectorAll<HTMLElement>('.filter-all').forEach(element => element.classList.add("hidden")); //.style.display = 'none');
+    document.querySelectorAll("#accordionSidebar a.filter.selected").forEach(element => {
+      var filterClass = element.getAttribute("data-filterclass");
+      console.log("filterClass: " + filterClass);
+      document.querySelectorAll<HTMLElement>('.' + filterClass).forEach(element => element.classList.remove("hidden")); //.style.display = 'block');
+    });
+    if (document.querySelectorAll("#accordionSidebar a.filter.selected").length == 0) {
+      document.querySelectorAll<HTMLElement>('.filter-all').forEach(element => element.classList.remove("hidden"));//.style.display = 'block');
+    }
+    var pokemonCounter = document.querySelectorAll<HTMLElement>('.filter-all').length - document.querySelectorAll<HTMLElement>('.filter-all.hidden').length;
+    document.getElementById("pokemonCounter")!.innerHTML = `${pokemonCounter}`;
+  }
+
 
   getTypes() {
     const promise = new Promise<void>((resolve, reject) => {
@@ -48,7 +67,10 @@ export class AppComponent implements OnInit {
           console.log("types...........................................");
           console.log(types.results);
           for (let n = 0; n < types.results.length; n++) {
-            this.categories.push(types.results[n].name);
+            var filterClass = Object();
+            filterClass.name = types.results[n].name;
+            filterClass.class = `filter-type-${types.results[n].name}`;
+            this.types.push(filterClass);
           }
           resolve();
         },
@@ -57,10 +79,102 @@ export class AppComponent implements OnInit {
             reject(err);
           }
         );
-    }); 
+    });
     return promise;
   }
 
+  pokedexRegions: any;
+  buildRegions() {
+    const promise = new Promise<void>((resolve, reject) => {
+      const apiURL = 'https://pokeapi.co/api/v2/pokedex';
+      this.http
+        .get(apiURL)
+        .toPromise()
+        .then((res: any) => {
+          // Success
+          this.pokedexRegions = res.results;
+          // for (let n = 0; n < res.results.length; n++) {
+          //   console.log(res.results[n].name);
+          //   this.pokedexRegions.push(res.results[n].name);
+
+          // }
+          resolve();
+        },
+          err => {
+            // Error
+            reject(err);
+          }
+        )
+    });
+    return promise;
+  }
+
+  capitalizeFirstLetter(string: any) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+  filterByRegion(event: any) {
+    document.querySelectorAll<HTMLElement>("#accordionSidebar a.filter.selected").forEach(element => element.classList.remove("selected"));
+    event.srcElement.classList.toggle("selected");
+    document.querySelectorAll<HTMLElement>('.filter-all').forEach(element => element.classList.remove("hidden")); //.style.display = 'none');
+
+    var url = event.srcElement.getAttribute("data-filterclass");
+    const promise = new Promise<void>((resolve, reject) => {
+      this.http
+        .get(url)
+        .toPromise()
+        .then((res: any) => {
+          // Success
+          document.querySelectorAll<HTMLElement>('.filter-all').forEach(element => element.classList.add("hidden")); //.style.display = 'none');
+          for (let n = 0; n < res.pokemon_entries.length; n++) {
+            console.log(res.pokemon_entries[n].pokemon_species.name);
+            //var name = this.capitalizeFirstLetter(res.pokemon_entries[n].pokemon_species.name);
+            //name = `pokemon-${name}`;            
+            var dexAr = res.pokemon_entries[n].pokemon_species.url.split("/");
+            var filterClass = `pokemon-${dexAr[dexAr.length - 2]}`;
+            console.log(filterClass);
+            if (document.getElementsByClassName(filterClass).length > 0) {
+              document.getElementsByClassName(filterClass)[0].closest(".filter-all")!.classList.remove("hidden"); //.style.display = 'none');
+            }
+          }
+          var pokemonCounter = document.querySelectorAll<HTMLElement>('.filter-all').length - document.querySelectorAll<HTMLElement>('.filter-all.hidden').length;
+          document.getElementById("pokemonCounter")!.innerHTML = `${pokemonCounter}`;
+        },
+          err => {
+            // Error
+            reject(err);
+          }
+        )
+    });
+    return promise;
+  }
+
+  switchShinyAll(event: any) {
+    event.srcElement.classList.toggle("selected");
+    document.querySelectorAll('.img-pokemon').forEach(element => {
+      if (event.srcElement.classList.contains("selected")) {
+        var elImg = (element as HTMLImageElement);
+        var src = elImg.src;
+        src = src.replace("shiny/", "");
+        src = src.replace("pokemon/", "pokemon/shiny/");
+        elImg.src = src;
+      } else {
+        var elImg = (element as HTMLImageElement);
+        var src = elImg.src;
+        src = src.replace("shiny/", "");
+        elImg.src = src;
+      }
+    });
+    if (event.srcElement.classList.contains("selected")) {
+      document.querySelectorAll('.fa-sun').forEach(element => {
+        (element as HTMLElement).style.color = "rgb(78, 115, 223)"
+      });
+    } else {
+      document.querySelectorAll('.fa-sun').forEach(element => {
+        (element as HTMLElement).style.color = "white"
+      });
+    }
+  }
 }
 
 

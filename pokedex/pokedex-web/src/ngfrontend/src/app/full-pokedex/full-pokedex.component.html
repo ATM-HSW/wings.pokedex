@@ -1,11 +1,3 @@
-<!-- <script>
-    $(document).ready(function () {
-        setTimeout(function () {
-            initSbAdmin2();
-            console.log("initSbAdmin2 !");
-        }, 3000);
-    });
-</script> -->
 <!-- Topbar -->
 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
@@ -59,17 +51,17 @@
 <!-- End of Topbar -->
 
 <!-- Begin Page Content -->
-<div class="container-fluid">
+<div class="container-fluid" onmouseenter="$('i').tooltip();">
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Search:</h1>
+        <h1 class="h3 mb-0 text-gray-800"><span id="pokemonCounter"></span> Pokémon</h1>
     </div>
     <div class="row">
         <div id="full-pokedex-spinner" _ngcontent-nct-c101="" role="status" class="spinner-border"
             style="width: 5rem;height: 5rem;color: #4e73df; margin-left: 40px; margin-top:20px;"><span
                 _ngcontent-nct-c101="" class="sr-only">Loading...</span></div>
         <div *ngFor="let pokemon of pokemons; index as i;"
-            class="col-xl-2 col-md-6 mb-4 type-{{pokemon.types[0]}} type-{{pokemon.types[1]}}  type-{{pokemon.types[2]}} type-{{pokemon.types[3]}} type-{{pokemon.types[4]}} type-{{pokemon.types[5]}}"
+            class="col-xl-2 col-md-6 mb-4 filter-all filter-type-{{pokemon.types[0]}} filter-type-{{pokemon.types[1]}}"
             (click)="markPokemon($event)">
             <div
                 class="card border-left-primary shadow h-100 py-2 pokemons pokemon-{{pokemon.de}} pokemon-{{pokemon.en}} pokemon-{{pokemon.es}} pokemon-{{pokemon.fr}} pokemon-{{pokemon.it}} pokemon-{{pokemon.ja}} pokemon-{{pokemon.ko}}  pokemon-{{i+1}}">
@@ -86,14 +78,81 @@
                                 <span class="language language_ja" style="display:none;">{{pokemon.ja}}</span>
                                 <span class="language language_ko" style="display:none;">{{pokemon.ko}}</span>
                             </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800"><img style="width:120px"
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><img id="img-pokemon-{{i+1}}" class="img-pokemon"
+                                    style="width:120px"
                                     src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{i+1}}.png" />
                             </div>
+
+                            <div _ngcontent-nlx-c101="" _ngcontent-rgn-c101=""
+                                class="OFF__text-xs font-weight-bold text-primary OFF__text-uppercase mb-1"
+                                style="margin-top:23px;font-size: 0.8rem; background-color: #dddfeb; padding: 9px 4px 9px 4px; border-radius: 3px 3px 3px 3px;">
+                                <table _ngcontent-nlx-c101="">
+                                    <tbody>
+                                        <tr _ngcontent-nlx-c101="">
+                                            <td _ngcontent-nlx-c101="">Type: </td>
+                                            <td _ngcontent-nlx-c101=""></td>
+                                            <td _ngcontent-nlx-c101="">{{pokemon.types[0]}}, {{pokemon.types[1]}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                        <div class="col-auto" style="text-align:right">
-                            #{{i+1}} <br><br>
+                        <div class="col-auto" style="text-align: center;height: 231px; color:#4e73df">
+                            <!-- #{{i+1}} <br><br>
                             <i class="fas fa-calendar fa-2x text-gray-300"></i><br><br>
-                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            <i class="fas fa-calendar fa-2x text-gray-300"></i> -->
+
+                            <div class=""
+                                style=" font-weight:bold; font-size: 0.8rem;background-color: #4e73df; color:white; padding: 4px 4px 4px 4px;border-radius: 3px 3px 3px 3px;/* width: 141px; */">
+                                #{{i+1}}
+                            </div>
+
+                            <div class=""
+                                style="margin-top:5px; font-size: 0.8rem;background-color: #dddfeb;padding: 4px 4px 4px 4px;border-radius: 3px 3px 3px 3px;/* width: 141px; */">
+                                <table _ngcontent-nlx-c101="">
+                                    <tbody>
+                                        <tr _ngcontent-nlx-c101="">
+                                            <td _ngcontent-nlx-c101="">Height </td>
+
+                                        </tr>
+                                        <tr _ngcontent-nlx-c101="">
+                                            <td _ngcontent-nlx-c101="">{{pokemon.height}} </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class=""
+                                style="margin-top:5px; font-size: 0.8rem;background-color: #dddfeb;padding: 4px 4px 4px 4px;border-radius: 3px 3px 3px 3px;/* width: 141px; */">
+                                <table _ngcontent-nlx-c101="">
+                                    <tbody>
+                                        <tr _ngcontent-nlx-c101="">
+                                            <td _ngcontent-nlx-c101="">Weight</td>
+
+                                        </tr>
+                                        <tr _ngcontent-nlx-c101="">
+                                            <td _ngcontent-nlx-c101="">{{pokemon.weight}} </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div style="margin-top: 6px; font-size: 0.8rem; color:white; background-color: #dddfeb; padding: 4px 4px 4px 4px; border-radius: 3px 3px 3px 3px; /* width: 141px;"
+                                _ngcontent-skt-c101="" data-toggle="tooltip" data-placement="right"
+                                title="Switch to shiny Pokémon."><i class="fas fa-sun" style="font-size: 26px;"
+                                    (click)="switchShiny($event, (i+1))"></i>
+                                <table _ngcontent-skt-c101="" _ngcontent-nlx-c101=""></table>
+                            </div>
+                            <div style="border:2px solid #4e73df; margin-top: 5px; font-size: 0.8rem; color:white; background-color: #dddfeb; padding: 4px 4px 4px 4px; border-radius: 3px 3px 3px 3px; /* width: 141px;"
+                                _ngcontent-skt-c10 data-toggle="tooltip" data-placement="right"
+                                title="Save Pokémon in your Collection."><i class="fas fa-trophy" style="
+                                font-size: 26px;
+                            "></i>
+                                <table _ngcontent-skt-c101="" _ngcontent-nlx-c101=""></table>
+                            </div>
+
+
                         </div>
                     </div>
                 </div>

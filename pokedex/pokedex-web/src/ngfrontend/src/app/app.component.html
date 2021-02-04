@@ -15,31 +15,43 @@
                 MyPokédex</div>
         </a>
 
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item active">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
-                    <i style="font-size:23px;" class="fas fa-globe"></i>&nbsp;
-                    <span>Full Pokedex</span></a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="buttons.html">My Collection</a>
-                    </div>
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="buttons.html">Shiny</a>
-                    </div>
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Category</h6>
-                        <a *ngFor="let category of categories; index as i;" class="collapse-item" href="buttons.html">{{category}}</a>
-                        
-                    </div>
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Type:</h6>
-                        <a class="collapse-item" href="buttons.html">Buttons</a>
-                        <a class="collapse-item" href="cards.html">Cards</a>
-                    </div>
+        <!-- Nav Item - Full Pokedex -->
+        <li class="nav-item active">
+            <a class="nav-link filter" [routerLink]="" data-filterclass="filter-all" (click)="fullPokedex()">
+                <!-- ,'filter-all' -->
+                <i style="font-size:23px;" class="fas fa-globe"></i>&nbsp;
+                <span>Full Pokedex</span> 
+            </a>
+        </li>
+        <hr class="sidebar-divider">
+
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item active">
+            <a class="nav-link collapsed" id="a-filter" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                aria-expanded="true" aria-controls="collapseTwo">
+                <i style="font-size:22px;" class="fas fa-filter"></i>&nbsp;
+                <span>Filter</span></a>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="buttons.html">My Collection</a>
                 </div>
-            </li>
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" [routerLink]="" (click)="switchShinyAll($event)">Shiny</a>
+                </div>
+
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Type</h6>
+                    <a *ngFor="let type of types; index as i;" class="collapse-item filter" [routerLink]=""
+                        (click)="filterPokemons($event, false)" [attr.data-filterclass]="type.class">{{type.name}}</a>
+                </div>
+
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Region</h6>
+                    <a *ngFor="let region of pokedexRegions; index as i;" class="collapse-item filter" [routerLink]=""
+                        (click)="filterByRegion($event)" [attr.data-filterclass]="region.url">{{region.name}}</a>
+                </div>
+            </div>
+        </li>
 
         <!-- Divider
         <hr class="sidebar-divider my-0">
@@ -67,20 +79,20 @@
         <!-- Divider -->
         <hr class="sidebar-divider">
         <li class="nav-item active ">
-            <a id="langChange" class="nav-link collapsed" href="#" data-toggle="collapse" aria-expanded="false" data-target="#collapsePages"
-                aria-expanded="true" aria-controls="collapsePages">
-                <img src="assets/img/de.png" class="collapse-item language language_de" style="width:20px;" alt="">
-                <img src="assets/img/en.png" class="collapse-item language language_en" style="display:none;width:20px;"
+            <a id="langChange" class="nav-link collapsed" href="#" data-toggle="collapse" aria-expanded="false"
+                data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+                <img src="assets/img/de.png" class="collapse-item language language_de" style="width:23px;" alt="">
+                <img src="assets/img/en.png" class="collapse-item language language_en" style="display:none;width:23px;"
                     alt="">
-                <img src="assets/img/es.png" class="collapse-item language language_es" style="display:none;width:20px;"
+                <img src="assets/img/es.png" class="collapse-item language language_es" style="display:none;width:23px;"
                     alt="">
-                <img src="assets/img/fr.png" class="collapse-item language language_fr" style="display:none;width:20px;"
+                <img src="assets/img/fr.png" class="collapse-item language language_fr" style="display:none;width:23px;"
                     alt="">
-                <img src="assets/img/it.png" class="collapse-item language language_it" style="display:none;width:20px;"
+                <img src="assets/img/it.png" class="collapse-item language language_it" style="display:none;width:23px;"
                     alt="">
-                <img src="assets/img/ja.png" class="collapse-item language language_ja" style="display:none;width:20px;"
+                <img src="assets/img/ja.png" class="collapse-item language language_ja" style="display:none;width:23px;"
                     alt="">
-                <img src="assets/img/ko.png" class="collapse-item language language_ko" style="display:none;width:20px;"
+                <img src="assets/img/ko.png" class="collapse-item language language_ko" style="display:none;width:23px;"
                     alt="">&nbsp;&nbsp;&nbsp;<span>Language</span></a>
             <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-1 collapse-inner rounded"
