@@ -8,13 +8,13 @@ import { Pokemon } from './pokemon';
 //import { Observable } from 'rxjs';
 import { Observable } from 'rxjs/Observable';
 
- 
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class RestApiService {
-  
+
   // Define API
   apiURL = "";
   //apiURL = 'http://localhost:3000';
@@ -31,10 +31,22 @@ export class RestApiService {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
     })
-  }  
+  }
 
-  public getPokemons(){
+  public getPokemons() {
     return this.httpClient.get(this.apiURL + 'api/v1/users/pokemons');
+  }
+
+  public getAllPokemons() {
+    return this.httpClient.get(`https://pokeapi.co/api/v2/pokemon/?limit=400&offset=0`);
+  }
+
+  public getPokemonSpeciesDetails(dex : string | any) { 
+    return this.httpClient.get(`https://pokeapi.co/api/v2/pokemon-species/${dex}`);
+  }
+
+  public getPokemonDetails(dex : string | any) { 
+    return this.httpClient.get(`https://pokeapi.co/api/v2/pokemon/${dex}`);
   }
 
   // public fetchPokemonFromPokeApi(pokemons: any) {
@@ -55,7 +67,7 @@ export class RestApiService {
   //   //   retry(1),
   //   //   catchError(this.handleError)
   //   )
-  
+
 
   // // HttpClient API get() method => Fetch employee
   // getUserPokemons(id): Observable<Employee> {

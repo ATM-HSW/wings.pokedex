@@ -46,7 +46,6 @@
             </div>
         </li>
     </ul>
-
 </nav>
 <!-- End of Topbar -->
 
@@ -54,7 +53,7 @@
 <div class="container-fluid" onmouseenter="$('i').tooltip();">
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800"><span id="pokemonCounter"></span> Pokémon</h1>
+        <h1 class="h3 mb-0 text-gray-800"><span id="">{{pokemonCounter}}</span> Pokémon</h1>
     </div>
     <div class="row">
         <div id="full-pokedex-spinner" _ngcontent-nct-c101="" role="status" class="spinner-border"
@@ -79,13 +78,13 @@
                                 <span class="language language_ko" style="display:none;">{{pokemon.ko}}</span>
                             </div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800"><img id="img-pokemon-{{i+1}}" class="img-pokemon"
-                                    style="width:120px"
+                                    style="width:120px; height:7.5rem"
                                     src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{i+1}}.png" />
                             </div>
 
                             <div _ngcontent-nlx-c101="" _ngcontent-rgn-c101=""
                                 class="OFF__text-xs font-weight-bold text-primary OFF__text-uppercase mb-1"
-                                style="margin-top:23px;font-size: 0.8rem; background-color: #dddfeb; padding: 9px 4px 9px 4px; border-radius: 3px 3px 3px 3px;">
+                                style="height:2.2rem; margin-top:23px;font-size: 0.8rem; background-color: #dddfeb; padding: 9px 4px 9px 4px; border-radius: 3px 3px 3px 3px;">
                                 <table _ngcontent-nlx-c101="">
                                     <tbody>
                                         <tr _ngcontent-nlx-c101="">
@@ -108,7 +107,7 @@
                             </div>
 
                             <div class=""
-                                style="margin-top:5px; font-size: 0.8rem;background-color: #dddfeb;padding: 4px 4px 4px 4px;border-radius: 3px 3px 3px 3px;/* width: 141px; */">
+                                style="height:3.05rem; margin-top:5px; font-size: 0.8rem;background-color: #dddfeb;padding: 4px 4px 4px 4px;border-radius: 3px 3px 3px 3px;/* width: 141px; */">
                                 <table _ngcontent-nlx-c101="">
                                     <tbody>
                                         <tr _ngcontent-nlx-c101="">
@@ -124,7 +123,7 @@
                             </div>
 
                             <div class=""
-                                style="margin-top:5px; font-size: 0.8rem;background-color: #dddfeb;padding: 4px 4px 4px 4px;border-radius: 3px 3px 3px 3px;/* width: 141px; */">
+                                style="height:3.05rem; margin-top:5px; font-size: 0.8rem;background-color: #dddfeb;padding: 4px 4px 4px 4px;border-radius: 3px 3px 3px 3px;/* width: 141px; */">
                                 <table _ngcontent-nlx-c101="">
                                     <tbody>
                                         <tr _ngcontent-nlx-c101="">
@@ -146,13 +145,11 @@
                             </div>
                             <div style="border:2px solid #4e73df; margin-top: 5px; font-size: 0.8rem; color:white; background-color: #dddfeb; padding: 4px 4px 4px 4px; border-radius: 3px 3px 3px 3px; /* width: 141px;"
                                 _ngcontent-skt-c10 data-toggle="tooltip" data-placement="right"
-                                title="Save Pokémon in your Collection."><i class="fas fa-trophy" style="
+                                title="Save Pokémon in your Collection." (click)="getAllPokemons()"><i class="fas fa-trophy" style="
                                 font-size: 26px;
                             "></i>
                                 <table _ngcontent-skt-c101="" _ngcontent-nlx-c101=""></table>
                             </div>
-
-
                         </div>
                     </div>
                 </div>

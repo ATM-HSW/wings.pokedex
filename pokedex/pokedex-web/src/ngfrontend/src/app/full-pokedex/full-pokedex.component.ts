@@ -15,13 +15,17 @@ import { RestApiService } from "../shared/rest-api.service";
 
 
 export class FullPokedexComponent implements OnInit {
-  constructor(private http: HttpClient) { }
- // pokemons = [{ "types": ['abc', 'xyz'], "height": "", weight: "", "de" : "", "en" : "", "es" : "", "fr" : "", "it" : "", "ja" : "", "ko" : "" }];
-  pokemons : Pokemon[] = [];
+  constructor(private http: HttpClient, public restApi: RestApiService) {
+
+  }
+
+  // pokemons = [{ "types": ['abc', 'xyz'], "height": "", weight: "", "de" : "", "en" : "", "es" : "", "fr" : "", "it" : "", "ja" : "", "ko" : "" }];
+  pokemons: Pokemon[] = [];
   pokemons2: any;
   api: string = "https://pokeapi.co/api/v2/pokemon/?limit=400&offset=0"; //898
   textValue = ''; //initial value
   //categories : any = [];
+  pokemonCounter = 0;
 
 
   @HostListener('window:keyup', ['$event'])
@@ -33,109 +37,81 @@ export class FullPokedexComponent implements OnInit {
 
   }
 
-  fetchPokemonsFromPokeApi() {
-    const promise = new Promise<void>((resolve, reject) => {
-      const apiURL = this.api;
-      this.http
-        .get(apiURL)
-        .toPromise()
-        .then((res: any) => {
-          // Success
-          //console.log("fetchPokemonsFromPokeApi..!");
-          //this.pokemons = res.results;
-          for (let n = 0; n < res.results.length; n++) {
-            var pokemon = new Pokemon();
-            pokemon.de = res.results[0].name;
-            pokemon.url = res.results[0].url;
-            this.pokemons.push(pokemon);
-          }
-          document.getElementById("pokemonCounter")!.innerHTML = `${res.results.length}`;
-
-          resolve();
-          document.getElementById("full-pokedex-spinner")!.style.display = "none";
-        },
-          err => {
-            // Error
-            reject(err);
-          }
-        ).then((pokemons: any) => {
-          //console.log("START then..!");
-          let i = 0;
-          this.pokemons.forEach((pokemon: any) => {
-            i++;
-            const promise = new Promise<void>((resolve, reject) => {
-              const url = `https://pokeapi.co/api/v2/pokemon-species/${i}`;
-              this.http
-                .get(url)
-                .toPromise()
-                .then((pokemonPokeApi: any) => {
-                  //console.log("pokemonPokeApi 1");
-
-                  //console.log(pokemonPokeApi);
-                  // Success
-                  //pokemon = pokemonPokeApi; 
-                  // pokemon.dex = i;
-                  for (let n = 0; n < pokemonPokeApi.names.length; n++) {
-                    pokemon[pokemonPokeApi.names[n].language.name] = pokemonPokeApi.names[n].name;
-
-                    if (pokemonPokeApi.names[n].language.name.indexOf('de') > -1) {
-                      pokemon.name = pokemonPokeApi.names[n].name;
-                    }
-                  }
-
-                  //pokemon.de = pokemonPokeApi.weight;
-                  resolve();
-                },
-                  err => {
-                    // Error
-                    reject(err);
-                  }
-                );
-            });
-          });
-        }).then((pokemons: any) => {
-          //console.log("START then..!");
-          let i = 0;
-          this.pokemons.forEach((pokemon: any) => {
-            i++;
-            const promise = new Promise<void>((resolve, reject) => {
-              const url = `https://pokeapi.co/api/v2/pokemon/${i}`; ///https://pokeapi.co/api/v2/pokemon-species/${i}`;
-              this.http
-                .get(url)
-                .toPromise()
-                .then((pokemonPokeApi: any) => {
-                  //console.log("pokemonPokeApi 2");
-                  //console.log(pokemonPokeApi);
-                  let types: string[] = ['', '', '', '', '', ''];
-
-                  for (let n = 0; n < pokemonPokeApi.types.length; n++) {
-                    types[n] = pokemonPokeApi.types[n].type.name
-                  }
-                  pokemon.types = types;
-                  var height = parseFloat(pokemonPokeApi.height) / 10;
-                  pokemon.height = `${height} m`;
-                  var weight = parseFloat(pokemonPokeApi.weight) / 10;
-                  pokemon.weight = `${weight} kg`;
-                  // console.log("pokemon");
-                  //console.log(types);
-                  resolve();
-                },
-                  err => {
-                    // Error
-                    reject(err);
-                  }
-                );
-            });
-          });
-        });
-    });
-    return promise;
+  savePokemon(): void {
+    var data = this.restApi.getPokemons().subscribe((data: {}) => {
+      alert(data);
+    })
   }
 
-  updatePokemon() {
-    for (let i = 0; i < this.pokemons.length; i++) {
+  public getPokemonSpeciesDetails(pokemon: Pokemon) {
+    this.restApi.getPokemonSpeciesDetails(pokemon.dex).subscribe((data: any) => {
+      //set names
+      for (let n = 0; n < data.names.length; n++) {
+        let language: string = data.names[n].language.name;
+        let name: string = data.names[n].name;
+        switch (language) {
+          case "de":
+            pokemon.de = name;
+            break;
+          case "en":
+            pokemon.en = name;
+            break;
+          case "es":
+            pokemon.es = name;
+            break;
+          case "fr":
+            pokemon.fr = name;
+            break;
+          case "it":
+            pokemon.it = name;
+            break;
+          case "ja":
+            pokemon.ja = name;
+            break;
+          case "ko":
+            pokemon.ko = name;
+            break;
+          default:
+        }
+      }
+    });
+  }
 
-    }
+  public getPokemonDetails(pokemon: Pokemon) {
+    this.restApi.getPokemonDetails(pokemon.dex).subscribe((data: any) => {
+      //set types      
+      let types: string[] = ['', '', '', '', '', ''];
+      for (let n = 0; n < data.types.length; n++) {
+        types[n] = data.types[n].type.name
+      }
+      pokemon.types = types;
+      var height = parseFloat(data.height) / 10;
+      pokemon.height = `${height} m`;
+      var weight = parseFloat(data.weight) / 10;
+      pokemon.weight = `${weight} kg`
+    });
+  }
+
+  getAllPokemons() {
+    this.restApi.getAllPokemons().subscribe((data: any) => {
+      document.getElementById("full-pokedex-spinner")!.style.display = "none";
+      this.pokemonCounter = data.results.length
+      var counter: number;
+      for (var pokemonL1 of data.results!) {
+        var lcPokemon: Pokemon = new Pokemon();
+        lcPokemon.de = pokemonL1.name;
+        lcPokemon.url = pokemonL1.url;
+        var urlAr = pokemonL1.url.split("/");
+        lcPokemon.dex = urlAr[urlAr.length - 2];
+        this.pokemons.push(lcPokemon);
+      }
+      for (let i = 0; i < this.pokemons.length; i++) {
+        this.getPokemonSpeciesDetails(this.pokemons[i]);
+      }
+      for (let i = 0; i < this.pokemons.length; i++) {
+        this.getPokemonDetails(this.pokemons[i]);
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -146,7 +122,8 @@ export class FullPokedexComponent implements OnInit {
     // this.pokemons.push(pokemon);
 
     document.getElementById("full-pokedex-spinner")!.style.display = "block";
-    this.fetchPokemonsFromPokeApi();
+    //this.fetchPokemonsFromPokeApi();
+    this.getAllPokemons()
     //this.buildRegions();
   }
 
@@ -196,19 +173,14 @@ export class FullPokedexComponent implements OnInit {
 
   fetchPokemonData(pokemon: { url: any; }) {
     let url = pokemon.url // <--- this is saving the pokemon url to a      variable to us in a fetch.(Ex: https://pokeapi.co/api/v2/pokemon/1/)
-    //console.log("url: " + url);
-
     fetch(url)
       .then(response => response.json())
       .then((pokeData) => {
-        //console.log(pokeData);
         this.pokemons2.push(pokeData);
       })
   }
 
   switchShiny(event: any, dex: number) {
-    console.log(`witchShiny...${dex}`);
-    //document.getElementById(`img-pokemon-${dex}`)?.s
     var element = (document.getElementById(`img-pokemon-${dex}`) as HTMLImageElement);
     if (element.src.indexOf("shiny/") > -1) {
       element.src = element.src.replace("shiny/", "");
