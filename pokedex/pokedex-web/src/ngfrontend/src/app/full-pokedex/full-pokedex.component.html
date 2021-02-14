@@ -59,101 +59,144 @@
         <div id="full-pokedex-spinner" _ngcontent-nct-c101="" role="status" class="spinner-border"
             style="width: 5rem;height: 5rem;color: #4e73df; margin-left: 40px; margin-top:20px;"><span
                 _ngcontent-nct-c101="" class="sr-only">Loading...</span></div>
-        <div *ngFor="let pokemon of pokemons; index as i;"
-            class="col-xl-2 col-md-6 mb-4 filter-all filter-type-{{pokemon.types[0]}} filter-type-{{pokemon.types[1]}}"
-            (click)="markPokemon($event)">
-            <div
-                class="card border-left-primary shadow h-100 py-2 pokemons pokemon-{{pokemon.de}} pokemon-{{pokemon.en}} pokemon-{{pokemon.es}} pokemon-{{pokemon.fr}} pokemon-{{pokemon.it}} pokemon-{{pokemon.ja}} pokemon-{{pokemon.ko}}  pokemon-{{i+1}}">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="OFF__text-xs font-weight-bold text-primary OFF__text-uppercase mb-1"
-                                style="font-size:1.5rem;">
-                                <span class="language language_de">{{pokemon.de}}</span>
-                                <span class="language language_en" style="display:none;">{{pokemon.en}}</span>
-                                <span class="language language_es" style="display:none;">{{pokemon.es}}</span>
-                                <span class="language language_fr" style="display:none;">{{pokemon.fr}}</span>
-                                <span class="language language_it" style="display:none;">{{pokemon.it}}</span>
-                                <span class="language language_ja" style="display:none;">{{pokemon.ja}}</span>
-                                <span class="language language_ko" style="display:none;">{{pokemon.ko}}</span>
-                            </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800"><img id="img-pokemon-{{i+1}}" class="img-pokemon"
-                                    style="width:120px; height:7.5rem"
-                                    src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{i+1}}.png" />
-                            </div>
+        <div *ngFor="let pokemonVariants of pokemons; index as iV;">
+            <div *ngFor="let pokemon of pokemonVariants; index as i;">
+                <!-- <ng-template [ngIf]="pokemon"> -->
 
-                            <div _ngcontent-nlx-c101="" _ngcontent-rgn-c101=""
-                                class="OFF__text-xs font-weight-bold text-primary OFF__text-uppercase mb-1"
-                                style="height:2.2rem; margin-top:23px;font-size: 0.8rem; background-color: #dddfeb; padding: 9px 4px 9px 4px; border-radius: 3px 3px 3px 3px;">
-                                <table _ngcontent-nlx-c101="">
-                                    <tbody>
-                                        <tr _ngcontent-nlx-c101="">
-                                            <td _ngcontent-nlx-c101="">Type: </td>
-                                            <td _ngcontent-nlx-c101=""></td>
-                                            <td _ngcontent-nlx-c101="">{{pokemon.types[0]}}&nbsp;&nbsp;{{pokemon.types[1]}}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="col-auto" style="text-align: center;height: 231px; color:#4e73df">
-                            <!-- #{{i+1}} <br><br>
+
+                <div class="col-xl-2 col-md-6 mb-4 pokemons pokemon-{{pokemon.de}} pokemon-{{pokemon.en}} pokemon-{{pokemon.es}} pokemon-{{pokemon.fr}} pokemon-{{pokemon.it}} pokemon-{{pokemon.ja}} pokemon-{{pokemon.ko}}  pokemon-{{pokemon.dex}} filter-all filter-type-{{pokemon.types[0]}} filter-type-{{pokemon.types[1]}} fiter-shiny-{{pokemon.shiny}}"
+                    (click)="markPokemon($event)">
+                    <div
+                        class="card border-left-primary shadow h-100 py-2 ">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="OFF__text-xs font-weight-bold text-primary OFF__text-uppercase mb-1"
+                                        style="font-size:1.5rem;">
+                                        <span class="language language_de">{{pokemon.de}}</span>
+                                        <span class="language language_en" style="display:none;">{{pokemon.en}}</span>
+                                        <span class="language language_es" style="display:none;">{{pokemon.es}}</span>
+                                        <span class="language language_fr" style="display:none;">{{pokemon.fr}}</span>
+                                        <span class="language language_it" style="display:none;">{{pokemon.it}}</span>
+                                        <span class="language language_ja" style="display:none;">{{pokemon.ja}}</span>
+                                        <span class="language language_ko" style="display:none;">{{pokemon.ko}}</span>
+                                    </div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800"><img id="img-pokemon-{{pokemon.dex}}"
+                                            class="img-pokemon" style="width:120px; height:7.5rem"
+                                            src="{{pokemon.url_front}}" />
+                                    </div>
+
+                                    <div _ngcontent-nlx-c101="" _ngcontent-rgn-c101=""
+                                        class="OFF__text-xs font-weight-bold text-primary OFF__text-uppercase mb-1"
+                                        style="height:2.2rem; margin-top:23px;font-size: 0.8rem; background-color: #dddfeb; padding: 9px 4px 9px 4px; border-radius: 3px 3px 3px 3px;">
+                                        <table _ngcontent-nlx-c101="">
+                                            <tbody>
+                                                <tr _ngcontent-nlx-c101="">
+                                                    <td _ngcontent-nlx-c101="">Type: </td>
+                                                    <td _ngcontent-nlx-c101=""></td>
+                                                    <td _ngcontent-nlx-c101="">
+                                                        {{pokemon.types[0]}}&nbsp;&nbsp;{{pokemon.types[1]}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-auto" style="text-align: center;height: 231px; color:#4e73df">
+                                    <!-- #{{i+1}} <br><br>
                             <i class="fas fa-calendar fa-2x text-gray-300"></i><br><br>
                             <i class="fas fa-calendar fa-2x text-gray-300"></i> -->
 
-                            <div class=""
-                                style=" font-weight:bold; font-size: 0.8rem;background-color: #4e73df; color:white; padding: 4px 4px 4px 4px;border-radius: 3px 3px 3px 3px;/* width: 141px; */">
-                                #{{i+1}}
-                            </div>
+                                    <div class=""
+                                        style=" font-weight:bold; font-size: 0.8rem;background-color: #4e73df; color:white; padding: 4px 4px 4px 4px;border-radius: 3px 3px 3px 3px;/* width: 141px; */">
+                                        #{{pokemon.dex}}
+                                    </div>
 
-                            <div class=""
-                                style="height:3.05rem; margin-top:5px; font-size: 0.8rem;background-color: #dddfeb;padding: 4px 4px 4px 4px;border-radius: 3px 3px 3px 3px;/* width: 141px; */">
-                                <table _ngcontent-nlx-c101="">
-                                    <tbody>
-                                        <tr _ngcontent-nlx-c101="">
-                                            <td _ngcontent-nlx-c101="">Height </td>
+                                    <div class=""
+                                        style="height:3.05rem; margin-top:5px; font-size: 0.8rem;background-color: #dddfeb;padding: 4px 4px 4px 4px;border-radius: 3px 3px 3px 3px;/* width: 141px; */">
+                                        <table _ngcontent-nlx-c101="">
+                                            <tbody>
+                                                <tr _ngcontent-nlx-c101="">
+                                                    <td _ngcontent-nlx-c101="">Height </td>
 
-                                        </tr>
-                                        <tr _ngcontent-nlx-c101="">
-                                            <td _ngcontent-nlx-c101="">{{pokemon.height}} </td>
+                                                </tr>
+                                                <tr _ngcontent-nlx-c101="">
+                                                    <td _ngcontent-nlx-c101="">{{pokemon.height}} </td>
 
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
 
-                            <div class=""
-                                style="height:3.05rem; margin-top:5px; font-size: 0.8rem;background-color: #dddfeb;padding: 4px 4px 4px 4px;border-radius: 3px 3px 3px 3px;/* width: 141px; */">
-                                <table _ngcontent-nlx-c101="">
-                                    <tbody>
-                                        <tr _ngcontent-nlx-c101="">
-                                            <td _ngcontent-nlx-c101="">Weight</td>
+                                    <div class=""
+                                        style="height:3.05rem; margin-top:5px; font-size: 0.8rem;background-color: #dddfeb;padding: 4px 4px 4px 4px;border-radius: 3px 3px 3px 3px;/* width: 141px; */">
+                                        <table _ngcontent-nlx-c101="">
+                                            <tbody>
+                                                <tr _ngcontent-nlx-c101="">
+                                                    <td _ngcontent-nlx-c101="">Weight</td>
 
-                                        </tr>
-                                        <tr _ngcontent-nlx-c101="">
-                                            <td _ngcontent-nlx-c101="">{{pokemon.weight}} </td>
+                                                </tr>
+                                                <tr _ngcontent-nlx-c101="">
+                                                    <td _ngcontent-nlx-c101="">{{pokemon.weight}} </td>
 
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div style="margin-top: 6px; font-size: 0.8rem; color:white; background-color: #dddfeb; padding: 4px 4px 4px 4px; border-radius: 3px 3px 3px 3px; /* width: 141px;"
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div _ngcontent-vok-c101="" _ngcontent-skt-c101="" data-toggle="tooltip"
+                                        data-placement="right" title=""
+                                        style="margin-top: 6px; font-size: 0.8rem; color: white; background-color: #dddfeb; padding: 4px 4px 4px 4px; border-radius: 3px 3px 3px 3px;"
+                                        title=" Switch to shiny Pokémon." aria-describedby="tooltip380332"><i
+                                            _ngcontent-vok-c101="" class="far fa-star"
+                                            style="font-size: 26px;color: white;" data-original-title="" title=""></i><i
+                                            class="fas fa-check" data-original-title="" title="" style="
+                                color: white;font-size: 16px; text-align: right
+                            "></i>
+                                        <table _ngcontent-vok-c101="" _ngcontent-skt-c101="" _ngcontent-nlx-c101="">
+                                        </table>
+                                    </div>
+
+                                    <!-- <div style="margin-top: 6px; font-size: 0.8rem; color:white; background-color: #dddfeb; padding: 4px 4px 4px 4px; border-radius: 3px 3px 3px 3px; /* width: 141px;"
                                 _ngcontent-skt-c101="" data-toggle="tooltip" data-placement="right"
                                 title="Switch to shiny Pokémon."><i class="fas fa-sun" style="font-size: 26px;"
                                     (click)="switchShiny($event, (i+1))"></i>
                                 <table _ngcontent-skt-c101="" _ngcontent-nlx-c101=""></table>
-                            </div>
-                            <div style="border:2px solid #4e73df; margin-top: 5px; font-size: 0.8rem; color:white; background-color: #dddfeb; padding: 4px 4px 4px 4px; border-radius: 3px 3px 3px 3px; /* width: 141px;"
+                            </div> -->
+
+                                    <div _ngcontent-vok-c101="" _ngcontent-skt-c10="" data-toggle="tooltip"
+                                        (click)="getUsersPokemons()" data-placement="right" title=""
+                                        style="border: 2px solid #4e73df; margin-top: 5px; font-size: 0.8rem; color: white; background-color: #dddfeb; padding: 4px 4px 4px 4px; border-radius: 3px 3px 3px 3px;"
+                                        title="Save Pokémon in your Collection."><i _ngcontent-vok-c101=""
+                                            class="fas fa-map-marker-alt"
+                                            style="font-size: 26px;color: #4e73df;margin-right: 4px;" title=""></i><i
+                                            class="fas fa-check" title="" style="
+                                color: white;
+                                text-align: right;font-size: 16px;"></i>
+                                        <table _ngcontent-vok-c101="" _ngcontent-skt-c101="" _ngcontent-nlx-c101="">
+                                        </table>
+                                    </div>
+
+                                    <!-- <div style="border:2px solid #4e73df; margin-top: 5px; font-size: 0.8rem; color:white; background-color: #dddfeb; padding: 4px 4px 4px 4px; border-radius: 3px 3px 3px 3px; /* width: 141px;"
                                 _ngcontent-skt-c10 data-toggle="tooltip" data-placement="right"
-                                title="Save Pokémon in your Collection." (click)="getAllPokemons()"><i class="fas fa-trophy" style="
+                                title="Save Pokémon in your Collection." (click)="getUsersPokemons()"><i
+                                    class="fas fa-trophy" style="
                                 font-size: 26px;
                             "></i>
                                 <table _ngcontent-skt-c101="" _ngcontent-nlx-c101=""></table>
+                            </div>  -->
+                                </div>
                             </div>
+                            <a href="#" class="btn btn-facebook btn-block"><i class="fas fa-plus"
+                                    style="font-size: 20px; color:white" data-original-title=""
+                                    title=""></i>&nbsp;&nbsp;Add
+                                To
+                                Collection</a>
                         </div>
+
                     </div>
                 </div>
+                <!-- </ng-template> -->
             </div>
+            <!-- {{this.pokemon}}</li> -->
         </div>
-        <!-- {{this.pokemon}}</li> -->
     </div>
+</div>

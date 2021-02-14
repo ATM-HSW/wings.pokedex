@@ -38,7 +38,7 @@ export class RestApiService {
   }
 
   public getAllPokemons() {
-    return this.httpClient.get(`https://pokeapi.co/api/v2/pokemon/?limit=400&offset=0`);
+    return this.httpClient.get(`https://pokeapi.co/api/v2/pokemon/?limit=100&offset=0`); //898
   }
 
   public getPokemonSpeciesDetails(dex : string | any) { 
@@ -47,6 +47,11 @@ export class RestApiService {
 
   public getPokemonDetails(dex : string | any) { 
     return this.httpClient.get(`https://pokeapi.co/api/v2/pokemon/${dex}`);
+  }
+
+  public getUsersPokemons() {
+    return this.httpClient.get(`api/v1/users/pokemons`); //http://localhost:8080/pokedex-web/
+
   }
 
   // public fetchPokemonFromPokeApi(pokemons: any) {

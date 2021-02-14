@@ -16,13 +16,15 @@ import { RestApiService } from "../shared/rest-api.service";
 
 export class FullPokedexComponent implements OnInit {
   constructor(private http: HttpClient, public restApi: RestApiService) {
-
+    this.pokemons = new Array<Array<Pokemon>>()
   }
 
   // pokemons = [{ "types": ['abc', 'xyz'], "height": "", weight: "", "de" : "", "en" : "", "es" : "", "fr" : "", "it" : "", "ja" : "", "ko" : "" }];
-  pokemons: Pokemon[] = [];
+  pokemons!: Pokemon[][]; 
+
+  usersPokemons: Pokemon[] = [];
   pokemons2: any;
-  api: string = "https://pokeapi.co/api/v2/pokemon/?limit=400&offset=0"; //898
+  api: string = "https://pokeapi.co/api/v2/pokemon/?limit=898&offset=0"; //898
   textValue = ''; //initial value
   //categories : any = [];
   pokemonCounter = 0;
@@ -77,9 +79,12 @@ export class FullPokedexComponent implements OnInit {
     });
   }
 
-  public getPokemonDetails(pokemon: Pokemon) {
+  public setPokemonDetails(pokemon: Pokemon, index : number) {
     this.restApi.getPokemonDetails(pokemon.dex).subscribe((data: any) => {
-      //set types      
+      //set types    
+      //console.log(data);
+  
+
       let types: string[] = ['', '', '', '', '', ''];
       for (let n = 0; n < data.types.length; n++) {
         types[n] = data.types[n].type.name
@@ -89,10 +94,25 @@ export class FullPokedexComponent implements OnInit {
       pokemon.height = `${height} m`;
       var weight = parseFloat(data.weight) / 10;
       pokemon.weight = `${weight} kg`
+      pokemon.url_front = data.sprites.front_default;
+      
+      //set and add shiny pokemon version
+      try {
+        let pokemonShiny : Pokemon = Object.assign({}, pokemon);
+        if(data.sprites.front_shiny != null) {
+          pokemonShiny.url_front = data.sprites.front_shiny;
+          pokemonShiny.shiny = true;
+          this.pokemons[index].push(pokemonShiny);
+        }       
+      } catch(e) {
+        console.log("No shiny exists: " + pokemon.dex);
+      }
     });
   }
 
   getAllPokemons() {
+    //this.pokemons = [898][2]; 
+
     this.restApi.getAllPokemons().subscribe((data: any) => {
       document.getElementById("full-pokedex-spinner")!.style.display = "none";
       this.pokemonCounter = data.results.length
@@ -103,16 +123,48 @@ export class FullPokedexComponent implements OnInit {
         lcPokemon.url = pokemonL1.url;
         var urlAr = pokemonL1.url.split("/");
         lcPokemon.dex = urlAr[urlAr.length - 2];
-        this.pokemons.push(lcPokemon);
+        let lcAr = new Array();
+        lcAr.push(lcPokemon);
+        this.pokemons.push(lcAr);
+        //this.pokemons[this.pokemons.length - 1][0] = lcPokemon;
       }
       for (let i = 0; i < this.pokemons.length; i++) {
-        this.getPokemonSpeciesDetails(this.pokemons[i]);
+        this.setPokemonDetails(this.pokemons[i][0], i);
       }
       for (let i = 0; i < this.pokemons.length; i++) {
-        this.getPokemonDetails(this.pokemons[i]);
+        this.getPokemonSpeciesDetails(this.pokemons[i][0]);
       }
+      
+      console.log(this.pokemons);
     });
   }
+
+  getUsersPokemons() {
+    //console.log("getUsersPokemons.");
+    this.restApi.getUsersPokemons().subscribe((data: any) => {
+      this.usersPokemons = data;
+      //console.log(this.usersPokemons);
+      
+      // document.getElementById("full-pokedex-spinner")!.style.display = "none";
+      // this.pokemonCounter = data.results.length
+      // var counter: number;
+      // for (var pokemonL1 of data.results!) {
+      //   var lcPokemon: Pokemon = new Pokemon();
+      //   lcPokemon.de = pokemonL1.name;
+      //   lcPokemon.url = pokemonL1.url;
+      //   var urlAr = pokemonL1.url.split("/");
+      //   lcPokemon.dex = urlAr[urlAr.length - 2];
+      //   this.pokemons.push(lcPokemon);
+      // }
+      // for (let i = 0; i < this.pokemons.length; i++) {
+      //   this.getPokemonSpeciesDetails(this.pokemons[i]);
+      // }
+      // for (let i = 0; i < this.pokemons.length; i++) {
+      //   this.getPokemonDetails(this.pokemons[i]);
+      // }
+    });
+  }
+  
 
   ngOnInit(): void {
     // var pokemon = Object();
