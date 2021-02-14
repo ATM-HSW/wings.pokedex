@@ -5,3 +5,7 @@
 .col-xl-2 {
     min-width: 19rem !important;
 }
+
+.fiter-shiny-true {
+    display:none;
+}

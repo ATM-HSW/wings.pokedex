@@ -1,6 +1,6 @@
 export class Pokemon {
     dex: string | undefined;
-    shiny: boolean | undefined;
+    shiny: boolean = false;
     de: string | undefined;
     en: string | undefined;
     fr: string | undefined;
@@ -12,6 +12,7 @@ export class Pokemon {
     height = '';
     weight = '';
     url: string | undefined;
+    url_front: string | undefined;
 }
 
 
