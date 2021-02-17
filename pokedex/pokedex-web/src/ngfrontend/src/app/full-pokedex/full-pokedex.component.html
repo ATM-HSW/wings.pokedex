@@ -52,7 +52,7 @@
 <div class="container-fluid" onmouseenter="$('i,btn,a').tooltip();">
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800"><span id="">{{pokemonCounter}}</span> Pokémon</h1>
+        <h1 class="h3 mb-0 text-gray-800"><span id="pokemonCounter">{{pokemonCounter}}</span> Pokémon</h1>
     </div>
     <div class="row">
         <div id="full-pokedex-spinner" _ngcontent-nct-c101="" role="status" class="spinner-border"
@@ -60,7 +60,7 @@
                 _ngcontent-nct-c101="" class="sr-only">Loading...</span></div>
         <ng-container *ngFor="let pokemonVariants of pokemons; index as iV;">
             <div *ngFor="let pokemon of pokemonVariants; index as i;"
-                class="col-xl-2 col-md-6 mb-4 pokemons pokemon-{{pokemon.de}} pokemon-{{pokemon.en}} pokemon-{{pokemon.es}} pokemon-{{pokemon.fr}} pokemon-{{pokemon.it}} pokemon-{{pokemon.ja}} pokemon-{{pokemon.ko}}  pokemon-{{pokemon.dex}} filter-all filter-type-{{pokemon.types[0]}} filter-type-{{pokemon.types[1]}} fiter-shiny-{{pokemon.shiny}}"
+                class="col-xl-2 col-md-6 mb-4 pokemons pokemon-{{pokemon.de}} pokemon-{{pokemon.en}} pokemon-{{pokemon.es}} pokemon-{{pokemon.fr}} pokemon-{{pokemon.it}} pokemon-{{pokemon.ja}} pokemon-{{pokemon.ko}}  pokemon-{{pokemon.dex}} filter-all filter-type-{{pokemon.types[0]}} filter-type-{{pokemon.types[1]}} fiter-shiny-{{pokemon.shiny}}  fiter-region-{{pokemon.region}}"
                 (click)="markPokemon($event)">
                 <div class="card border-left-primary shadow h-100 py-2 ">
                     <div class="card-body">
@@ -118,11 +118,9 @@
                                         <tbody>
                                             <tr _ngcontent-nlx-c101="">
                                                 <td _ngcontent-nlx-c101="">Height </td>
-
                                             </tr>
                                             <tr _ngcontent-nlx-c101="">
                                                 <td _ngcontent-nlx-c101="">{{pokemon.height}} </td>
-
                                             </tr>
                                         </tbody>
                                     </table>
@@ -141,15 +139,14 @@
                                     </table>
                                 </div>
                                 <ng-template [ngIf]="pokemon.shiny" [ngIfElse]="notShiny2">
-                                    <a href="#" style="height:2.4rem; margin-top: 5px;"
-                                        class="btn btn-facebook btn-block" data-placement="right"
-                                        title="Hide Shiny Pokémon!"> <i class="fas fa-times-circle"
-                                            style="font-size:18px;"></i></a>
+                                            <button style="height:2.4rem; margin-top: 5px;" data-placement="right" (click)="toggleShiny('.fiter-shiny-true.pokemon-' + pokemon.dex)" 
+                                            class="btn btn-facebook btn-block" title="Hide Shiny Pokémon!"> <i 
+                                                class="fas fa-times-circle" style="font-size:18px;"></i></button>
                                 </ng-template>
                                 <ng-template #notShiny2>
-                                    <a href="#" style="height:2.4rem; margin-top: 5px;" data-placement="right"
-                                        class="btn btn-facebook btn-block" title="Show Shiny Pokémon!"> <i
-                                            class="fas fa-star" style="font-size:18px;"></i></a>
+                                    <button style="height:2.4rem; margin-top: 5px;" data-placement="right" (click)="toggleShiny('.fiter-shiny-true.pokemon-' + pokemon.dex)"
+                                        class="btn btn-facebook btn-block" title="Show Shiny Pokémon!"> <i 
+                                            class="fas fa-star" style="font-size:18px;"></i></button>
                                 </ng-template>
                             </div>
                         </div>

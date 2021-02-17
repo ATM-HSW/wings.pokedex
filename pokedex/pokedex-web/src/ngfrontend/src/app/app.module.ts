@@ -17,7 +17,7 @@ import { FullPokedexComponent } from './full-pokedex/full-pokedex.component';
     AppComponent,
     UserEditComponent,
     UserPokemonsComponent,
-    FullPokedexComponent,
+    FullPokedexComponent
   ],
   imports: [
     BrowserModule,

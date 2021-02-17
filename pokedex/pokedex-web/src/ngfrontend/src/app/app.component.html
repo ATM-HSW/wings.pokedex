@@ -14,70 +14,7 @@
             <div class="sidebar-brand-text mx-3 pokemon-font" style="margin: 0 0 0 0rem !important; font-size:22px">
                 MyPokédex</div>
         </a>
-
-        <!-- Nav Item - Full Pokedex -->
-        <li class="nav-item active">
-            <a class="nav-link filter" [routerLink]="" data-filterclass="filter-all" (click)="fullPokedex()">
-                <!-- ,'filter-all' -->
-                <i style="font-size:23px;" class="fas fa-globe"></i>&nbsp;
-                <span>Full Pokedex</span> 
-            </a>
-        </li>
-        <hr class="sidebar-divider">
-
         <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item active">
-            <a class="nav-link collapsed" id="a-filter" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                aria-expanded="true" aria-controls="collapseTwo">
-                <i style="font-size:22px;" class="fas fa-filter"></i>&nbsp;
-                <span>Filter</span></a>
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" [routerLink]="">My Collection</a> 
-                </div>
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" [routerLink]="" (click)="switchShinyAll($event)">Shiny</a>
-                </div>
-
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Type</h6>
-                    <a *ngFor="let type of types; index as i;" class="collapse-item filter" [routerLink]=""
-                        (click)="filterPokemons($event, false)" [attr.data-filterclass]="type.class">{{type!.name}}</a>
-                </div>
-
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Region</h6>
-                    <a *ngFor="let region of pokedexRegions; index as i;" class="collapse-item filter" [routerLink]=""
-                        (click)="filterByRegion($event)" [attr.data-filterclass]="region.url">{{region!.name}}</a>
-                </div>
-            </div>
-        </li>
-
-        <!-- Divider
-        <hr class="sidebar-divider my-0">
-
-        <li class="nav-item active">
-            <a class="nav-link" [routerLink]="['/full-pokedex']">
-                <i style="font-size:23px;" class="fas fa-globe"></i>&nbsp;
-                <span>Pokedex</span></a>
-        </li>
-
-        <hr class="sidebar-divider">
-        <li class="nav-item active">
-            <a class="nav-link" [routerLink]="['/user-pokemons']">
-                <i style="font-size:20px;" class="fas fa-trophy"></i>&nbsp;
-                <span>My Collection</span></a>
-        </li>
-
-        <hr class="sidebar-divider">
-        <li class="nav-item active">
-            <a class="nav-link" [routerLink]="['/user-edit']">
-                <i style="font-size:20px;" class="fas fa-wrench"></i>&nbsp;
-                <span>Einstellungen</span></a>
-        </li>
-    -->
-        <!-- Divider -->
-        <hr class="sidebar-divider">
         <li class="nav-item active ">
             <a id="langChange" class="nav-link collapsed" href="#" data-toggle="collapse" aria-expanded="false"
                 data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
@@ -114,18 +51,58 @@
                 </div>
             </div>
         </li>
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
+        <li class="nav-item active">
+            <a class="nav-link " id="a-filter" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                aria-expanded="true" aria-controls="collapseTwo">
+                <i style="font-size:22px;" class="fas fa-filter"></i>&nbsp;
+                <span>Filter</span></a>
+            <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item filter" data-filterclass="filter-all" [routerLink]=""
+                        (click)="globalFunctions.toggleSelection(true, $event)"><i class="fas fa-globe"></i>&nbsp;
+                        Full Pokedex</a>
+                </div>
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item filter" [routerLink]=""><i class="fas fa-dot-circle"></i>&nbsp; My Collection</a>
+                </div>
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item filter selected" [routerLink]="" data-filterclass="fiter-shiny-false"
+                        (click)="globalFunctions.toggleSelection(false, $event)"><i class="fas fa-map-marker"></i>&nbsp;
+                        Regular</a>
+                    <a class="collapse-item filter" [routerLink]="" data-filterclass="fiter-shiny-true"
+                        (click)="globalFunctions.toggleSelection(false, $event)"><i class="fas fa-star"></i>&nbsp;
+                        Shiny</a>
+                </div>
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h1 class="collapse-header" style="font-size:0.9rem">Type</h1>
+                    <a *ngFor="let type of types; index as i;" class="collapse-item filter" [routerLink]=""
+                        (click)="globalFunctions.toggleSelection(false, $event)"
+                        [attr.data-filterclass]="type.class">{{type!.name}}</a>
+                </div>
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h2 class="collapse-header"  style="font-size:0.9rem">Region</h2> 
+                    <a *ngFor="let region of pokedexRegions; index as i;" class="collapse-item filter" [routerLink]=""
+                        (click)="filterByRegion($event)" [attr.data-filterclass]="region.url">{{region!.name}}</a>
+                    <!-- <a *ngFor="let region of pokedexRegions; index as i;" class="collapse-item filter" [routerLink]=""
+                        (click)="globalFunctions.toggleSelection('.' + region!.name, true)"
+                        [attr.data-filterclass]="region.url">{{region!.name}}</a>-->
+                </div>
+            </div>
+        </li>
     </ul>
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
-
         <!-- Main Content -->
         <div id="content">
             <router-outlet></router-outlet>
         </div>
         <!-- End of Main Content -->
-
         <!-- Footer -->
         <footer class="sticky-footer bg-white">
             <div class="container my-auto">
@@ -135,10 +112,8 @@
             </div>
         </footer>
         <!-- End of Footer -->
-
     </div>
     <!-- End of Content Wrapper -->
-
 </div>
 <!-- End of Page Wrapper -->
 

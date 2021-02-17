@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { HostListener } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { GlobalFunctionsService } from '../shared/global-functions.service';
 import { Pokemon } from '../shared/pokemon';
 import { RestApiService } from "../shared/rest-api.service";
 
@@ -15,13 +16,12 @@ import { RestApiService } from "../shared/rest-api.service";
 
 
 export class FullPokedexComponent implements OnInit {
-  constructor(private http: HttpClient, public restApi: RestApiService) {
+  constructor(private http: HttpClient, public restApi: RestApiService, public globalFunctions: GlobalFunctionsService) {
     this.pokemons = new Array<Array<Pokemon>>()
   }
 
   // pokemons = [{ "types": ['abc', 'xyz'], "height": "", weight: "", "de" : "", "en" : "", "es" : "", "fr" : "", "it" : "", "ja" : "", "ko" : "" }];
-  pokemons!: Pokemon[][]; 
-
+  pokemons!: Pokemon[][];
   usersPokemons: Pokemon[] = [];
   pokemons2: any;
   api: string = "https://pokeapi.co/api/v2/pokemon/?limit=898&offset=0"; //898
@@ -35,8 +35,6 @@ export class FullPokedexComponent implements OnInit {
     if (event.key === "Escape") {
       this.newSearch();
     }
-
-
   }
 
   savePokemon(): void {
@@ -51,6 +49,7 @@ export class FullPokedexComponent implements OnInit {
       for (let n = 0; n < data.names.length; n++) {
         let language: string = data.names[n].language.name;
         let name: string = data.names[n].name;
+        name = name.charAt(0).toUpperCase() + name.slice(1);
         switch (language) {
           case "de":
             pokemon.de = name;
@@ -79,11 +78,11 @@ export class FullPokedexComponent implements OnInit {
     });
   }
 
-  public setPokemonDetails(pokemon: Pokemon, index : number) {
+  public setPokemonDetails(pokemon: Pokemon, index: number) {
     this.restApi.getPokemonDetails(pokemon.dex).subscribe((data: any) => {
       //set types    
       //console.log(data);
-  
+
 
       let types: string[] = ['', '', '', '', '', ''];
       for (let n = 0; n < data.types.length; n++) {
@@ -95,16 +94,16 @@ export class FullPokedexComponent implements OnInit {
       var weight = parseFloat(data.weight) / 10;
       pokemon.weight = `${weight} kg`
       pokemon.url_front = data.sprites.front_default;
-      
+
       //set and add shiny pokemon version
       try {
-        let pokemonShiny : Pokemon = Object.assign({}, pokemon);
-        if(data.sprites.front_shiny != null) {
+        let pokemonShiny: Pokemon = Object.assign({}, pokemon);
+        if (data.sprites.front_shiny != null) {
           pokemonShiny.url_front = data.sprites.front_shiny;
           pokemonShiny.shiny = true;
           this.pokemons[index].push(pokemonShiny);
-        }       
-      } catch(e) {
+        }
+      } catch (e) {
         console.log("No shiny exists: " + pokemon.dex);
       }
     });
@@ -119,7 +118,7 @@ export class FullPokedexComponent implements OnInit {
       var counter: number;
       for (var pokemonL1 of data.results!) {
         var lcPokemon: Pokemon = new Pokemon();
-        lcPokemon.de = pokemonL1.name;
+        lcPokemon.de = pokemonL1.name.charAt(0).toUpperCase() + pokemonL1.name.slice(1);
         lcPokemon.url = pokemonL1.url;
         var urlAr = pokemonL1.url.split("/");
         lcPokemon.dex = urlAr[urlAr.length - 2];
@@ -134,7 +133,7 @@ export class FullPokedexComponent implements OnInit {
       for (let i = 0; i < this.pokemons.length; i++) {
         this.getPokemonSpeciesDetails(this.pokemons[i][0]);
       }
-      
+
       console.log(this.pokemons);
     });
   }
@@ -144,7 +143,7 @@ export class FullPokedexComponent implements OnInit {
     this.restApi.getUsersPokemons().subscribe((data: any) => {
       this.usersPokemons = data;
       //console.log(this.usersPokemons);
-      
+
       // document.getElementById("full-pokedex-spinner")!.style.display = "none";
       // this.pokemonCounter = data.results.length
       // var counter: number;
@@ -164,7 +163,7 @@ export class FullPokedexComponent implements OnInit {
       // }
     });
   }
-  
+
 
   ngOnInit(): void {
     // var pokemon = Object();
@@ -179,12 +178,6 @@ export class FullPokedexComponent implements OnInit {
     //this.buildRegions();
   }
 
-  // fetchSpecies(pokemons: any) {
-  //   fetch('https://pokeapi.co/api/v2/pokemon/?limit=898&offset=0') //898
-  //     .then(response => response.json())
-  //     .then(pokemon => console.log("pokemon: " + pokemon))
-  //     .catch(error => console.error('error:', error));
-  // }
   searchByNrName(value: string): void {
     document.querySelectorAll('.pokemons').forEach(element => element.classList.remove('pokemon-selected'));
 
@@ -193,19 +186,25 @@ export class FullPokedexComponent implements OnInit {
       alert("Bitte geben Sie den Namen oder die Nummer des Pokémon ein!")
       return;
     }
-    value = value;
-    var element;
 
-    element = document.getElementsByClassName("pokemon-" + value)[0];
-    if (element != null) {
-      if (element.closest(".filter-all")!.classList.contains("hidden")) {
-        alert("Der gesuchte Pokémon wird durch Ihre Filter ausgeblendet!");
-        return;
+    var allHidden = true;
+    var selection = document.querySelectorAll(".pokemon-" + value);
+
+    selection.forEach(element => {
+      if (!element.classList.contains("hidden")) {
+        allHidden = false;
+        element.classList.add("pokemon-selected");
+        const yOffset = -20;
+        const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: y, behavior: 'smooth' })
       }
-      element.classList.add("pokemon-selected");
-      const yOffset = -20;
-      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: 'smooth' })
+      element.classList.add('pokemon-selected');
+    });
+
+    if (selection.length > 0) {
+      if (allHidden) {
+        alert("Der gesuchte Pokémon wird durch Ihre Filter ausgeblendet!");
+      }
     } else {
       alert("Zu dem Namen oder der Nummer wurde keine Pokémon gefunden.")
     }
@@ -219,8 +218,10 @@ export class FullPokedexComponent implements OnInit {
   }
 
   markPokemon(event: any): void {
-    document.querySelectorAll('.pokemons').forEach(element => element.classList.remove('pokemon-selected'));
-    event.srcElement.closest(".pokemons").classList.add('pokemon-selected');
+    if (!event.srcElement.closest(".pokemons").classList.contains('pokemon-selected')) {
+      document.querySelectorAll('.pokemons').forEach(element => element.classList.remove('pokemon-selected'));
+      event.srcElement.closest(".pokemons").classList.add('pokemon-selected');
+    }
   }
 
   fetchPokemonData(pokemon: { url: any; }) {
@@ -232,14 +233,14 @@ export class FullPokedexComponent implements OnInit {
       })
   }
 
-  switchShiny(event: any, dex: number) {
-    var element = (document.getElementById(`img-pokemon-${dex}`) as HTMLImageElement);
-    if (element.src.indexOf("shiny/") > -1) {
-      element.src = element.src.replace("shiny/", "");
-      event.srcElement.style.color = "white";
-    } else {
-      element.src = element.src.replace("pokemon/", "pokemon/shiny/");
-      event.srcElement.style.color = "#4e73df";
-    }
+  toggleShiny(pSelector: any) {
+    document.querySelectorAll(pSelector).forEach(element => {
+      if (element.classList.contains('hidden')) {
+        element.classList.remove('hidden');
+        element.classList.add('pokemon-selected');
+      } else {
+        element.classList.add('hidden');        
+      }
+    });
   }
 }

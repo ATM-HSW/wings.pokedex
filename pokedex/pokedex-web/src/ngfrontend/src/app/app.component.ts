@@ -1,6 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AngularFaviconService } from 'angular-favicon';
 import { HttpClient } from '@angular/common/http';
+import { FullPokedexComponent } from './full-pokedex/full-pokedex.component';
+import { GlobalFunctionsService } from './shared/global-functions.service';
+
 
 @Component({
   selector: 'app-root',
@@ -11,7 +14,7 @@ import { HttpClient } from '@angular/common/http';
 export class AppComponent implements OnInit {
   types: any = [];
 
-  constructor(private ngxFavicon: AngularFaviconService, private http: HttpClient) { }
+  constructor(private ngxFavicon: AngularFaviconService, private http: HttpClient, public globalFunctions : GlobalFunctionsService) { }
   ngOnInit(): void {
     this.ngxFavicon.setFavicon("favicon.png");
     this.getTypes();
@@ -187,6 +190,17 @@ export class AppComponent implements OnInit {
       });
     }
   }
+
+  //  toggleSelection(pClass : String | undefined, reset : Boolean) {
+  //   //document.querySelectorAll(`${pClass}`)[0].classList.toggle('hidden');
+  //   if(reset) {
+  //     document.querySelectorAll('.filter-all').forEach(element => element.classList.add('hidden'));
+  //   }
+  //   document.querySelectorAll(`${pClass}`).forEach(element => element.classList.toggle('hidden'));
+  //   //this.pokemonCounter = document.querySelectorAll('.filter-all').length - document.querySelectorAll('.filter-all.hidden').length;
+
+  //   //alert(pClass);
+  // }
 }
 
 

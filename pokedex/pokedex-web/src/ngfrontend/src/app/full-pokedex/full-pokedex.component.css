@@ -6,6 +6,10 @@
     min-width: 19rem !important;
 }
 
-.fiter-shiny-true {
-    display:none;
-}
+.pokemon-selected:not(.filter-shiny-true) > div {
+    box-shadow: 0px 0px 8px 12px #f27373 !important;
+} 
+
+div.pokemon-selected.filter-shiny-true > div {
+    box-shadow: 0px 0px 8px 12px #f2bf73 !important;
+} 
