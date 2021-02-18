@@ -49,114 +49,137 @@
 <!-- End of Topbar -->
 
 <!-- Begin Page Content -->
-<div class="container-fluid" onmouseenter="$('i,btn,a').tooltip();">
+<div class="container-fluid" onmouseenter="$('.tooltips').tooltip();">
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800"><span id="pokemonCounter">{{pokemonCounter}}</span> Pokémon</h1>
+        <h1 class="h3 mb-0 text-gray-800"><span id="pokemonCounter"><i class="fas fa-sync fa-spin"
+                    data-original-title="" title=""
+                    style="color: #4e73df; font-size: 2rem;"></i></span>&nbsp;&nbsp;Pokémon</h1>
     </div>
     <div class="row">
-        <div id="full-pokedex-spinner" _ngcontent-nct-c101="" role="status" class="spinner-border"
-            style="width: 5rem;height: 5rem;color: #4e73df; margin-left: 40px; margin-top:20px;"><span
-                _ngcontent-nct-c101="" class="sr-only">Loading...</span></div>
         <ng-container *ngFor="let pokemonVariants of pokemons; index as iV;">
-            <div *ngFor="let pokemon of pokemonVariants; index as i;"
-                class="col-xl-2 col-md-6 mb-4 pokemons pokemon-{{pokemon.de}} pokemon-{{pokemon.en}} pokemon-{{pokemon.es}} pokemon-{{pokemon.fr}} pokemon-{{pokemon.it}} pokemon-{{pokemon.ja}} pokemon-{{pokemon.ko}}  pokemon-{{pokemon.dex}} filter-all filter-type-{{pokemon.types[0]}} filter-type-{{pokemon.types[1]}} fiter-shiny-{{pokemon.shiny}}  fiter-region-{{pokemon.region}}"
-                (click)="markPokemon($event)">
-                <div class="card border-left-primary shadow h-100 py-2 ">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="OFF__text-xs font-weight-bold text-primary OFF__text-uppercase mb-1"
-                                    style="font-size:1.5rem;">
-                                    <span class="language language_de">{{pokemon.de}}</span>
-                                    <span class="language language_en" style="display:none;">{{pokemon.en}}</span>
-                                    <span class="language language_es" style="display:none;">{{pokemon.es}}</span>
-                                    <span class="language language_fr" style="display:none;">{{pokemon.fr}}</span>
-                                    <span class="language language_it" style="display:none;">{{pokemon.it}}</span>
-                                    <span class="language language_ja" style="display:none;">{{pokemon.ja}}</span>
-                                    <span class="language language_ko" style="display:none;">{{pokemon.ko}}</span>
-                                </div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800"><img
-                                        id="img-pokemon-{{pokemon.dex}}" class="img-pokemon"
-                                        style="width:120px; height:7.5rem" src="{{pokemon.url_front}}" />
-                                </div>
+            <ng-container *ngFor="let pokemon of pokemonVariants; index as i;">
 
-                                <div _ngcontent-nlx-c101="" _ngcontent-rgn-c101=""
-                                    class="OFF__text-xs font-weight-bold text-primary OFF__text-uppercase mb-1"
-                                    style="height:2.2rem; margin-top:23px;font-size: 0.8rem; background-color: #dddfeb; padding: 9px 4px 9px 4px; border-radius: 3px 3px 3px 3px;">
-                                    <table _ngcontent-nlx-c101="">
-                                        <tbody>
-                                            <tr _ngcontent-nlx-c101="">
-                                                <td _ngcontent-nlx-c101="">Type: </td>
-                                                <td _ngcontent-nlx-c101=""></td>
-                                                <td _ngcontent-nlx-c101="">
-                                                    {{pokemon.types[0]}}&nbsp;&nbsp;{{pokemon.types[1]}}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="col-auto" style="text-align: center;height: 231px; color:#4e73df">
-                                <ng-template [ngIf]="pokemon.shiny" [ngIfElse]="notShiny">
-                                    <div class=""
-                                        style="line-height:16px; font-weight:bold; font-size: 0.8rem;background-color: #ffc107; color:white; height:3.5rem;  padding: 4px 4px 4px 4px;border-radius: 3px 3px 3px 3px;/* width: 141px; */">
-                                        <i _ngcontent-vok-c101="" class="fas fa-star" style="font-size:18px;"></i>
-                                        <br /> #{{pokemon.dex}}<br />shiny
+                <div class="col-xl-2 col-md-6 mb-4 pokemons pokemon-{{pokemon.de}} pokemon-{{pokemon.en}} pokemon-{{pokemon.es}} pokemon-{{pokemon.fr}} pokemon-{{pokemon.it}} pokemon-{{pokemon.ja}} pokemon-{{pokemon.ko}}  pokemon-{{pokemon.dex}} filter-all filter-type-{{pokemon.types[0]}} filter-type-{{pokemon.types[1]}} fiter-shiny-{{pokemon.shiny}}  fiter-region-{{pokemon.region[0]}} fiter-region-{{pokemon.region[1]}}  hidden-{{pokemon.shiny}}"
+                    (click)="markPokemon($event)">
+                    <div class="card border-left-primary shadow h-100 py-2 ">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="OFF__text-xs font-weight-bold text-primary OFF__text-uppercase mb-1"
+                                        style="font-size:1.5rem;">
+                                        <span class="language language_de">{{pokemon.de}}</span>
+                                        <span class="language language_en" style="display:none;">{{pokemon.en}}</span>
+                                        <span class="language language_es" style="display:none;">{{pokemon.es}}</span>
+                                        <span class="language language_fr" style="display:none;">{{pokemon.fr}}</span>
+                                        <span class="language language_it" style="display:none;">{{pokemon.it}}</span>
+                                        <span class="language language_ja" style="display:none;">{{pokemon.ja}}</span>
+                                        <span class="language language_ko" style="display:none;">{{pokemon.ko}}</span>
                                     </div>
-                                </ng-template>
-                                <ng-template #notShiny>
-                                    <div class=""
-                                        style=" font-weight:bold; font-size: 0.8rem;background-color: #4e73df; color:white; height:3.5rem; padding: 4px 4px 4px 4px;border-radius: 3px 3px 3px 3px;/* width: 141px; */">
-                                        <i _ngcontent-vok-c101="" class="fas fa-map-marker" style="font-size:18px;"></i>
-                                        <br />
-                                        #{{pokemon.dex}}
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800"><img alt=''
+                                            id="img-pokemon-{{pokemon.dex}}" class="img-pokemon"
+                                            style="width:120px; height:7.5rem" src="{{pokemon.url_front}}" />
                                     </div>
-                                </ng-template>
-                                <div class=""
-                                    style="height:3.6rem; margin-top:5px; font-size: 0.8rem;background-color: #dddfeb;padding: 4px 4px 4px 4px;border-radius: 3px 3px 3px 3px;/* width: 141px; */">
-                                    <table _ngcontent-nlx-c101="">
-                                        <tbody>
-                                            <tr _ngcontent-nlx-c101="">
-                                                <td _ngcontent-nlx-c101="">Height </td>
-                                            </tr>
-                                            <tr _ngcontent-nlx-c101="">
-                                                <td _ngcontent-nlx-c101="">{{pokemon.height}} </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+
+                                    <div _ngcontent-nlx-c101="" _ngcontent-rgn-c101=""
+                                        class="OFF__text-xs font-weight-bold text-primary OFF__text-uppercase mb-1"
+                                        style="height:2.2rem; margin-top:23px;font-size: 0.8rem; background-color: #dddfeb; padding: 9px 4px 9px 4px; border-radius: 3px 3px 3px 3px;">
+                                        <table _ngcontent-nlx-c101="">
+                                            <tbody>
+                                                <tr _ngcontent-nlx-c101="">
+                                                    <td _ngcontent-nlx-c101="">Type: </td>
+                                                    <td _ngcontent-nlx-c101=""></td>
+                                                    <td _ngcontent-nlx-c101="">
+                                                        {{pokemon.types[0]}}&nbsp;&nbsp;{{pokemon.types[1]}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div _ngcontent-nlx-c101="" _ngcontent-rgn-c101=""
+                                        class="OFF__text-xs font-weight-bold text-primary OFF__text-uppercase mb-1"
+                                        style="height:2.2rem; OFF__margin-top:23px;font-size: 0.8rem; background-color: #dddfeb; padding: 9px 4px 9px 4px; border-radius: 3px 3px 3px 3px;">
+                                        <table _ngcontent-nlx-c101="">
+                                            <tbody>
+                                                <tr _ngcontent-nlx-c101="">
+                                                    <td _ngcontent-nlx-c101="">Region: </td>
+                                                    <td _ngcontent-nlx-c101=""></td>
+                                                    <td _ngcontent-nlx-c101="">
+                                                        {{pokemon.types[0]}}  {{pokemon.types[1]}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
-                                <div class=""
-                                    style="height:3.6rem; margin-top:5px; font-size: 0.8rem;background-color: #dddfeb;padding: 4px 4px 4px 4px;border-radius: 3px 3px 3px 3px;/* width: 141px; */">
-                                    <table _ngcontent-nlx-c101="">
-                                        <tbody>
-                                            <tr _ngcontent-nlx-c101="">
-                                                <td _ngcontent-nlx-c101="">Weight</td>
-                                            </tr>
-                                            <tr _ngcontent-nlx-c101="">
-                                                <td _ngcontent-nlx-c101="">{{pokemon.weight}} </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <ng-template [ngIf]="pokemon.shiny" [ngIfElse]="notShiny2">
-                                            <button style="height:2.4rem; margin-top: 5px;" data-placement="right" (click)="toggleShiny('.fiter-shiny-true.pokemon-' + pokemon.dex)" 
-                                            class="btn btn-facebook btn-block" title="Hide Shiny Pokémon!"> <i 
+                                <div class="col-auto" style="text-align: center;height: 275px; color:#4e73df">
+                                    <ng-template [ngIf]="pokemon.shiny" [ngIfElse]="notShiny">
+                                        <div class=""
+                                            style="line-height:16px; font-weight:bold; font-size: 0.8rem;background-color: #ffc107; color:white; height:3.5rem;  padding: 4px 4px 4px 4px;border-radius: 3px 3px 3px 3px;/* width: 141px; */">
+                                            <i _ngcontent-vok-c101="" class="fas fa-star" style="font-size:18px;"></i>
+                                            <br /> #{{pokemon.dex}}<br />shiny
+                                        </div>
+                                    </ng-template>
+                                    <ng-template #notShiny>
+                                        <div class=""
+                                            style=" font-weight:bold; font-size: 0.8rem;background-color: #4e73df; color:white; height:3.5rem; padding: 4px 4px 4px 4px;border-radius: 3px 3px 3px 3px;/* width: 141px; */">
+                                            <i _ngcontent-vok-c101="" class="fas fa-map-marker"
+                                                style="font-size:18px;"></i>
+                                            <br />
+                                            #{{pokemon.dex}}
+                                        </div>
+                                    </ng-template>
+                                    <div class=""
+                                        style="height:3.6rem; margin-top:5px; font-size: 0.8rem;background-color: #dddfeb;padding: 4px 4px 4px 4px;border-radius: 3px 3px 3px 3px;/* width: 141px; */">
+                                        <table _ngcontent-nlx-c101="">
+                                            <tbody>
+                                                <tr _ngcontent-nlx-c101="">
+                                                    <td _ngcontent-nlx-c101="">Height </td>
+                                                </tr>
+                                                <tr _ngcontent-nlx-c101="">
+                                                    <td _ngcontent-nlx-c101="">{{pokemon.height}} </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class=""
+                                        style="height:3.6rem; margin-top:5px; font-size: 0.8rem;background-color: #dddfeb;padding: 4px 4px 4px 4px;border-radius: 3px 3px 3px 3px;/* width: 141px; */">
+                                        <table _ngcontent-nlx-c101="">
+                                            <tbody>
+                                                <tr _ngcontent-nlx-c101="">
+                                                    <td _ngcontent-nlx-c101="">Weight</td>
+                                                </tr>
+                                                <tr _ngcontent-nlx-c101="">
+                                                    <td _ngcontent-nlx-c101="">{{pokemon.weight}} </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <ng-template [ngIf]="pokemon.shiny" [ngIfElse]="notShiny2">
+                                        <button style="height:2.4rem; margin-top: 5px;" data-placement="right"
+                                            (click)="toggleShiny('.fiter-shiny-true.pokemon-' + pokemon.dex)"
+                                            class="btn btn-facebook btn-block tooltips" title="Hide Shiny Pokémon!"> <i
                                                 class="fas fa-times-circle" style="font-size:18px;"></i></button>
-                                </ng-template>
-                                <ng-template #notShiny2>
-                                    <button style="height:2.4rem; margin-top: 5px;" data-placement="right" (click)="toggleShiny('.fiter-shiny-true.pokemon-' + pokemon.dex)"
-                                        class="btn btn-facebook btn-block" title="Show Shiny Pokémon!"> <i 
-                                            class="fas fa-star" style="font-size:18px;"></i></button>
-                                </ng-template>
+                                    </ng-template>
+                                    <ng-template #notShiny2>
+                                        <button style="height:2.4rem; margin-top: 5px;" data-placement="right"
+                                            (click)="toggleShiny('.fiter-shiny-true.pokemon-' + pokemon.dex)"
+                                            class="btn btn-facebook btn-block tooltips" title="Show Shiny Pokémon!"> <i
+                                                class="fas fa-star" style="font-size:18px;"></i></button>
+                                    </ng-template>
+                                    <button style="height:2.4rem; margin-top: 5px;" data-placement="right"
+                                    (click)="toggleShiny('.fiter-shiny-true.pokemon-' + pokemon.dex)"
+                                    class="btn btn-facebook btn-block tooltips" title="Save Pokémon in Your Collection!"> <i
+                                        class="fas fa-plus" style="font-size:18px;"></i></button>
+                                </div>
                             </div>
+                            <!-- <a href="#" class="btn btn-facebook btn-block tooltips" title="Save Pokémon in Your Collection."
+                                data-placement="right"><i class="fas fa-plus"
+                                    style="font-size: 20px; color:white"></i>&nbsp;&nbsp;Add
+                                To Collection</a> -->
                         </div>
-                        <a href="#" class="btn btn-facebook btn-block" title="Save Pokémon in Your Collection."
-                            data-placement="right"><i class="fas fa-plus"
-                                style="font-size: 20px; color:white"></i>&nbsp;&nbsp;Add
-                            To Collection</a>
                     </div>
                 </div>
-            </div>
+            </ng-container>
         </ng-container>
     </div>
 </div>

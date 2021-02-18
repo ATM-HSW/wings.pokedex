@@ -85,8 +85,8 @@
                 </div>
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h2 class="collapse-header"  style="font-size:0.9rem">Region</h2> 
-                    <a *ngFor="let region of pokedexRegions; index as i;" class="collapse-item filter" [routerLink]=""
-                        (click)="filterByRegion($event)" [attr.data-filterclass]="region.url">{{region!.name}}</a>
+                    <a *ngFor="let region of globalFunctions.pokedexRegions; index as i;" class="collapse-item filter" [routerLink]=""
+                        [attr.data-filterclass]="region.name">{{region!.name}}</a>
                     <!-- <a *ngFor="let region of pokedexRegions; index as i;" class="collapse-item filter" [routerLink]=""
                         (click)="globalFunctions.toggleSelection('.' + region!.name, true)"
                         [attr.data-filterclass]="region.url">{{region!.name}}</a>-->

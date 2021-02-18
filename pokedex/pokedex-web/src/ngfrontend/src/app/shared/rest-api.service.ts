@@ -15,11 +15,11 @@ import { Observable } from 'rxjs/Observable';
 })
 export class RestApiService {
 
-  // Define API
+  // Define API 
   apiURL = "";
   //apiURL = 'http://localhost:3000';
   //apiURL = 'http://localhost:8080/pokedex-web/api/v1/users';
-
+  maxFetch = 400; //898
   constructor(private httpClient: HttpClient) { }
 
   /*========================================
@@ -38,8 +38,8 @@ export class RestApiService {
   }
 
   public getAllPokemons() {
-    return this.httpClient.get(`https://pokeapi.co/api/v2/pokemon/?limit=100&offset=0`); //898
-  }
+    return this.httpClient.get(`https://pokeapi.co/api/v2/pokemon/?limit=${this.maxFetch}&offset=0`); 
+  } 
 
   public getPokemonSpeciesDetails(dex : string | any) { 
     return this.httpClient.get(`https://pokeapi.co/api/v2/pokemon-species/${dex}`);
@@ -51,8 +51,17 @@ export class RestApiService {
 
   public getUsersPokemons() {
     return this.httpClient.get(`api/v1/users/pokemons`); //http://localhost:8080/pokedex-web/
-
   }
+
+  public getRegions() { 
+    return this.httpClient.get('https://pokeapi.co/api/v2/pokedex'); 
+  }
+
+  public getSpeciesByRegion(url : string) { 
+    return this.httpClient.get(url); 
+  }
+
+
 
   // public fetchPokemonFromPokeApi(pokemons: any) {
   //   return this.httpClient.get('https://pokeapi.co/api/v2/pokemon/?limit=80&offset=0').toPromise().then((res: any) => {

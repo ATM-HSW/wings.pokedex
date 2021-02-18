@@ -6,14 +6,11 @@ import { GlobalFunctionsService } from '../shared/global-functions.service';
 import { Pokemon } from '../shared/pokemon';
 import { RestApiService } from "../shared/rest-api.service";
 
-
 @Component({
   selector: 'app-full-pokedex',
   templateUrl: './full-pokedex.component.html',
   styleUrls: ['./full-pokedex.component.css']
 })
-
-
 
 export class FullPokedexComponent implements OnInit {
   constructor(private http: HttpClient, public restApi: RestApiService, public globalFunctions: GlobalFunctionsService) {
@@ -27,8 +24,7 @@ export class FullPokedexComponent implements OnInit {
   api: string = "https://pokeapi.co/api/v2/pokemon/?limit=898&offset=0"; //898
   textValue = ''; //initial value
   //categories : any = [];
-  pokemonCounter = 0;
-
+  //pokemonCounter = 0;
 
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
@@ -74,6 +70,10 @@ export class FullPokedexComponent implements OnInit {
             break;
           default:
         }
+        if (pokemon.dex == "100") {
+          var pokemonCounter = document.querySelectorAll('.filter-all').length - document.querySelectorAll('.filter-all.hidden-true').length;
+          document.getElementById("pokemonCounter")!.innerText = `${pokemonCounter}`;
+        }
       }
     });
   }
@@ -113,8 +113,7 @@ export class FullPokedexComponent implements OnInit {
     //this.pokemons = [898][2]; 
 
     this.restApi.getAllPokemons().subscribe((data: any) => {
-      document.getElementById("full-pokedex-spinner")!.style.display = "none";
-      this.pokemonCounter = data.results.length
+      //this.pokemonCounter = data.results.length
       var counter: number;
       for (var pokemonL1 of data.results!) {
         var lcPokemon: Pokemon = new Pokemon();
@@ -133,8 +132,57 @@ export class FullPokedexComponent implements OnInit {
       for (let i = 0; i < this.pokemons.length; i++) {
         this.getPokemonSpeciesDetails(this.pokemons[i][0]);
       }
+      for (let i = 0; i < this.globalFunctions.pokedexRegions.length; i++) {
+        this.getSpeciesByRegion(this.globalFunctions.pokedexRegions[i].url, this.globalFunctions.pokedexRegions[i].name);
+        // console.log(this.globalFunctions.pokedexRegions[i].name);
+        // console.log(this.globalFunctions.pokedexRegions[i].url);
 
-      console.log(this.pokemons);
+
+        // //this.pokemonCounter = data.results.length
+        // var counter: number;
+        // for (var pokemonL1 of data.results!) {
+        //   var lcPokemon: Pokemon = new Pokemon();
+        //   lcPokemon.de = pokemonL1.name.charAt(0).toUpperCase() + pokemonL1.name.slice(1);
+        //   lcPokemon.url = pokemonL1.url;
+        //   var urlAr = pokemonL1.url.split("/");
+        //   lcPokemon.dex = urlAr[urlAr.length - 2];
+        //   let lcAr = new Array();
+        //   lcAr.push(lcPokemon);
+        //   this.pokemons.push(lcAr);
+        //   //this.pokemons[this.pokemons.length - 1][0] = lcPokemon;
+        // }
+        // for (let i = 0; i < this.pokemons.length; i++) {
+        //   this.setPokemonDetails(this.pokemons[i][0], i);
+        // }
+        // for (let i = 0; i < this.pokemons.length; i++) {
+        //   this.getPokemonSpeciesDetails(this.pokemons[i][0]);
+        // }
+
+        // console.log(this.pokemons);
+
+
+      }
+
+
+
+
+    });
+  }
+
+  getSpeciesByRegion(url: string, regionName : string) {
+    console.log("getSpeciesByRegion");
+    this.restApi.getSpeciesByRegion(url).subscribe((data: any) => {
+      for (var pokemon_entry of data.pokemon_entries!) {
+        url = pokemon_entry.pokemon_species.url;
+        var urlAr = url.split("/");
+        let dex : number = parseInt(urlAr[urlAr.length - 2]);
+        if(dex <this.restApi.maxFetch) {
+          this.pokemons[dex][0].region = regionName;
+        //this.pokemons[dex][1].region = regionName;
+        }
+      }
+      
+      
     });
   }
 
@@ -166,13 +214,14 @@ export class FullPokedexComponent implements OnInit {
 
 
   ngOnInit(): void {
+    //document.getElementById("pokemonCounter")!.innerHTML = globalFunctions.spinnerIcon;
+
     // var pokemon = Object();
     // pokemon.types = [];
     // pokemon.types.push = ["abc"];
     // pokemon.types.push = ["efg"];
     // this.pokemons.push(pokemon);
 
-    document.getElementById("full-pokedex-spinner")!.style.display = "block";
     //this.fetchPokemonsFromPokeApi();
     this.getAllPokemons()
     //this.buildRegions();
@@ -191,7 +240,7 @@ export class FullPokedexComponent implements OnInit {
     var selection = document.querySelectorAll(".pokemon-" + value);
 
     selection.forEach(element => {
-      if (!element.classList.contains("hidden")) {
+      if (!element.classList.contains("hidden-true")) {
         allHidden = false;
         element.classList.add("pokemon-selected");
         const yOffset = -20;
@@ -235,12 +284,13 @@ export class FullPokedexComponent implements OnInit {
 
   toggleShiny(pSelector: any) {
     document.querySelectorAll(pSelector).forEach(element => {
-      if (element.classList.contains('hidden')) {
-        element.classList.remove('hidden');
+      if (element.classList.contains('hidden-true')) {
+        element.classList.remove('hidden-true');
         element.classList.add('pokemon-selected');
       } else {
-        element.classList.add('hidden');        
+        element.classList.add('hidden-true');
       }
     });
+    this.globalFunctions.updateCounter(true, 400);
   }
 }

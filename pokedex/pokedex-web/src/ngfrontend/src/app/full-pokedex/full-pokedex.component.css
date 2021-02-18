@@ -2,6 +2,13 @@
     display:none !important;
 }
 
+.hidden-false {
+    display:block !important;
+}
+.hidden-true {
+    display:none !important;
+}
+
 .col-xl-2 {
     min-width: 19rem !important;
 }
