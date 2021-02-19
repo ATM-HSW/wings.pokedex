@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AngularFaviconService } from 'angular-favicon';
 import { HttpClient } from '@angular/common/http';
 import { FullPokedexComponent } from './full-pokedex/full-pokedex.component';
-import { GlobalFunctionsService } from './shared/global-functions.service';
+import { GlobalFunctionsService } from './shared/global-functions.service'; 
 
 
 @Component({

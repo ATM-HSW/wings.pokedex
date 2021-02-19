@@ -6,7 +6,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 //import { retry, catchError } from 'rxjs';
 import { Pokemon } from './pokemon';
 //import { Observable } from 'rxjs';
-import { Observable } from 'rxjs/Observable';
+//import { Observable } from 'rxjs/Observable';
 
 
 
@@ -54,10 +54,14 @@ export class RestApiService {
   }
 
   public getRegions() { 
-    return this.httpClient.get('https://pokeapi.co/api/v2/pokedex'); 
+    return this.httpClient.get('https://pokeapi.co/api/v2/region'); 
   }
 
-  public getSpeciesByRegion(url : string) { 
+  public getSpeciesByPokedex(url : string) { 
+    return this.httpClient.get(url); 
+  }
+
+  public getRegionDetails(url : string) { 
     return this.httpClient.get(url); 
   }
 

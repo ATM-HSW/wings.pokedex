@@ -60,22 +60,23 @@
                 <i style="font-size:22px;" class="fas fa-filter"></i>&nbsp;
                 <span>Filter</span></a>
             <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                
+
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item filter" data-filterclass="filter-all" [routerLink]=""
                         (click)="globalFunctions.toggleSelection(true, $event)"><i class="fas fa-globe"></i>&nbsp;
                         Full Pokedex</a>
                 </div>
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item filter" [routerLink]=""><i class="fas fa-dot-circle"></i>&nbsp; My Collection</a>
+                    <a class="collapse-item filter" [routerLink]=""><i class="fas fa-dot-circle"></i>&nbsp; My
+                        Collection</a>
                 </div>
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item filter selected" [routerLink]="" data-filterclass="fiter-shiny-false"
-                        (click)="globalFunctions.toggleSelection(false, $event)"><i class="fas fa-map-marker"></i>&nbsp;
-                        Regular</a>
-                    <a class="collapse-item filter" [routerLink]="" data-filterclass="fiter-shiny-true"
-                        (click)="globalFunctions.toggleSelection(false, $event)"><i class="fas fa-star"></i>&nbsp;
-                        Shiny</a>
+                    <a class="collapse-item filter selected" [routerLink]="" data-filterclass="filter-shiny-false"
+                        (click)="globalFunctions.toggleSelection(false, $event)"><i
+                            class="fas fa-map-marker"></i>&nbsp;Regular</a>
+                    <a class="collapse-item filter" [routerLink]="" data-filterclass="filter-shiny-true"
+                        (click)="globalFunctions.toggleSelection(false, $event)"><i
+                            class="fas fa-star"></i>&nbsp;Shiny</a>
                 </div>
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h1 class="collapse-header" style="font-size:0.9rem">Type</h1>
@@ -84,9 +85,10 @@
                         [attr.data-filterclass]="type.class">{{type!.name}}</a>
                 </div>
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <h2 class="collapse-header"  style="font-size:0.9rem">Region</h2> 
-                    <a *ngFor="let region of globalFunctions.pokedexRegions; index as i;" class="collapse-item filter" [routerLink]=""
-                        [attr.data-filterclass]="region.name">{{region!.name}}</a>
+                    <h2 class="collapse-header" style="font-size:0.9rem">Region</h2>
+                    <a *ngFor="let region of globalFunctions.pokedexRegions; index as i;" class="collapse-item filter"
+                        [routerLink]="" (click)="globalFunctions.toggleSelection(false, $event)"
+                        [attr.data-filterclass]="region.class">{{region!.name}}</a>
                     <!-- <a *ngFor="let region of pokedexRegions; index as i;" class="collapse-item filter" [routerLink]=""
                         (click)="globalFunctions.toggleSelection('.' + region!.name, true)"
                         [attr.data-filterclass]="region.url">{{region!.name}}</a>-->

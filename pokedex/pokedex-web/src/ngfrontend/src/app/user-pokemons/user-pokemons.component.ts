@@ -6,7 +6,7 @@ import { RestApiService } from "../shared/rest-api.service";
   selector: 'app-user-pokemons',
   templateUrl: './user-pokemons.component.html',
   styleUrls: ['./user-pokemons.component.css']
-})
+}) 
 export class UserPokemonsComponent implements OnInit {
 
   UserPokemon: any = [];

@@ -3,10 +3,10 @@ import { HostListener } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GlobalFunctionsService } from '../shared/global-functions.service';
-import { Pokemon } from '../shared/pokemon';
-import { RestApiService } from "../shared/rest-api.service";
+import { Pokemon } from '../shared/pokemon'; 
+import { RestApiService } from "../shared/rest-api.service"; 
 
-@Component({
+@Component({ 
   selector: 'app-full-pokedex',
   templateUrl: './full-pokedex.component.html',
   styleUrls: ['./full-pokedex.component.css']
@@ -159,138 +159,133 @@ export class FullPokedexComponent implements OnInit {
         // }
 
         // console.log(this.pokemons);
-
-
       }
-
-
-
-
     });
   }
 
-  getSpeciesByRegion(url: string, regionName : string) {
+  getSpeciesByRegion(url: string, regionName: string) {
     console.log("getSpeciesByRegion");
-    this.restApi.getSpeciesByRegion(url).subscribe((data: any) => {
-      for (var pokemon_entry of data.pokemon_entries!) {
-        url = pokemon_entry.pokemon_species.url;
-        var urlAr = url.split("/");
-        let dex : number = parseInt(urlAr[urlAr.length - 2]);
-        if(dex <this.restApi.maxFetch) {
-          this.pokemons[dex][0].region = regionName;
-        //this.pokemons[dex][1].region = regionName;
-        }
+    this.restApi.getRegionDetails(url).subscribe((data: any) => {
+      this.restApi.getSpeciesByPokedex(data.pokedexes[0].url).subscribe((data: any) => {
+        console.log(data);
+        for (var pokemon_entry of data.pokemon_entries) {
+          url = pokemon_entry.pokemon_species.url;
+          var urlAr = url.split("/");
+          let dex: number = parseInt(urlAr[urlAr.length - 2]);
+          if (dex <= this.restApi.maxFetch && this.pokemons[dex-1] !== undefined) {
+            this.pokemons[dex-1][0].regions.push(regionName);
+            this.pokemons[dex-1][0].regions.splice(this.pokemons[dex-1][0].regions.indexOf(''), 1);           
+          }     
       }
-      
-      
-    });
-  }
+      }); 
+  });
+}
 
-  getUsersPokemons() {
-    //console.log("getUsersPokemons.");
-    this.restApi.getUsersPokemons().subscribe((data: any) => {
-      this.usersPokemons = data;
-      //console.log(this.usersPokemons);
+getUsersPokemons() {
+  //console.log("getUsersPokemons.");
+  this.restApi.getUsersPokemons().subscribe((data: any) => {
+    this.usersPokemons = data;
+    //console.log(this.usersPokemons);
 
-      // document.getElementById("full-pokedex-spinner")!.style.display = "none";
-      // this.pokemonCounter = data.results.length
-      // var counter: number;
-      // for (var pokemonL1 of data.results!) {
-      //   var lcPokemon: Pokemon = new Pokemon();
-      //   lcPokemon.de = pokemonL1.name;
-      //   lcPokemon.url = pokemonL1.url;
-      //   var urlAr = pokemonL1.url.split("/");
-      //   lcPokemon.dex = urlAr[urlAr.length - 2];
-      //   this.pokemons.push(lcPokemon);
-      // }
-      // for (let i = 0; i < this.pokemons.length; i++) {
-      //   this.getPokemonSpeciesDetails(this.pokemons[i]);
-      // }
-      // for (let i = 0; i < this.pokemons.length; i++) {
-      //   this.getPokemonDetails(this.pokemons[i]);
-      // }
-    });
-  }
+    // document.getElementById("full-pokedex-spinner")!.style.display = "none";
+    // this.pokemonCounter = data.results.length
+    // var counter: number;
+    // for (var pokemonL1 of data.results!) {
+    //   var lcPokemon: Pokemon = new Pokemon();
+    //   lcPokemon.de = pokemonL1.name;
+    //   lcPokemon.url = pokemonL1.url;
+    //   var urlAr = pokemonL1.url.split("/");
+    //   lcPokemon.dex = urlAr[urlAr.length - 2];
+    //   this.pokemons.push(lcPokemon);
+    // }
+    // for (let i = 0; i < this.pokemons.length; i++) {
+    //   this.getPokemonSpeciesDetails(this.pokemons[i]);
+    // }
+    // for (let i = 0; i < this.pokemons.length; i++) {
+    //   this.getPokemonDetails(this.pokemons[i]);
+    // }
+  });
+}
 
 
-  ngOnInit(): void {
-    //document.getElementById("pokemonCounter")!.innerHTML = globalFunctions.spinnerIcon;
+ngOnInit(): void {
+  //document.getElementById("pokemonCounter")!.innerHTML = globalFunctions.spinnerIcon;
 
-    // var pokemon = Object();
-    // pokemon.types = [];
-    // pokemon.types.push = ["abc"];
-    // pokemon.types.push = ["efg"];
-    // this.pokemons.push(pokemon);
+  // var pokemon = Object();
+  // pokemon.types = [];
+  // pokemon.types.push = ["abc"];
+  // pokemon.types.push = ["efg"];
+  // this.pokemons.push(pokemon);
 
-    //this.fetchPokemonsFromPokeApi();
-    this.getAllPokemons()
-    //this.buildRegions();
-  }
+  //this.fetchPokemonsFromPokeApi();
+  this.getAllPokemons()
+  //this.buildRegions();
+}
 
-  searchByNrName(value: string): void {
-    document.querySelectorAll('.pokemons').forEach(element => element.classList.remove('pokemon-selected'));
+searchByNrName(value: string): void {
+  document.querySelectorAll('.pokemons').forEach(element => element.classList.remove('pokemon-selected'));
 
-    var searchNrName: HTMLElement;
-    if (value.length == 0) {
-      alert("Bitte geben Sie den Namen oder die Nummer des Pokémon ein!")
-      return;
-    }
+  var searchNrName: HTMLElement;
+  if(value.length == 0) {
+  alert("Bitte geben Sie den Namen oder die Nummer des Pokémon ein!")
+  return;
+}
 
-    var allHidden = true;
-    var selection = document.querySelectorAll(".pokemon-" + value);
+var allHidden = true;
+var selection = document.querySelectorAll(".pokemon-" + value);
 
-    selection.forEach(element => {
-      if (!element.classList.contains("hidden-true")) {
-        allHidden = false;
-        element.classList.add("pokemon-selected");
-        const yOffset = -20;
-        const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-        window.scrollTo({ top: y, behavior: 'smooth' })
-      }
-      element.classList.add('pokemon-selected');
-    });
-
-    if (selection.length > 0) {
-      if (allHidden) {
-        alert("Der gesuchte Pokémon wird durch Ihre Filter ausgeblendet!");
-      }
-    } else {
-      alert("Zu dem Namen oder der Nummer wurde keine Pokémon gefunden.")
-    }
-  }
-
-  newSearch(): void {
-    var element = document.getElementById("searchNrName");
-    const y = element!.getBoundingClientRect().top;
+selection.forEach(element => {
+  if (!element.classList.contains("hidden-true")) {
+    allHidden = false;
+    element.classList.add("pokemon-selected");
+    const yOffset = -20;
+    const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
     window.scrollTo({ top: y, behavior: 'smooth' })
+  }
+  element.classList.add('pokemon-selected');
+});
+
+if (selection.length > 0) {
+  if (allHidden) {
+    alert("Der gesuchte Pokémon wird durch Ihre Filter ausgeblendet!");
+  }
+} else {
+  alert("Zu dem Namen oder der Nummer wurde keine Pokémon gefunden.")
+}
+  }
+
+newSearch(): void {
+  var element = document.getElementById("searchNrName");
+  const y = element!.getBoundingClientRect().top;
+  window.scrollTo({ top: y, behavior: 'smooth' })
     element!.focus();
+}
+
+markPokemon(event: any): void {
+  if(!event.srcElement.closest(".pokemons").classList.contains('pokemon-selected')) {
+  document.querySelectorAll('.pokemons').forEach(element => element.classList.remove('pokemon-selected'));
+  event.srcElement.closest(".pokemons").classList.add('pokemon-selected');
+}
   }
 
-  markPokemon(event: any): void {
-    if (!event.srcElement.closest(".pokemons").classList.contains('pokemon-selected')) {
-      document.querySelectorAll('.pokemons').forEach(element => element.classList.remove('pokemon-selected'));
-      event.srcElement.closest(".pokemons").classList.add('pokemon-selected');
+fetchPokemonData(pokemon: { url: any; }) {
+  let url = pokemon.url // <--- this is saving the pokemon url to a      variable to us in a fetch.(Ex: https://pokeapi.co/api/v2/pokemon/1/)
+  fetch(url)
+    .then(response => response.json())
+    .then((pokeData) => {
+      this.pokemons2.push(pokeData);
+    })
+}
+
+toggleShiny(pSelector: any) {
+  document.querySelectorAll(pSelector).forEach(element => {
+    if (element.classList.contains('hidden-true')) {
+      element.classList.remove('hidden-true');
+      element.classList.add('pokemon-selected');
+    } else {
+      element.classList.add('hidden-true');
     }
-  }
-
-  fetchPokemonData(pokemon: { url: any; }) {
-    let url = pokemon.url // <--- this is saving the pokemon url to a      variable to us in a fetch.(Ex: https://pokeapi.co/api/v2/pokemon/1/)
-    fetch(url)
-      .then(response => response.json())
-      .then((pokeData) => {
-        this.pokemons2.push(pokeData);
-      })
-  }
-
-  toggleShiny(pSelector: any) {
-    document.querySelectorAll(pSelector).forEach(element => {
-      if (element.classList.contains('hidden-true')) {
-        element.classList.remove('hidden-true');
-        element.classList.add('pokemon-selected');
-      } else {
-        element.classList.add('hidden-true');
-      }
-    });
-    this.globalFunctions.updateCounter(true, 400);
-  }
+  });
+  this.globalFunctions.updateCounter(true, 400);
+}
 }
