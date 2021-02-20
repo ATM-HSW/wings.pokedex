@@ -14,9 +14,15 @@
 }
 
 .pokemon-selected:not(.filter-shiny-true) > div {
-    box-shadow: 0px 0px 8px 12px #f27373 !important;
+    box-shadow: 0px 0px 8px 12px #4e73df !important;
 } 
 
 div.pokemon-selected.filter-shiny-true > div {
-    box-shadow: 0px 0px 8px 12px #f2bf73 !important;
+    box-shadow: 0px 0px 8px 12px #f16fe6 !important;
 } 
+
+.filter-inCollection-true  > div {
+    border: 3px solid #ffc107;
+    border-left:12px solid #ffc107 !important;
+   
+}

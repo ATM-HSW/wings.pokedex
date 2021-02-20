@@ -20,6 +20,7 @@ export class FullPokedexComponent implements OnInit {
   // pokemons = [{ "types": ['abc', 'xyz'], "height": "", weight: "", "de" : "", "en" : "", "es" : "", "fr" : "", "it" : "", "ja" : "", "ko" : "" }];
   pokemons!: Pokemon[][];
   usersPokemons: Pokemon[] = [];
+  usersPokemonsIndex: String[] = [];
   pokemons2: any;
   api: string = "https://pokeapi.co/api/v2/pokemon/?limit=898&offset=0"; //898
   textValue = ''; //initial value
@@ -33,10 +34,21 @@ export class FullPokedexComponent implements OnInit {
     }
   }
 
-  savePokemon(): void {
-    var data = this.restApi.getPokemons().subscribe((data: {}) => {
-      alert(data);
-    })
+  // savePokemon(): void {
+  //   var data = this.restApi.getPokemons().subscribe((data: {}) => {
+  //     alert(data);
+  //   })
+  // }
+
+  toggleInCollection(dex : string | undefined, shiny : boolean, inCollection : boolean) {
+    console.log("savePokemonInCollection");
+    this.usersPokemonsIndex.push(`${dex}-${shiny}`);
+    var index : number = parseInt(dex!) - 1;
+    if(shiny) {      
+      this.pokemons[index][1].inCollection = !inCollection;
+    } else {
+      this.pokemons[index][0].inCollection = !inCollection;
+    }
   }
 
   public getPokemonSpeciesDetails(pokemon: Pokemon) {
@@ -96,12 +108,19 @@ export class FullPokedexComponent implements OnInit {
       var weight = parseFloat(data.weight) / 10;
       pokemon.weight = `${weight} kg`
       pokemon.url_front = data.sprites.front_default;
+      if (this.usersPokemonsIndex.includes(`${pokemon.dex}-${pokemon.shiny}`)) {
+        pokemon.inCollection = true;
+      }
+
       //set and add shiny pokemon version
       try {
         let pokemonShiny: Pokemon = Object.assign({}, pokemon);
         if (data.sprites.front_shiny != null) {
           pokemonShiny.url_front = data.sprites.front_shiny;
           pokemonShiny.shiny = true;
+          if (this.usersPokemonsIndex.includes(`${pokemonShiny.dex}-${pokemonShiny.shiny}`)) {
+            pokemonShiny.inCollection = true;
+          }
           this.pokemons[index].push(pokemonShiny);
         }
       } catch (e) {
@@ -136,7 +155,7 @@ export class FullPokedexComponent implements OnInit {
       }
       for (let i = 0; i < this.pokemons.length; i++) {
         this.getPokemonSpeciesDetails(this.pokemons[i][0]);
-       
+
       }
       for (let i = 0; i < this.globalFunctions.pokedexRegions.length; i++) {
         this.getSpeciesByRegion(this.globalFunctions.pokedexRegions[i].url, this.globalFunctions.pokedexRegions[i].name);
@@ -170,10 +189,8 @@ export class FullPokedexComponent implements OnInit {
   }
 
   getSpeciesByRegion(url: string, regionName: string) {
-    console.log("getSpeciesByRegion");
     this.restApi.getRegionDetails(url).subscribe((data: any) => {
       this.restApi.getSpeciesByPokedex(data.pokedexes[0].url).subscribe((data: any) => {
-        console.log(data);
         for (var pokemon_entry of data.pokemon_entries) {
           url = pokemon_entry.pokemon_species.url;
           var urlAr = url.split("/");
@@ -189,10 +206,16 @@ export class FullPokedexComponent implements OnInit {
 
   getUsersPokemons() {
     //console.log("getUsersPokemons.");
+    this.usersPokemonsIndex = [];
+    this.usersPokemons = [];
     this.restApi.getUsersPokemons().subscribe((data: any) => {
       this.usersPokemons = data;
-      //console.log(this.usersPokemons);
-
+      console.log(this.usersPokemons);
+      for (var pokemon of this.usersPokemons) {
+        this.usersPokemonsIndex.push(`${pokemon.dex}-${pokemon.shiny}`);
+      }
+      console.log("usersPokemonsIndex");
+      console.log(this.usersPokemonsIndex);
       // document.getElementById("full-pokedex-spinner")!.style.display = "none";
       // this.pokemonCounter = data.results.length
       // var counter: number;
@@ -224,6 +247,8 @@ export class FullPokedexComponent implements OnInit {
     // this.pokemons.push(pokemon);
 
     //this.fetchPokemonsFromPokeApi();
+    this.getUsersPokemons();
+
     this.getAllPokemons()
     //this.buildRegions();
   }
@@ -283,7 +308,7 @@ export class FullPokedexComponent implements OnInit {
       })
   }
 
-  toggleShiny(pSelector: any) {
+  toggleShinyRegular(pSelector: any) {
     document.querySelectorAll(pSelector).forEach(element => {
       if (element.classList.contains('hidden-true')) {
         element.classList.remove('hidden-true');

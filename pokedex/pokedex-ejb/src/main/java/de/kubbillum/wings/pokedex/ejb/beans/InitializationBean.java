@@ -40,8 +40,19 @@ public class InitializationBean {
 			pokemon.setDex(99);
 			pokemon.setShiny(true);			
 			Pokemon resultPokemon = pokemonDao.create(pokemon);
-		
 			resultUser.getPokemons().add(resultPokemon);
+			
+			Pokemon pokemon2 = new Pokemon();
+			pokemon2.setDex(12);
+			pokemon2.setShiny(false);			
+			Pokemon resultPokemon2 = pokemonDao.create(pokemon2);
+			resultUser.getPokemons().add(resultPokemon2);
+			
+			Pokemon pokemon3 = new Pokemon();
+			pokemon3.setDex(12);
+			pokemon3.setShiny(true);			
+			Pokemon resultPokemon3 = pokemonDao.create(pokemon3);
+			resultUser.getPokemons().add(resultPokemon3);
 			
 			pokedexUserDAO.update(resultUser);				
 		}

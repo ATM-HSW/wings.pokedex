@@ -13,7 +13,8 @@ export class Pokemon {
     weight = '';
     url: string | undefined;
     url_front: string | undefined;
-    regions : any = ['','','',''];
+    regions : any = ['','','','','','','',''];
+    inCollection : boolean  = false;
 }
 
 

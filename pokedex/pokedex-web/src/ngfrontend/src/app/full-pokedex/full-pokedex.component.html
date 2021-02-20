@@ -59,7 +59,7 @@
     <div class="row">
         <ng-container *ngFor="let pokemonVariants of pokemons; index as iV;">
             <ng-container *ngFor="let pokemon of pokemonVariants; index as i;">
-                <div class="col-xl-2 col-md-6 mb-4 pokemons pokemon-{{pokemon.de}} pokemon-{{pokemon.en}} pokemon-{{pokemon.es}} pokemon-{{pokemon.fr}} pokemon-{{pokemon.it}} pokemon-{{pokemon.ja}} pokemon-{{pokemon.ko}}  pokemon-{{pokemon.dex}} filter-all filter-type-{{pokemon.types[0]}} filter-type-{{pokemon.types[1]}} filter-shiny-{{pokemon.shiny}}  filter-region-{{pokemon.regions[0]}} filter-region-{{pokemon.regions[1]}} filter-region-{{pokemon.regions[2]}} hidden-{{pokemon.shiny}} filter-region-{{pokemon.regions[3]}}"
+                <div class="col-xl-2 col-md-6 mb-4 pokemons pokemon-{{pokemon.de}} pokemon-{{pokemon.en}} pokemon-{{pokemon.es}} pokemon-{{pokemon.fr}} pokemon-{{pokemon.it}} pokemon-{{pokemon.ja}} pokemon-{{pokemon.ko}}  pokemon-{{pokemon.dex}} filter-all filter-type-{{pokemon.types[0]}} filter-type-{{pokemon.types[1]}} filter-shiny-{{pokemon.shiny}}  filter-region-{{pokemon.regions[0]}} filter-region-{{pokemon.regions[1]}} filter-region-{{pokemon.regions[2]}} hidden-{{pokemon.shiny}} filter-region-{{pokemon.regions[3]}} filter-region-{{pokemon.regions[4]}} filter-region-{{pokemon.regions[5]}} filter-region-{{pokemon.regions[6]}} filter-region-{{pokemon.regions[7]}} filter-inCollection-{{pokemon.inCollection}}"
                     (click)="markPokemon($event)">
                     <div class="card border-left-primary shadow h-100 py-2 ">
                         <div class="card-body">
@@ -81,7 +81,7 @@
                                     </div>
                                     <div _ngcontent-nlx-c101="" _ngcontent-rgn-c101=""
                                         class="OFF__text-xs font-weight-bold text-primary OFF__text-uppercase mb-1"
-                                        style="vertical-align:middle;height:2.2rem; margin-top:23px;font-size: 0.8rem; background-color: #dddfeb; padding: 1px 4px 9px 4px; border-radius: 3px 3px 3px 3px;">
+                                        style="vertical-align:middle;height:1.8Xrem; margin-top:23px;font-size: 0.8rem; background-color: #dddfeb; padding: 1px 4px 9px 4px; border-radius: 3px 3px 3px 3px;">
                                         <table _ngcontent-nlx-c101="">
                                             <tbody>
                                                 <tr _ngcontent-nlx-c101="">
@@ -95,16 +95,16 @@
                                     </div>
                                     <div _ngcontent-nlx-c101="" _ngcontent-rgn-c101=""
                                         class="OFF__text-xs font-weight-bold text-primary OFF__text-uppercase mb-1"
-                                        style="vertical-align:middle; height:2.2rem;;font-size: 0.8rem; background-color: #dddfeb; padding: 1px 4px 9px 4px; border-radius: 3px 3px 3px 3px;">
+                                        style="vertical-align:middle; height:3rem;;font-size: 0.8rem; background-color: #dddfeb; padding: 1px 4px 9px 4px; border-radius: 3px 3px 3px 3px;">
                                         <table _ngcontent-nlx-c101="">
                                             <tbody>
                                                 <tr _ngcontent-nlx-c101="">
                                                     <td _ngcontent-nlx-c101="" style="vertical-align: top;">Region:
-                                                    </td>
-                                                    <td _ngcontent-nlx-c101=""></td>
-                                                    <td _ngcontent-nlx-c101="" style="vertical-align: middle; line-height:14px; ">
                                                         {{pokemon.regions[0]}} {{pokemon.regions[1]}}
-                                                        {{pokemon.regions[2]}} {{pokemon.regions[3]}}</td>
+                                                        {{pokemon.regions[2]}} {{pokemon.regions[3]}}
+                                                        {{pokemon.regions[4]}} {{pokemon.regions[5]}}
+                                                        {{pokemon.regions[6]}} {{pokemon.regions[7]}}
+                                                    </td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -113,7 +113,7 @@
                                 <div class="col-auto" style="text-align: center;height: 275px; color:#4e73df">
                                     <ng-template [ngIf]="pokemon.shiny" [ngIfElse]="notShiny">
                                         <div class=""
-                                            style="line-height:16px; font-weight:bold; font-size: 0.8rem;background-color: #ffc107; color:white; height:3.5rem;  padding: 4px 4px 4px 4px;border-radius: 3px 3px 3px 3px;/* width: 141px; */">
+                                            style="line-height:16px; font-weight:bold; font-size: 0.8rem;background-color: #ff00eb; color:white; height:3.5rem;  padding: 4px 4px 4px 4px;border-radius: 3px 3px 3px 3px;/* width: 141px; */">
                                             <i _ngcontent-vok-c101="" class="fas fa-star" style="font-size:18px;"></i>
                                             <br /> #{{pokemon.dex}}<br />shiny
                                         </div>
@@ -155,21 +155,36 @@
                                     </div>
                                     <ng-template [ngIf]="pokemon.shiny" [ngIfElse]="notShiny2">
                                         <button style="height:2.4rem; margin-top: 5px;" data-placement="right"
-                                            (click)="toggleShiny('.filter-shiny-true.pokemon-' + pokemon.dex)"
-                                            class="btn btn-facebook btn-block tooltips" title="Hide Shiny Pokémon!"> <i
-                                                class="fas fa-times-circle" style="font-size:18px;"></i></button>
+                                            (click)="toggleShinyRegular('.filter-shiny-false.pokemon-' + pokemon.dex)"
+                                            class="btn btn-facebook btn-block tooltips" title="Show Regular Pokémon!">
+                                            <i class="fas fa-map-marker" style="font-size:18px;"></i></button>
                                     </ng-template>
                                     <ng-template #notShiny2>
                                         <button style="height:2.4rem; margin-top: 5px;" data-placement="right"
-                                            (click)="toggleShiny('.filter-shiny-true.pokemon-' + pokemon.dex)"
+                                            (click)="toggleShinyRegular('.filter-shiny-true.pokemon-' + pokemon.dex)"
                                             class="btn btn-facebook btn-block tooltips" title="Show Shiny Pokémon!"> <i
-                                                class="fas fa-star" style="font-size:18px;"></i></button>
+                                                class="fas fa-star" style="font-size:22px; color:#ff00eb;"></i></button>
                                     </ng-template>
-                                    <button style="height:2.4rem; margin-top: 5px;" data-placement="right"
-                                        (click)="toggleShiny('.filter-shiny-true.pokemon-' + pokemon.dex)"
-                                        class="btn btn-facebook btn-block tooltips"
-                                        title="Save Pokémon in Your Collection!"> <i class="fas fa-plus"
-                                            style="font-size:18px;"></i></button>
+
+                                    <ng-template [ngIf]="pokemon.inCollection" [ngIfElse]="notInCollection">
+                                        <button style="height:2.4rem; margin-top: 5px;" data-placement="right"
+                                        (click)="toggleInCollection(pokemon.dex, pokemon.shiny, pokemon.inCollection)"
+                                            class="btn btn-facebook btn-block tooltips"
+                                            title="Remove Pokémon from Your Collection!"><i class="fas fa-times-circle"
+                                                style="font-size:18px;"></i></button>
+                                    </ng-template>
+                                    <ng-template #notInCollection>
+                                        <button style="height:2.4rem; margin-top: 5px;" data-placement="right"
+                                            (click)="toggleInCollection(pokemon.dex, pokemon.shiny, pokemon.inCollection)"
+                                            class="btn btn-facebook btn-block tooltips"
+                                            title="Save Pokémon in Your Collection!"> <i
+                                                class="fas fa-compress-arrows-alt"
+                                                style="font-size:23px;color:#ffc107;"></i></button>
+
+
+                                    </ng-template>
+
+
                                 </div>
                             </div>
                         </div>

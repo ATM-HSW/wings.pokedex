@@ -33,7 +33,7 @@ export class RestApiService {
     })
   }
 
-  public getPokemons() {
+  public getUsersPokemons() {
     return this.httpClient.get(this.apiURL + 'api/v1/users/pokemons');
   }
 
@@ -47,10 +47,6 @@ export class RestApiService {
 
   public getPokemonDetails(dex : string | any) { 
     return this.httpClient.get(`https://pokeapi.co/api/v2/pokemon/${dex}`);
-  }
-
-  public getUsersPokemons() {
-    return this.httpClient.get(`api/v1/users/pokemons`); //http://localhost:8080/pokedex-web/
   }
 
   public getRegions() { 

@@ -17,15 +17,15 @@ export class UserPokemonsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.loadUserPokemons()
+    //this.loadUserPokemons()
   }
 
   // Get employees list
-  loadUserPokemons() {
-    return this.restApi.getPokemons().subscribe((data: {}) => {
-      this.UserPokemon = data;
-    })
-  }
+  // loadUserPokemons() {
+  //   return this.restApi.getPokemons().subscribe((data: {}) => {
+  //     this.UserPokemon = data;
+  //   })
+  // }
 
   // Delete employee
   // deleteEmployee(id: any) {
