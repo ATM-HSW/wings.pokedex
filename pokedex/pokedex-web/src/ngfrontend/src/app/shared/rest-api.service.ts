@@ -34,7 +34,15 @@ export class RestApiService {
   }
 
   public getUsersPokemons() {
-    return this.httpClient.get(this.apiURL + 'api/v1/users/pokemons');
+    return this.httpClient.get(this.apiURL + 'api/v1/user/pokemon/list');
+  }
+
+  public addUserPokemon(pokemon : Object) {
+    return this.httpClient.put<Pokemon>(this.apiURL + 'api/v1/user/pokemon/list/add', pokemon)
+  }
+
+  public removeUserPokemon(dex : string | any, shiny : boolean) {
+    return this.httpClient.delete<Pokemon>(this.apiURL + `api/v1/user/pokemon/list/remove/${dex}-${shiny}`)
   }
 
   public getAllPokemons() {

@@ -40,15 +40,38 @@ export class FullPokedexComponent implements OnInit {
   //   })
   // }
 
-  toggleInCollection(dex : string | undefined, shiny : boolean, inCollection : boolean) {
+  addUserPokemon(dex: string | undefined, shiny: boolean) {
     console.log("savePokemonInCollection");
     this.usersPokemonsIndex.push(`${dex}-${shiny}`);
-    var index : number = parseInt(dex!) - 1;
-    if(shiny) {      
-      this.pokemons[index][1].inCollection = !inCollection;
+    var index: number = parseInt(dex!) - 1;
+    if (shiny) {
+      this.pokemons[index][1].inCollection = true;
     } else {
-      this.pokemons[index][0].inCollection = !inCollection;
+      this.pokemons[index][0].inCollection = true;
     }
+    var pokemon: Object = {
+      "dex": dex,
+      "shiny": shiny
+    }
+    this.restApi.addUserPokemon(pokemon).subscribe((data: any) => {
+      console.log("addUserPokemon");
+      console.log(data);
+    });
+  }
+
+  removeUserPokemon(dex: string | undefined, shiny: boolean) {
+    console.log("removeUserPokemon");
+    this.usersPokemonsIndex.splice(this.usersPokemonsIndex.indexOf(`${dex}-${shiny}`), 1);
+    var index: number = parseInt(dex!) - 1;
+    if (shiny) {
+      this.pokemons[index][1].inCollection = false;
+    } else {
+      this.pokemons[index][0].inCollection = false;
+    }
+    this.restApi.removeUserPokemon(dex, shiny).subscribe((data: any) => {
+      console.log("removeUserPokemon"); 
+      console.log(data);
+    });
   }
 
   public getPokemonSpeciesDetails(pokemon: Pokemon) {
@@ -97,6 +120,8 @@ export class FullPokedexComponent implements OnInit {
   }
 
   public setPokemonDetails(pokemon: Pokemon, index: number) {
+    console.log("setPokemonDetails");
+
     this.restApi.getPokemonDetails(pokemon.dex).subscribe((data: any) => {
       let types: string[] = ['', '', '', '', '', ''];
       for (let n = 0; n < data.types.length; n++) {
@@ -108,17 +133,18 @@ export class FullPokedexComponent implements OnInit {
       var weight = parseFloat(data.weight) / 10;
       pokemon.weight = `${weight} kg`
       pokemon.url_front = data.sprites.front_default;
-      if (this.usersPokemonsIndex.includes(`${pokemon.dex}-${pokemon.shiny}`)) {
+      if (this.usersPokemonsIndex.includes(`${pokemon.dex}-false`)) {
         pokemon.inCollection = true;
       }
 
       //set and add shiny pokemon version
       try {
         let pokemonShiny: Pokemon = Object.assign({}, pokemon);
+        pokemonShiny.inCollection = false;
         if (data.sprites.front_shiny != null) {
           pokemonShiny.url_front = data.sprites.front_shiny;
           pokemonShiny.shiny = true;
-          if (this.usersPokemonsIndex.includes(`${pokemonShiny.dex}-${pokemonShiny.shiny}`)) {
+          if (this.usersPokemonsIndex.includes(`${pokemonShiny.dex}-true`)) {
             pokemonShiny.inCollection = true;
           }
           this.pokemons[index].push(pokemonShiny);

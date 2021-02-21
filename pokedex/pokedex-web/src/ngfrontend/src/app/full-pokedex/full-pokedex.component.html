@@ -49,7 +49,7 @@
 <!-- End of Topbar -->
 
 <!-- Begin Page Content -->
-<div class="container-fluid" onmouseenter="$('.tooltips').tooltip();">
+<div class="container-fluid" OFF__onmouseenter="$('.tooltips').tooltip();">
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800"><span id="pokemonCounter"><i class="fas fa-sync fa-spin"
@@ -156,26 +156,26 @@
                                     <ng-template [ngIf]="pokemon.shiny" [ngIfElse]="notShiny2">
                                         <button style="height:2.4rem; margin-top: 5px;" data-placement="right"
                                             (click)="toggleShinyRegular('.filter-shiny-false.pokemon-' + pokemon.dex)"
-                                            class="btn btn-facebook btn-block tooltips" title="Show Regular Pokémon!">
+                                            class="btn btn-facebook btn-block tooltips" title="Show/Hide Regular Pokémon!">
                                             <i class="fas fa-map-marker" style="font-size:18px;"></i></button>
                                     </ng-template>
                                     <ng-template #notShiny2>
                                         <button style="height:2.4rem; margin-top: 5px;" data-placement="right"
                                             (click)="toggleShinyRegular('.filter-shiny-true.pokemon-' + pokemon.dex)"
-                                            class="btn btn-facebook btn-block tooltips" title="Show Shiny Pokémon!"> <i
+                                            class="btn btn-facebook btn-block tooltips" title="Show/Hide Shiny Pokémon!"> <i
                                                 class="fas fa-star" style="font-size:22px; color:#ff00eb;"></i></button>
                                     </ng-template>
 
                                     <ng-template [ngIf]="pokemon.inCollection" [ngIfElse]="notInCollection">
                                         <button style="height:2.4rem; margin-top: 5px;" data-placement="right"
-                                        (click)="toggleInCollection(pokemon.dex, pokemon.shiny, pokemon.inCollection)"
+                                        (click)="removeUserPokemon(pokemon.dex, pokemon.shiny)"
                                             class="btn btn-facebook btn-block tooltips"
                                             title="Remove Pokémon from Your Collection!"><i class="fas fa-times-circle"
                                                 style="font-size:18px;"></i></button>
                                     </ng-template>
                                     <ng-template #notInCollection>
                                         <button style="height:2.4rem; margin-top: 5px;" data-placement="right"
-                                            (click)="toggleInCollection(pokemon.dex, pokemon.shiny, pokemon.inCollection)"
+                                            (click)="addUserPokemon(pokemon.dex, pokemon.shiny)"
                                             class="btn btn-facebook btn-block tooltips"
                                             title="Save Pokémon in Your Collection!"> <i
                                                 class="fas fa-compress-arrows-alt"
