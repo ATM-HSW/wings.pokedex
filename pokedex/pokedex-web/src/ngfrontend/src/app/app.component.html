@@ -15,6 +15,50 @@
                 MyPokédex</div>
         </a>
         <!-- Nav Item - Pages Collapse Menu -->
+        <ng-template [ngIf]="globalFunctions.loginUsername" [ngIfElse]="noLogin">
+            <li _ngcontent-xbh-c102="" class="nav-item active" data-toggle="tooltip" data-placement="right"
+                title="You must log in first to manage your own collection!"><a _ngcontent-xbh-c102="" id="a-login"
+                    href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+                    aria-controls="collapseTwo" class="nav-link"><i _ngcontent-xbh-c102="" class="fas fa-user-lock"
+                        style="font-size: 22px;"></i>&nbsp;
+                    <span _ngcontent-xbh-c102=""><b>Hello&nbsp; {{globalFunctions.loginUsername}}</b> !</span></a>
+                <div _ngcontent-xbh-c102="" id="collapseOne" aria-labelledby="headingTwo"
+                    data-parent="#accordionSidebar" class="collapse">
+                    <div _ngcontent-xbh-c102="" class="bg-white py-2 collapse-inner rounded">
+                        <button class="btn btn-primary" type="button" (click)="logoutUser()"
+                            style="width: 90%;margin-right: 5%;margin-left: 5%;">
+                            <i class="fas fa-door-open"></i> Logout
+                        </button>
+                    </div>
+                </div>
+            </li>
+        </ng-template>
+        <ng-template #noLogin>
+            <li _ngcontent-xbh-c102="" class="nav-item active" data-toggle="tooltip" data-placement="right"
+                title="You must log in first to manage your own collection!"><a _ngcontent-xbh-c102="" id="a-login"
+                    href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+                    aria-controls="collapseTwo" class="nav-link"><i _ngcontent-xbh-c102="" class="fas fa-unlock-alt"
+                        style="font-size: 22px;"></i>&nbsp;
+                    <span _ngcontent-xbh-c102="">Login</span></a>
+                <div _ngcontent-xbh-c102="" id="collapseOne" aria-labelledby="headingTwo"
+                    data-parent="#accordionSidebar" class="collapse show">
+                    <div _ngcontent-xbh-c102="" class="bg-white py-2 collapse-inner rounded">
+                        <div class="input-group" style="width: 92%;margin-right: auto;margin-left: auto;">
+                            <input #textbox type="text" required class="form-control bg-light border-2 small"
+                                placeholder="Username" aria-label="Search" aria-describedby="basic-addon2"
+                                (keyup.enter)="loginUser(textbox.value)">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button" (click)="loginUser(textbox.value)">
+                                    <i class="fas fa-sign-in-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ng-template>
+
+        <hr class="sidebar-divider">
         <li class="nav-item active ">
             <a id="langChange" class="nav-link collapsed" href="#" data-toggle="collapse" aria-expanded="false"
                 data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
@@ -59,26 +103,39 @@
                 aria-expanded="true" aria-controls="collapseTwo">
                 <i style="font-size:22px;" class="fas fa-filter"></i>&nbsp;
                 <span>Filter</span></a>
-            <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item filter" data-filterclass="filter-all" [routerLink]=""
                         (click)="globalFunctions.toggleSelection(true, $event)"><i class="fas fa-globe"></i>&nbsp;
                         Full Pokedex</a>
-                </div>
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item filter" [routerLink]="" data-filterclass="filter-inCollection-true"
-                        (click)="globalFunctions.toggleSelection(false, $event)"><i class="fas fa-compress-arrows-alt" style="color:#ffc107;font-size: 16px;line-height: 14px;"></i>&nbsp;
-                        My 
-                        Collection</a>
+                </div> 
+                <div class="bg-white py-2 collapse-inner rounded" data-toggle="tooltip" data-placement="right"
+                    title="You must log in first to manage your own collection!">
+                    <ng-template [ngIf]="globalFunctions.loginUsername" [ngIfElse]="noLogin2">
+                        <a class="collapse-item filter" [routerLink]="" data-filterclass="filter-inCollection-true"
+                            (click)="globalFunctions.toggleSelection(false, $event)"><i
+                                class="fas fa-compress-arrows-alt"
+                                style="color:#ffc107;font-size: 16px;line-height: 14px;"></i>&nbsp;
+                            My
+                            Collection</a>
+                    </ng-template>
+                    <ng-template #noLogin2>
+                        <a class="collapse-item filter" [routerLink]=""
+                            onclick="alert('You must log in first to manage your own collection!')"><i
+                                class="fas fa-compress-arrows-alt"
+                                style="color:#ffc107;font-size: 16px;line-height: 14px;"></i>&nbsp;
+                            My
+                            Collection</a>
+                    </ng-template>
                 </div>
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item filter selected" [routerLink]="" data-filterclass="filter-shiny-false"
                         (click)="globalFunctions.toggleSelection(false, $event)"><i
                             class="fas fa-map-marker"></i>&nbsp;Regular</a>
                     <a class="collapse-item filter" [routerLink]="" data-filterclass="filter-shiny-true"
-                        (click)="globalFunctions.toggleSelection(false, $event)"><i
-                            class="fas fa-star" style="color:#f16fe6;"></i>&nbsp;Shiny</a>
+                        (click)="globalFunctions.toggleSelection(false, $event)"><i class="fas fa-star"
+                            style="color:#f16fe6;"></i>&nbsp;Shiny</a>
                 </div>
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h1 class="collapse-header" style="font-size:0.9rem">Type</h1>
@@ -104,7 +161,7 @@
     <div id="content-wrapper" class="d-flex flex-column">
         <!-- Main Content -->
         <div id="content">
-            <router-outlet></router-outlet>
+            <router-outlet (activate)="onActivate($event)"></router-outlet>
         </div>
         <!-- End of Main Content -->
         <!-- Footer -->

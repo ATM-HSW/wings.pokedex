@@ -12,6 +12,7 @@ export class GlobalFunctionsService {
     //this.getRegions();
   }
   spinnerIcon = '<i class="fas fa-sync fa-spin" data-original-title="" title="" style="color: #4e73df; font-size: 2rem;"></i> ';
+  public loginUsername: any;
 
   public toggleSelection(reset: Boolean, event: any) {
     var selector = ".filter-all";
@@ -22,7 +23,9 @@ export class GlobalFunctionsService {
         var selector = ""
       });
     } else {
-      event.srcElement.classList.toggle("selected");
+      if (event != null) {
+        event.srcElement.classList.toggle("selected");
+      }
 
       document.querySelectorAll("#accordionSidebar a.filter.selected").forEach(element => {
         selectorAr.push(element.getAttribute("data-filterclass"))
@@ -54,7 +57,7 @@ export class GlobalFunctionsService {
       this.pokedexRegions = data.results;
       for (let i = 0; i < this.pokedexRegions.length; i++) {
         this.pokedexRegions[i].class = `filter-region-${this.pokedexRegions[i].name}`;
-      } 
+      }
     });
   }
 }

@@ -20,7 +20,7 @@ export class FullPokedexComponent implements OnInit {
   // pokemons = [{ "types": ['abc', 'xyz'], "height": "", weight: "", "de" : "", "en" : "", "es" : "", "fr" : "", "it" : "", "ja" : "", "ko" : "" }];
   pokemons!: Pokemon[][];
   usersPokemons: Pokemon[] = [];
-  usersPokemonsIndex: String[] = [];
+  //usersPokemonsIndex: String[] = [];
   pokemons2: any;
   api: string = "https://pokeapi.co/api/v2/pokemon/?limit=898&offset=0"; //898
   textValue = ''; //initial value
@@ -40,9 +40,13 @@ export class FullPokedexComponent implements OnInit {
   //   })
   // }
 
+  test123() {
+    alert(123123);
+  }
+
   addUserPokemon(dex: string | undefined, shiny: boolean) {
     console.log("savePokemonInCollection");
-    this.usersPokemonsIndex.push(`${dex}-${shiny}`);
+    //this.usersPokemonsIndex.push(`${dex}-${shiny}`);
     var index: number = parseInt(dex!) - 1;
     if (shiny) {
       this.pokemons[index][1].inCollection = true;
@@ -54,14 +58,16 @@ export class FullPokedexComponent implements OnInit {
       "shiny": shiny
     }
     this.restApi.addUserPokemon(pokemon).subscribe((data: any) => {
+      this.usersPokemons = data;
       console.log("addUserPokemon");
       console.log(data);
+      this.globalFunctions.toggleSelection(false,null);
     });
   }
 
   removeUserPokemon(dex: string | undefined, shiny: boolean) {
     console.log("removeUserPokemon");
-    this.usersPokemonsIndex.splice(this.usersPokemonsIndex.indexOf(`${dex}-${shiny}`), 1);
+    //this.usersPokemonsIndex.splice(this.usersPokemonsIndex.indexOf(`${dex}-${shiny}`), 1);
     var index: number = parseInt(dex!) - 1;
     if (shiny) {
       this.pokemons[index][1].inCollection = false;
@@ -69,8 +75,10 @@ export class FullPokedexComponent implements OnInit {
       this.pokemons[index][0].inCollection = false;
     }
     this.restApi.removeUserPokemon(dex, shiny).subscribe((data: any) => {
-      console.log("removeUserPokemon"); 
+      this.usersPokemons = data;
+      console.log("removeUserPokemon");
       console.log(data);
+      this.globalFunctions.toggleSelection(false,null);
     });
   }
 
@@ -133,9 +141,9 @@ export class FullPokedexComponent implements OnInit {
       var weight = parseFloat(data.weight) / 10;
       pokemon.weight = `${weight} kg`
       pokemon.url_front = data.sprites.front_default;
-      if (this.usersPokemonsIndex.includes(`${pokemon.dex}-false`)) {
-        pokemon.inCollection = true;
-      }
+      // if (this.usersPokemonsIndex.includes(`${pokemon.dex}-false`)) {
+      //   pokemon.inCollection = true;
+      // }
 
       //set and add shiny pokemon version
       try {
@@ -144,9 +152,9 @@ export class FullPokedexComponent implements OnInit {
         if (data.sprites.front_shiny != null) {
           pokemonShiny.url_front = data.sprites.front_shiny;
           pokemonShiny.shiny = true;
-          if (this.usersPokemonsIndex.includes(`${pokemonShiny.dex}-true`)) {
-            pokemonShiny.inCollection = true;
-          }
+          // if (this.usersPokemonsIndex.includes(`${pokemonShiny.dex}-true`)) {
+          //   pokemonShiny.inCollection = true;
+          // }
           this.pokemons[index].push(pokemonShiny);
         }
       } catch (e) {
@@ -230,18 +238,40 @@ export class FullPokedexComponent implements OnInit {
     });
   }
 
+  clearUsersPokemon() {
+    for (var pokemon of this.usersPokemons) {
+      //this.usersPokemonsIndex.push(`${pokemon.dex}-${pokemon.shiny}`);
+      var index1 = parseInt(pokemon.dex!) - 1;
+      var index2 = 0;
+      if(pokemon.shiny) {
+        index2 = 1
+      }
+      this.pokemons[index1][index2].inCollection = false;
+    }
+    this.usersPokemons = [];
+    this.globalFunctions.toggleSelection(true,null);
+  }
+
   getUsersPokemons() {
     //console.log("getUsersPokemons.");
-    this.usersPokemonsIndex = [];
+    //this.usersPokemonsIndex = [];
     this.usersPokemons = [];
     this.restApi.getUsersPokemons().subscribe((data: any) => {
       this.usersPokemons = data;
       console.log(this.usersPokemons);
       for (var pokemon of this.usersPokemons) {
-        this.usersPokemonsIndex.push(`${pokemon.dex}-${pokemon.shiny}`);
+        //this.usersPokemonsIndex.push(`${pokemon.dex}-${pokemon.shiny}`);
+        var index1 = parseInt(pokemon.dex!) - 1;
+        var index2 = 0;
+        if(pokemon.shiny) {
+          index2 = 1
+        }
+        this.pokemons[index1][index2].inCollection = true;
       }
-      console.log("usersPokemonsIndex");
-      console.log(this.usersPokemonsIndex);
+      this.globalFunctions.toggleSelection(false,null);
+
+      //console.log("usersPokemonsIndex");
+      //console.log(this.usersPokemonsIndex);
       // document.getElementById("full-pokedex-spinner")!.style.display = "none";
       // this.pokemonCounter = data.results.length
       // var counter: number;
@@ -273,7 +303,7 @@ export class FullPokedexComponent implements OnInit {
     // this.pokemons.push(pokemon);
 
     //this.fetchPokemonsFromPokeApi();
-    this.getUsersPokemons();
+    //this.getUsersPokemons();
 
     this.getAllPokemons()
     //this.buildRegions();

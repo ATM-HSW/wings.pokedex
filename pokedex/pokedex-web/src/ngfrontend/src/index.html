@@ -2,30 +2,32 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>MyPokédex</title>
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
-        <link href="//db.onlinewebfonts.com/c/f4d1593471d222ddebd973210265762a?family=Pokemon" rel="stylesheet" type="text/css"/>
-        <link rel='icon' href='favicon.ico' type='image/x-icon' sizes="16x16" />
-        
-        <script>
-          function initTooltips() {
-              //jQuery vs. Angular2 Workaround :-(
-              $('[data-toggle="tooltip"]').tooltip();
-          }
-      </script>
-    <base href="/">
-</head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>MyPokédex</title>
+  <link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
+  <link href="//db.onlinewebfonts.com/c/f4d1593471d222ddebd973210265762a?family=Pokemon" rel="stylesheet"
+    type="text/css" />
+  <link rel='icon' href='favicon.ico' type='image/x-icon' sizes="16x16" />
 
-<body id="page-top" onmouseover="initSbAdmin2(); initTooltips();">
-  <app-root></app-root> 
+  <script>
+    function initTooltips() {
+      //jQuery vs. Angular2 Workaround :-(      
+      $('[data-toggle="tooltip"]').tooltip();
+    }
+  </script>
+  <base href="/">
+</head> 
+
+<body id="page-top" onmouseover="initTooltips();"
+  onclick="$('[data-toggle=\'tooltip\']').tooltip('hide'); $('.tooltip.show').hide()">
+  <app-root></app-root>
 </body>
-<script src="https://unpkg.com/pokeapi-js-wrapper/dist/index.js"></script> 
+<script src="https://unpkg.com/pokeapi-js-wrapper/dist/index.js"></script>
 
 </html>

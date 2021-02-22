@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AngularFaviconService } from 'angular-favicon';
 import { HttpClient } from '@angular/common/http';
 import { FullPokedexComponent } from './full-pokedex/full-pokedex.component';
-import { GlobalFunctionsService } from './shared/global-functions.service'; 
+import { GlobalFunctionsService } from './shared/global-functions.service';
 
 
 @Component({
@@ -14,7 +14,7 @@ import { GlobalFunctionsService } from './shared/global-functions.service';
 export class AppComponent implements OnInit {
   types: any = [];
 
-  constructor(private ngxFavicon: AngularFaviconService, private http: HttpClient, public globalFunctions : GlobalFunctionsService) { }
+  constructor(private ngxFavicon: AngularFaviconService, private http: HttpClient, public globalFunctions: GlobalFunctionsService) { }
   ngOnInit(): void {
     //this.globalFunctions.updateCounter(false, -1); 
     this.ngxFavicon.setFavicon("favicon.png");
@@ -23,12 +23,28 @@ export class AppComponent implements OnInit {
     //console.log("buildRegions");
   }
   title = 'ngfrontend';
+  componentReference: any;
+  onActivate(pComponentReference: any) {
+    console.log(pComponentReference)
+    this.componentReference = pComponentReference;
+  }
+
+  public loginUser(username: String) {
+    this.globalFunctions.loginUsername = username;
+    this.componentReference.getUsersPokemons();
+  }
+
+  public logoutUser() {
+    this.globalFunctions.loginUsername = null;
+    this.componentReference.clearUsersPokemon(); 
+  }
 
   changeLanguage(lang: string) {
     console.log("changeLanguage...");
     document.querySelectorAll<HTMLElement>('.language').forEach(element => element.style.display = 'none');
     document.querySelectorAll<HTMLElement>(`.language_${lang}`).forEach(element => element.style.display = 'inline');
     document.getElementById("langChange")?.click();
+    this.componentReference.test123();
   }
 
   fullPokedex() {
@@ -69,13 +85,13 @@ export class AppComponent implements OnInit {
     return promise;
   }
 
-  
+
 
   capitalizeFirstLetter(string: any) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
- 
+
 }
 
 
