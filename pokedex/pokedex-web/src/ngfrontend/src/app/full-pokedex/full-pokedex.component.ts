@@ -17,15 +17,9 @@ export class FullPokedexComponent implements OnInit {
     this.pokemons = new Array<Array<Pokemon>>()
   }
 
-  // pokemons = [{ "types": ['abc', 'xyz'], "height": "", weight: "", "de" : "", "en" : "", "es" : "", "fr" : "", "it" : "", "ja" : "", "ko" : "" }];
   pokemons!: Pokemon[][];
   usersPokemons: Pokemon[] = [];
-  //usersPokemonsIndex: String[] = [];
-  pokemons2: any;
-  api: string = "https://pokeapi.co/api/v2/pokemon/?limit=898&offset=0"; //898
-  textValue = ''; //initial value
-  //categories : any = [];
-  //pokemonCounter = 0;
+  textValue = '';
 
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
@@ -34,19 +28,7 @@ export class FullPokedexComponent implements OnInit {
     }
   }
 
-  // savePokemon(): void {
-  //   var data = this.restApi.getPokemons().subscribe((data: {}) => {
-  //     alert(data);
-  //   })
-  // }
-
-  test123() {
-    alert(123123);
-  }
-
   addUserPokemon(dex: string | undefined, shiny: boolean) {
-    console.log("savePokemonInCollection");
-    //this.usersPokemonsIndex.push(`${dex}-${shiny}`);
     var index: number = parseInt(dex!) - 1;
     if (shiny) {
       this.pokemons[index][1].inCollection = true;
@@ -57,28 +39,25 @@ export class FullPokedexComponent implements OnInit {
       "dex": dex,
       "shiny": shiny
     }
-    this.restApi.addUserPokemon(pokemon).subscribe((data: any) => {
+    this.restApi.addUserPokemon(this.globalFunctions.loginUserId, pokemon).subscribe((data: any) => {
       this.usersPokemons = data;
-      console.log("addUserPokemon");
-      console.log(data);
-      this.globalFunctions.toggleSelection(false,null);
+      this.globalFunctions.toggleSelection(false, null);
     });
   }
 
   removeUserPokemon(dex: string | undefined, shiny: boolean) {
     console.log("removeUserPokemon");
-    //this.usersPokemonsIndex.splice(this.usersPokemonsIndex.indexOf(`${dex}-${shiny}`), 1);
     var index: number = parseInt(dex!) - 1;
     if (shiny) {
       this.pokemons[index][1].inCollection = false;
     } else {
       this.pokemons[index][0].inCollection = false;
     }
-    this.restApi.removeUserPokemon(dex, shiny).subscribe((data: any) => {
+    this.restApi.removeUserPokemon(this.globalFunctions.loginUserId, dex, shiny).subscribe((data: any) => {
       this.usersPokemons = data;
       console.log("removeUserPokemon");
       console.log(data);
-      this.globalFunctions.toggleSelection(false,null);
+      this.globalFunctions.toggleSelection(false, null);
     });
   }
 
@@ -128,8 +107,6 @@ export class FullPokedexComponent implements OnInit {
   }
 
   public setPokemonDetails(pokemon: Pokemon, index: number) {
-    console.log("setPokemonDetails");
-
     this.restApi.getPokemonDetails(pokemon.dex).subscribe((data: any) => {
       let types: string[] = ['', '', '', '', '', ''];
       for (let n = 0; n < data.types.length; n++) {
@@ -141,9 +118,6 @@ export class FullPokedexComponent implements OnInit {
       var weight = parseFloat(data.weight) / 10;
       pokemon.weight = `${weight} kg`
       pokemon.url_front = data.sprites.front_default;
-      // if (this.usersPokemonsIndex.includes(`${pokemon.dex}-false`)) {
-      //   pokemon.inCollection = true;
-      // }
 
       //set and add shiny pokemon version
       try {
@@ -152,9 +126,6 @@ export class FullPokedexComponent implements OnInit {
         if (data.sprites.front_shiny != null) {
           pokemonShiny.url_front = data.sprites.front_shiny;
           pokemonShiny.shiny = true;
-          // if (this.usersPokemonsIndex.includes(`${pokemonShiny.dex}-true`)) {
-          //   pokemonShiny.inCollection = true;
-          // }
           this.pokemons[index].push(pokemonShiny);
         }
       } catch (e) {
@@ -168,10 +139,7 @@ export class FullPokedexComponent implements OnInit {
   }
 
   getAllPokemons() {
-    //this.pokemons = [898][2]; 
-
     this.restApi.getAllPokemons().subscribe((data: any) => {
-      //this.pokemonCounter = data.results.length
       var counter: number;
       for (var pokemonL1 of data.results!) {
         var lcPokemon: Pokemon = new Pokemon();
@@ -182,7 +150,6 @@ export class FullPokedexComponent implements OnInit {
         let lcAr = new Array();
         lcAr.push(lcPokemon);
         this.pokemons.push(lcAr);
-        //this.pokemons[this.pokemons.length - 1][0] = lcPokemon;
       }
       for (let i = 0; i < this.pokemons.length; i++) {
         this.setPokemonDetails(this.pokemons[i][0], i);
@@ -193,31 +160,6 @@ export class FullPokedexComponent implements OnInit {
       }
       for (let i = 0; i < this.globalFunctions.pokedexRegions.length; i++) {
         this.getSpeciesByRegion(this.globalFunctions.pokedexRegions[i].url, this.globalFunctions.pokedexRegions[i].name);
-        // console.log(this.globalFunctions.pokedexRegions[i].name);
-        // console.log(this.globalFunctions.pokedexRegions[i].url);
-
-
-        // //this.pokemonCounter = data.results.length
-        // var counter: number;
-        // for (var pokemonL1 of data.results!) {
-        //   var lcPokemon: Pokemon = new Pokemon();
-        //   lcPokemon.de = pokemonL1.name.charAt(0).toUpperCase() + pokemonL1.name.slice(1);
-        //   lcPokemon.url = pokemonL1.url;
-        //   var urlAr = pokemonL1.url.split("/");
-        //   lcPokemon.dex = urlAr[urlAr.length - 2];
-        //   let lcAr = new Array();
-        //   lcAr.push(lcPokemon);
-        //   this.pokemons.push(lcAr);
-        //   //this.pokemons[this.pokemons.length - 1][0] = lcPokemon;
-        // }
-        // for (let i = 0; i < this.pokemons.length; i++) {
-        //   this.setPokemonDetails(this.pokemons[i][0], i);
-        // }
-        // for (let i = 0; i < this.pokemons.length; i++) {
-        //   this.getPokemonSpeciesDetails(this.pokemons[i][0]);
-        // }
-
-        // console.log(this.pokemons);
       }
     });
   }
@@ -239,74 +181,38 @@ export class FullPokedexComponent implements OnInit {
   }
 
   clearUsersPokemon() {
+    console.log("clearUsersPokemon");
     for (var pokemon of this.usersPokemons) {
-      //this.usersPokemonsIndex.push(`${pokemon.dex}-${pokemon.shiny}`);
       var index1 = parseInt(pokemon.dex!) - 1;
       var index2 = 0;
-      if(pokemon.shiny) {
+      if (pokemon.shiny) {
         index2 = 1
       }
       this.pokemons[index1][index2].inCollection = false;
     }
     this.usersPokemons = [];
-    this.globalFunctions.toggleSelection(true,null);
+    this.globalFunctions.toggleSelection(true, null);
   }
 
-  getUsersPokemons() {
-    //console.log("getUsersPokemons.");
-    //this.usersPokemonsIndex = [];
+  getUsersPokemons(id: number) {
+    console.log("getUsersPokemons.");
     this.usersPokemons = [];
-    this.restApi.getUsersPokemons().subscribe((data: any) => {
+    this.restApi.getUsersPokemons(id).subscribe((data: any) => {
       this.usersPokemons = data;
-      console.log(this.usersPokemons);
       for (var pokemon of this.usersPokemons) {
-        //this.usersPokemonsIndex.push(`${pokemon.dex}-${pokemon.shiny}`);
         var index1 = parseInt(pokemon.dex!) - 1;
         var index2 = 0;
-        if(pokemon.shiny) {
+        if (pokemon.shiny) {
           index2 = 1
         }
         this.pokemons[index1][index2].inCollection = true;
       }
-      this.globalFunctions.toggleSelection(false,null);
-
-      //console.log("usersPokemonsIndex");
-      //console.log(this.usersPokemonsIndex);
-      // document.getElementById("full-pokedex-spinner")!.style.display = "none";
-      // this.pokemonCounter = data.results.length
-      // var counter: number;
-      // for (var pokemonL1 of data.results!) {
-      //   var lcPokemon: Pokemon = new Pokemon();
-      //   lcPokemon.de = pokemonL1.name;
-      //   lcPokemon.url = pokemonL1.url;
-      //   var urlAr = pokemonL1.url.split("/");
-      //   lcPokemon.dex = urlAr[urlAr.length - 2];
-      //   this.pokemons.push(lcPokemon);
-      // }
-      // for (let i = 0; i < this.pokemons.length; i++) {
-      //   this.getPokemonSpeciesDetails(this.pokemons[i]);
-      // }
-      // for (let i = 0; i < this.pokemons.length; i++) {
-      //   this.getPokemonDetails(this.pokemons[i]);
-      // }
+      this.globalFunctions.toggleSelection(false, null);
     });
   }
 
-
   ngOnInit(): void {
-    //document.getElementById("pokemonCounter")!.innerHTML = globalFunctions.spinnerIcon;
-
-    // var pokemon = Object();
-    // pokemon.types = [];
-    // pokemon.types.push = ["abc"];
-    // pokemon.types.push = ["efg"];
-    // this.pokemons.push(pokemon);
-
-    //this.fetchPokemonsFromPokeApi();
-    //this.getUsersPokemons();
-
     this.getAllPokemons()
-    //this.buildRegions();
   }
 
   searchByNrName(value: string): void {
@@ -353,15 +259,6 @@ export class FullPokedexComponent implements OnInit {
       document.querySelectorAll('.pokemons').forEach(element => element.classList.remove('pokemon-selected'));
       event.srcElement.closest(".pokemons").classList.add('pokemon-selected');
     }
-  }
-
-  fetchPokemonData(pokemon: { url: any; }) {
-    let url = pokemon.url // <--- this is saving the pokemon url to a      variable to us in a fetch.(Ex: https://pokeapi.co/api/v2/pokemon/1/)
-    fetch(url)
-      .then(response => response.json())
-      .then((pokeData) => {
-        this.pokemons2.push(pokeData);
-      })
   }
 
   toggleShinyRegular(pSelector: any) {

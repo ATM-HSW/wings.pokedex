@@ -21,7 +21,7 @@
                     href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
                     aria-controls="collapseTwo" class="nav-link"><i _ngcontent-xbh-c102="" class="fas fa-user-lock"
                         style="font-size: 22px;"></i>&nbsp;
-                    <span _ngcontent-xbh-c102=""><b>Hello&nbsp; {{globalFunctions.loginUsername}}</b> !</span></a>
+                    <span _ngcontent-xbh-c102=""><b> {{globalFunctions.loginUsername}}</b></span></a>
                 <div _ngcontent-xbh-c102="" id="collapseOne" aria-labelledby="headingTwo"
                     data-parent="#accordionSidebar" class="collapse">
                     <div _ngcontent-xbh-c102="" class="bg-white py-2 collapse-inner rounded">
@@ -148,9 +148,6 @@
                     <a *ngFor="let region of globalFunctions.pokedexRegions; index as i;" class="collapse-item filter"
                         [routerLink]="" (click)="globalFunctions.toggleSelection(false, $event)"
                         [attr.data-filterclass]="region.class">{{region!.name}}</a>
-                    <!-- <a *ngFor="let region of pokedexRegions; index as i;" class="collapse-item filter" [routerLink]=""
-                        (click)="globalFunctions.toggleSelection('.' + region!.name, true)"
-                        [attr.data-filterclass]="region.url">{{region!.name}}</a>-->
                 </div>
             </div>
         </li>

@@ -3,7 +3,7 @@ import { AngularFaviconService } from 'angular-favicon';
 import { HttpClient } from '@angular/common/http';
 import { FullPokedexComponent } from './full-pokedex/full-pokedex.component';
 import { GlobalFunctionsService } from './shared/global-functions.service';
-
+import { RestApiService } from './shared/rest-api.service';
 
 @Component({
   selector: 'app-root',
@@ -14,33 +14,57 @@ import { GlobalFunctionsService } from './shared/global-functions.service';
 export class AppComponent implements OnInit {
   types: any = [];
 
-  constructor(private ngxFavicon: AngularFaviconService, private http: HttpClient, public globalFunctions: GlobalFunctionsService) { }
+  constructor(private ngxFavicon: AngularFaviconService, private http: HttpClient, public globalFunctions: GlobalFunctionsService, public restApi: RestApiService) { }
   ngOnInit(): void {
-    //this.globalFunctions.updateCounter(false, -1); 
     this.ngxFavicon.setFavicon("favicon.png");
     this.getTypes();
     this.globalFunctions.getRegions();
-    //console.log("buildRegions");
   }
   title = 'ngfrontend';
   componentReference: any;
   onActivate(pComponentReference: any) {
-    console.log(pComponentReference)
     this.componentReference = pComponentReference;
   }
 
   public loginUser(username: String) {
-    this.globalFunctions.loginUsername = username;
-    this.componentReference.getUsersPokemons();
+    if (username.length > 0) {
+      this.restApi.getUser(username).subscribe((data: any) => {
+        var user = data;
+        if (user != null) {
+          this.globalFunctions.loginUsername = user.userName;
+          this.globalFunctions.loginUserId = data.id; 
+          this.componentReference.getUsersPokemons(user.id);
+        }
+      }, (error => {
+        console.log(error);
+        var create = window.confirm("The user does not exist yet. Should the user be created now?");
+        if (create) {
+          var user = Object();
+          user.userName = username;
+          user.firstName = '';
+          user.lastName = '';
+          user.gender = 'Unknown';
+          this.addUser(user);
+        }
+      }));
+    }
+  }
+
+  public addUser(user: Object) {
+    this.restApi.addUser(user).subscribe((data: any) => {
+      this.globalFunctions.loginUsername = data.userName;
+      this.globalFunctions.loginUserId = data.id; 
+      alert("The user has been created. You can now manage your collection.");
+    });
   }
 
   public logoutUser() {
     this.globalFunctions.loginUsername = null;
-    this.componentReference.clearUsersPokemon(); 
+    //this.componentReference.usersPokemons = [];
+    this.componentReference.clearUsersPokemon();
   }
 
   changeLanguage(lang: string) {
-    console.log("changeLanguage...");
     document.querySelectorAll<HTMLElement>('.language').forEach(element => element.style.display = 'none');
     document.querySelectorAll<HTMLElement>(`.language_${lang}`).forEach(element => element.style.display = 'inline');
     document.getElementById("langChange")?.click();
@@ -61,13 +85,11 @@ export class AppComponent implements OnInit {
 
   getTypes() {
     const promise = new Promise<void>((resolve, reject) => {
-      const url = `https://pokeapi.co/api/v2/type`; ///https://pokeapi.co/api/v2/pokemon-species/${i}`;
+      const url = `https://pokeapi.co/api/v2/type`; 
       this.http
         .get(url)
         .toPromise()
         .then((types: any) => {
-          //console.log("types...........................................");
-          //console.log(types.results);
           for (let n = 0; n < types.results.length; n++) {
             var filterClass = Object();
             filterClass.name = types.results[n].name;
@@ -85,13 +107,7 @@ export class AppComponent implements OnInit {
     return promise;
   }
 
-
-
   capitalizeFirstLetter(string: any) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
-
-
 }
-
-

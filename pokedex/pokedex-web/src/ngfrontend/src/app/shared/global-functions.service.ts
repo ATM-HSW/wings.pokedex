@@ -13,6 +13,7 @@ export class GlobalFunctionsService {
   }
   spinnerIcon = '<i class="fas fa-sync fa-spin" data-original-title="" title="" style="color: #4e73df; font-size: 2rem;"></i> ';
   public loginUsername: any;
+  public loginUserId: any;
 
   public toggleSelection(reset: Boolean, event: any) {
     var selector = ".filter-all";

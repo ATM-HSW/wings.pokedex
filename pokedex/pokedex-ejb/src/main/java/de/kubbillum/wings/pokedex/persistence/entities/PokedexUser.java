@@ -18,6 +18,7 @@ import de.kubbillum.wings.pokedex.persistence.enums.Gender;
 
 @Entity
 @NamedQuery(name = PokedexUser.QUERY_GETALL, query = "SELECT c FROM PokedexUser c")
+@NamedNativeQuery(name = PokedexUser.QUERY_GET_USER_BY_USERNAME, query = "SELECT * FROM PokedexUser c WHERE userName = ?", resultClass = PokedexUser.class)
 @NamedNativeQuery(name = PokedexUser.QUERY_GETBIRTHDAYS, query = "SELECT * FROM PokedexUser WHERE EXTRACT(day from birthday) = ? AND EXTRACT(month from birthday) = ?", resultClass = PokedexUser.class)
 
 @Table(name = "PokedexUser", uniqueConstraints = @UniqueConstraint(columnNames = { "userName" }))
@@ -25,6 +26,8 @@ public class PokedexUser implements Serializable {
 
 	public static final String QUERY_GETALL = "PokedexUser.GetAll";
 	public static final String QUERY_GETBIRTHDAYS = "PokedexUser.GetByBirthday";
+	public static final String QUERY_GET_USER_BY_USERNAME = "PokedexUser.GetUserByUserName";
+
 
 	private static final long serialVersionUID = 1L;
 
@@ -37,11 +40,11 @@ public class PokedexUser implements Serializable {
 	private String userName;
 
 	@NotNull
-	@Size(min = 1, max = 100)
+	@Size(max = 100)
 	private String firstName;
 
 	@NotNull
-	@Size(min = 1, max = 100)
+	@Size(max = 100)
 	private String lastName;
 
 	@NotNull

@@ -154,37 +154,56 @@
                                         </table>
                                     </div>
                                     <ng-template [ngIf]="pokemon.shiny" [ngIfElse]="notShiny2">
-                                        <button style="height:2.4rem; margin-top: 5px;" data-placement="right"
+                                        <button style="height:2.4rem; margin-top: 5px;" data-toggle="tooltip"
+                                            data-placement="right"
                                             (click)="toggleShinyRegular('.filter-shiny-false.pokemon-' + pokemon.dex)"
-                                            class="btn btn-facebook btn-block tooltips" title="Show/Hide Regular Pokémon!">
+                                            class="btn btn-facebook btn-block tooltips"
+                                            title="Show/Hide Regular Pokémon!">
                                             <i class="fas fa-map-marker" style="font-size:18px;"></i></button>
                                     </ng-template>
                                     <ng-template #notShiny2>
-                                        <button style="height:2.4rem; margin-top: 5px;" data-placement="right"
+                                        <button style="height:2.4rem; margin-top: 5px;" data-toggle="tooltip"
+                                            data-placement="right"
                                             (click)="toggleShinyRegular('.filter-shiny-true.pokemon-' + pokemon.dex)"
-                                            class="btn btn-facebook btn-block tooltips" title="Show/Hide Shiny Pokémon!"> <i
-                                                class="fas fa-star" style="font-size:22px; color:#ff00eb;"></i></button>
+                                            class="btn btn-facebook btn-block tooltips"
+                                            title="Show/Hide Shiny Pokémon!"> <i class="fas fa-star"
+                                                style="font-size:22px; color:#ff00eb;"></i></button>
                                     </ng-template>
-
                                     <ng-template [ngIf]="pokemon.inCollection" [ngIfElse]="notInCollection">
-                                        <button style="height:2.4rem; margin-top: 5px;" data-placement="right"
-                                        (click)="removeUserPokemon(pokemon.dex, pokemon.shiny)"
-                                            class="btn btn-facebook btn-block" data-toggle="tooltip" data-placement="right"
-                                            title="Remove Pokémon from Your Collection!"><i class="fas fa-times-circle"
-                                                style="font-size:24px;"></i></button>
+                                        <ng-template [ngIf]="globalFunctions.loginUsername" [ngIfElse]="noLogin3">
+                                            <button style="height:2.4rem; margin-top: 5px;" data-placement="right"
+                                                (click)="removeUserPokemon(pokemon.dex, pokemon.shiny)"
+                                                class="btn btn-facebook btn-block" data-toggle="tooltip"
+                                                data-placement="right" title="Remove Pokémon from Your Collection!"><i
+                                                    class="fas fa-times-circle" style="font-size:24px;"></i></button>
+                                        </ng-template>
+                                        <ng-template #noLogin3>
+                                            <button style="height:2.4rem; margin-top: 5px;" data-placement="right"                                               
+                                                class="btn btn-facebook btn-block" data-toggle="tooltip"
+                                                data-placement="right"
+                                                title="You must log in first to manage your own collection!<br/><br/>Remove Pokémon from Your Collection!"><i
+                                                    class="fas fa-times-circle" style="font-size:24px;"></i></button>
+                                        </ng-template>
                                     </ng-template>
                                     <ng-template #notInCollection>
-                                        <button style="height:2.4rem; margin-top: 5px;" data-placement="right"
-                                            (click)="addUserPokemon(pokemon.dex, pokemon.shiny)"
-                                            class="btn btn-facebook btn-block" data-toggle="tooltip" data-placement="right" data-html="true" 
-                                            title="Save Pokémon in Your Collection! <br/><br/>You must log in first to manage your own collection!"> <i
-                                                class="fas fa-compress-arrows-alt"
-                                                style="font-size:23px;color:#ffc107;"></i></button>
-
-
+                                        <ng-template [ngIf]="globalFunctions.loginUsername" [ngIfElse]="noLogin4">
+                                            <button style="height:2.4rem; margin-top: 5px;" data-placement="right"
+                                                (click)="addUserPokemon(pokemon.dex, pokemon.shiny)"
+                                                class="btn btn-facebook btn-block" data-toggle="tooltip"
+                                                data-placement="right" data-html="true"
+                                                title="Save Pokémon in Your Collection!">
+                                                <i class="fas fa-compress-arrows-alt"
+                                                    style="font-size:23px;color:#ffc107;"></i></button>
+                                        </ng-template>
+                                        <ng-template #noLogin4> 
+                                            <button style="height:2.4rem; margin-top: 5px;" data-placement="right"
+                                                class="btn btn-facebook btn-block" data-toggle="tooltip"
+                                                data-placement="right" data-html="true"
+                                                title="You must log in first to manage your own collection!<br/><br/>Save Pokémon in Your Collection!">
+                                                <i class="fas fa-compress-arrows-alt"
+                                                    style="font-size:23px;color:#ffc107;"></i></button>
+                                        </ng-template>
                                     </ng-template>
-
-
                                 </div>
                             </div>
                         </div>

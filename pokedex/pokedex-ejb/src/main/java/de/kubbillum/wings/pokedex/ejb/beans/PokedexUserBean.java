@@ -52,4 +52,9 @@ public class PokedexUserBean implements PokedexUserDAO {
 		LocalDate today = LocalDate.now();
 		return em.createNamedQuery(PokedexUser.QUERY_GETBIRTHDAYS, PokedexUser.class).setParameter(1, today.getDayOfMonth()).setParameter(2, today.getMonthValue()).getResultList();
 	}
+
+	@Override
+	public PokedexUser getPokedexUserByUserName(String userName) {
+		return em.createNamedQuery(PokedexUser.QUERY_GET_USER_BY_USERNAME, PokedexUser.class).setParameter(1, userName).getResultList().get(0);
+	}
 }
