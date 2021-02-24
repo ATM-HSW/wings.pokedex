@@ -32,8 +32,10 @@ export class AppComponent implements OnInit {
         var user = data;
         if (user != null) {
           this.globalFunctions.loginUsername = user.userName;
-          this.globalFunctions.loginUserId = data.id; 
-          this.componentReference.getUsersPokemons(user.id);
+          this.globalFunctions.loginUserId = data.id;
+          this.globalFunctions.loginUser = data;
+          this.componentReference.getUsersPokemons(user.id)
+          localStorage.setItem("stLoginUser", JSON.stringify(this.globalFunctions.loginUser));
         }
       }, (error => {
         console.log(error);
@@ -53,7 +55,7 @@ export class AppComponent implements OnInit {
   public addUser(user: Object) {
     this.restApi.addUser(user).subscribe((data: any) => {
       this.globalFunctions.loginUsername = data.userName;
-      this.globalFunctions.loginUserId = data.id; 
+      this.globalFunctions.loginUserId = data.id;
       alert("The user has been created. You can now manage your collection.");
     });
   }
@@ -61,6 +63,7 @@ export class AppComponent implements OnInit {
   public logoutUser() {
     this.globalFunctions.loginUsername = null;
     //this.componentReference.usersPokemons = [];
+    localStorage.removeItem("stLoginUser");
     this.componentReference.clearUsersPokemon();
   }
 
@@ -85,7 +88,7 @@ export class AppComponent implements OnInit {
 
   getTypes() {
     const promise = new Promise<void>((resolve, reject) => {
-      const url = `https://pokeapi.co/api/v2/type`; 
+      const url = `https://pokeapi.co/api/v2/type`;
       this.http
         .get(url)
         .toPromise()

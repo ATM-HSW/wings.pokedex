@@ -11,7 +11,7 @@ export class RestApiService {
   apiURL = "";
   //apiURL = 'http://localhost:3000';
   //apiURL = 'http://localhost:8080/pokedex-web/api/v1/users';
-  maxFetch = 400; //898
+  maxFetch :  number = 400 ; //898
   constructor(private httpClient: HttpClient) { }
 
   /*========================================

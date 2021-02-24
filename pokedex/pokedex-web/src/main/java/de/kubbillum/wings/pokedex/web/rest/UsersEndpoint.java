@@ -36,7 +36,11 @@ public class UsersEndpoint {
 		PokedexUser resultUser = pokedexUserDAO.create(user);
 		return resultUser;
 	}
-	
+	/**
+	 * m.kubbillum
+	 * @param userName
+	 * @return
+	 */
 	@GET
 	@Path("/{userName}")
 	@Produces(MediaType.APPLICATION_JSON)

@@ -13,7 +13,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { UserEditComponent } from './user-edit/user-edit.component';
-import { FullPokedexComponent } from './full-pokedex/full-pokedex.component';
+import { FullPokedexComponent } from './full-pokedex/full-pokedex.component'; 
 
 
 const routes: Routes = [

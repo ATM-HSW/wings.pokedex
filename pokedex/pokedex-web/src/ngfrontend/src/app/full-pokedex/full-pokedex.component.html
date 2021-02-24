@@ -49,7 +49,7 @@
 <!-- End of Topbar -->
 
 <!-- Begin Page Content -->
-<div class="container-fluid" OFF__onmouseenter="$('.tooltips').tooltip();">
+<div class="container-fluid" OFF__onmouseenter="$('.tooltips').tooltip();" (click)="useLocalStorage()">
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800"><span id="pokemonCounter"><i class="fas fa-sync fa-spin"
@@ -75,7 +75,7 @@
                                         <span class="language language_ja" style="display:none;">{{pokemon.ja}}</span>
                                         <span class="language language_ko" style="display:none;">{{pokemon.ko}}</span>
                                     </div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800"><img alt=''
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800"><img alt='' (load)="onImageLoad()"
                                             id="img-pokemon-{{pokemon.dex}}" class="img-pokemon"
                                             style="width:120px; height:7.5rem" src="{{pokemon.url_front}}" />
                                     </div>

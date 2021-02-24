@@ -1,4 +1,5 @@
 import { HttpClient } from '@angular/common/http';
+import { OnChanges, SimpleChanges } from '@angular/core';
 import { HostListener } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -12,9 +13,12 @@ import { RestApiService } from "../shared/rest-api.service";
   styleUrls: ['./full-pokedex.component.css']
 })
 
-export class FullPokedexComponent implements OnInit {
+export class FullPokedexComponent implements OnInit, OnChanges {
   constructor(private http: HttpClient, public restApi: RestApiService, public globalFunctions: GlobalFunctionsService) {
     this.pokemons = new Array<Array<Pokemon>>()
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    throw new Error('Method not implemented.');
   }
 
   pokemons!: Pokemon[][];
@@ -26,6 +30,21 @@ export class FullPokedexComponent implements OnInit {
     if (event.key === "Escape") {
       this.newSearch();
     }
+  }
+
+  useLocalStorage() {
+    console.log("useLocalStorage");
+    var stPokemons = JSON.parse(JSON.stringify(this.pokemons));
+    for (var pokemon of this.usersPokemons) {
+      var index1 = parseInt(pokemon.dex!) - 1;
+      var index2 = 0;
+      if (pokemon.shiny) {
+        index2 = 1
+      }
+      stPokemons[index1][index2].inCollection = false;
+    }
+    localStorage.setItem("stPokemons", JSON.stringify(stPokemons));
+    localStorage.setItem("stUsersPokemons", JSON.stringify(this.usersPokemons));
   }
 
   addUserPokemon(dex: string | undefined, shiny: boolean) {
@@ -139,33 +158,57 @@ export class FullPokedexComponent implements OnInit {
   }
 
   getAllPokemons() {
-    this.restApi.getAllPokemons().subscribe((data: any) => {
-      var counter: number;
-      for (var pokemonL1 of data.results!) {
-        var lcPokemon: Pokemon = new Pokemon();
-        lcPokemon.de = pokemonL1.name.charAt(0).toUpperCase() + pokemonL1.name.slice(1);
-        lcPokemon.url = pokemonL1.url;
-        var urlAr = pokemonL1.url.split("/");
-        lcPokemon.dex = urlAr[urlAr.length - 2];
-        let lcAr = new Array();
-        lcAr.push(lcPokemon);
-        this.pokemons.push(lcAr);
-      }
-      for (let i = 0; i < this.pokemons.length; i++) {
-        this.setPokemonDetails(this.pokemons[i][0], i);
-      }
-      for (let i = 0; i < this.pokemons.length; i++) {
-        this.getPokemonSpeciesDetails(this.pokemons[i][0]);
+    console.log("getAllPokemons...");
+    var stFetchMax = localStorage.getItem("stFetchMax");
+    var stPokemons = localStorage.getItem("stPokemons");
+    var lcPokemons = null;
+    if ((stFetchMax != null && this.restApi.maxFetch == parseInt(stFetchMax) && stPokemons != null)) {
+      lcPokemons = JSON.parse(stPokemons);
+    }
+    if (!(lcPokemons != null && lcPokemons.length > 0 && lcPokemons.length == this.restApi.maxFetch)) {
+      localStorage.setItem("stFetchMax", JSON.stringify(this.restApi.maxFetch));
 
+      this.restApi.getAllPokemons().subscribe((data: any) => {
+        var counter: number;
+        for (var pokemonL1 of data.results!) {
+          var lcPokemon: Pokemon = new Pokemon();
+          lcPokemon.de = pokemonL1.name.charAt(0).toUpperCase() + pokemonL1.name.slice(1);
+          lcPokemon.url = pokemonL1.url;
+          var urlAr = pokemonL1.url.split("/");
+          lcPokemon.dex = urlAr[urlAr.length - 2];
+          let lcAr = new Array();
+          lcAr.push(lcPokemon);
+          this.pokemons.push(lcAr);
+        }
+
+        for (let i = 0; i < this.pokemons.length; i++) {
+          this.setPokemonDetails(this.pokemons[i][0], i);
+        }
+        for (let i = 0; i < this.pokemons.length; i++) {
+          this.getPokemonSpeciesDetails(this.pokemons[i][0]);
+        }
+        for (let i = 0; i < this.globalFunctions.pokedexRegions.length; i++) {
+          this.getSpeciesByRegion(this.globalFunctions.pokedexRegions[i].url, this.globalFunctions.pokedexRegions[i].name);
+        }
+      });
+    } else {
+      this.pokemons = lcPokemons;
+      console.log("ELSE => this.pokemons");
+      console.log(this.pokemons);
+
+      var stLoginUser = localStorage.getItem("stLoginUser");
+      if (stLoginUser != null) {
+        this.globalFunctions.loginUser = JSON.parse(stLoginUser);
+        this.globalFunctions.loginUserId = this.globalFunctions.loginUser.id;
+        this.globalFunctions.loginUsername = this.globalFunctions.loginUser.userName;
+        this.getUsersPokemons(this.globalFunctions.loginUser.id)
       }
-      for (let i = 0; i < this.globalFunctions.pokedexRegions.length; i++) {
-        this.getSpeciesByRegion(this.globalFunctions.pokedexRegions[i].url, this.globalFunctions.pokedexRegions[i].name);
-      }
-    });
+    }
   }
 
   getSpeciesByRegion(url: string, regionName: string) {
     this.restApi.getRegionDetails(url).subscribe((data: any) => {
+      document.getElementById("pokemonCounter")!.innerHTML = this.globalFunctions.spinnerIcon;
       this.restApi.getSpeciesByPokedex(data.pokedexes[0].url).subscribe((data: any) => {
         for (var pokemon_entry of data.pokemon_entries) {
           url = pokemon_entry.pokemon_species.url;
@@ -212,7 +255,8 @@ export class FullPokedexComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllPokemons()
+    this.getAllPokemons();
+
   }
 
   searchByNrName(value: string): void {
@@ -271,5 +315,10 @@ export class FullPokedexComponent implements OnInit {
       }
     });
     this.globalFunctions.updateCounter(true, 400);
+  }
+
+  onImageLoad() {
+    var pokemonCounter = document.querySelectorAll('.filter-all').length - document.querySelectorAll('.filter-all.hidden-true').length;
+    document.getElementById("pokemonCounter")!.innerText = `${pokemonCounter}`;
   }
 }

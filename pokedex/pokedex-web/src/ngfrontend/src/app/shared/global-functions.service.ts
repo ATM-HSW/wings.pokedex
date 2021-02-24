@@ -14,6 +14,8 @@ export class GlobalFunctionsService {
   spinnerIcon = '<i class="fas fa-sync fa-spin" data-original-title="" title="" style="color: #4e73df; font-size: 2rem;"></i> ';
   public loginUsername: any;
   public loginUserId: any;
+  public loginUser: any;
+
 
   public toggleSelection(reset: Boolean, event: any) {
     var selector = ".filter-all";
@@ -54,11 +56,18 @@ export class GlobalFunctionsService {
   pokedexRegions: any;
   getRegions() {
     //this.pokemons = [898][2]; 
-    this.restApi.getRegions().subscribe((data: any) => {
-      this.pokedexRegions = data.results;
-      for (let i = 0; i < this.pokedexRegions.length; i++) {
-        this.pokedexRegions[i].class = `filter-region-${this.pokedexRegions[i].name}`;
-      }
-    });
+    var stPokedexRegions = localStorage.getItem("stPokedexRegions");
+    if (stPokedexRegions != null) {
+      this.pokedexRegions = JSON.parse(stPokedexRegions);
+    }
+    if (this.pokedexRegions == null || this.pokedexRegions.length > 0) {
+      this.restApi.getRegions().subscribe((data: any) => {
+        this.pokedexRegions = data.results;
+        for (let i = 0; i < this.pokedexRegions.length; i++) {
+          this.pokedexRegions[i].class = `filter-region-${this.pokedexRegions[i].name}`;
+          localStorage.setItem("stPokedexRegions", JSON.stringify(this.pokedexRegions));
+        }
+      });
+    }
   }
 }
