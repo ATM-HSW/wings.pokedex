@@ -225,13 +225,9 @@ export class FullPokedexComponent implements OnInit, OnChanges {
 
   clearUsersPokemon() {
     console.log("clearUsersPokemon");
-    for (var pokemon of this.usersPokemons) {
-      var index1 = parseInt(pokemon.dex!) - 1;
-      var index2 = 0;
-      if (pokemon.shiny) {
-        index2 = 1
-      }
-      this.pokemons[index1][index2].inCollection = false;
+    for (var pokemon_entry of this.pokemons) {
+      pokemon_entry[0].inCollection = false;
+      pokemon_entry[1].inCollection = false;
     }
     this.usersPokemons = [];
     this.globalFunctions.toggleSelection(true, null);
