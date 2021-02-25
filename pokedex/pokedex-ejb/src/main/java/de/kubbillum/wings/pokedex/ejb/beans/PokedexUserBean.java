@@ -1,17 +1,18 @@
 package de.kubbillum.wings.pokedex.ejb.beans;
 
-import java.time.LocalDate;
-import java.util.Calendar;
 import java.util.List;
-
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
 import de.kubbillum.wings.pokedex.ejb.interfaces.PokedexUserDAO;
 import de.kubbillum.wings.pokedex.persistence.entities.PokedexUser;
 
+/**
+ * Stateless Session Bean Class for data access using Dependency Injection and Java Persistence API
+ * 
+ * @author Martin Kubbillum <m.kubbillum@stud.hs-wismar.de> 
+ */
 @Stateless
 @Remote(PokedexUserDAO.class)
 public class PokedexUserBean implements PokedexUserDAO {
@@ -34,7 +35,7 @@ public class PokedexUserBean implements PokedexUserDAO {
 	public void remove(int id) {
 		PokedexUser toBeDeleted = getPokedexUser(id);
 		em.remove(toBeDeleted);
-	}
+	}	
 
 	@Override
 	public PokedexUser getPokedexUser(int id) {
@@ -43,13 +44,7 @@ public class PokedexUserBean implements PokedexUserDAO {
 
 	@Override
 	public List<PokedexUser> getAllPokedexUsers() {
-		return em.createNamedQuery(PokedexUser.QUERY_GETALL, PokedexUser.class).getResultList();//
-	}
-
-	@Override
-	public List<PokedexUser> getUsersHavingBirthday() {
-		LocalDate today = LocalDate.now();
-		return em.createNamedQuery(PokedexUser.QUERY_GETBIRTHDAYS, PokedexUser.class).setParameter(1, today.getDayOfMonth()).setParameter(2, today.getMonthValue()).getResultList();
+		return em.createNamedQuery(PokedexUser.QUERY_GETALL, PokedexUser.class).getResultList();
 	}
 
 	@Override

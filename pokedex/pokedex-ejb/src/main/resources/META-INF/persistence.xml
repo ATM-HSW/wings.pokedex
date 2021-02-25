@@ -3,6 +3,10 @@
 	xmlns="http://java.sun.com/xml/ns/persistence"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistencehttp://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<!-- m.kubbillum@stud.hs-wismar.de The jta-data-source specify the global 
+		JNDI name, which is the name of the DataSource that is used to connect to 
+		the database. The java:jboss/datasources/PokedexDS points to the PostgreSQL 
+		DB running on port 5432. -->
 	<persistence-unit name="pokedexPersistenceUnit"
 		transaction-type="JTA"> <!-- pokedexPersistenceUnit -->
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>

@@ -15,6 +15,11 @@ import de.kubbillum.wings.pokedex.ejb.interfaces.PokedexUserDAO;
 import de.kubbillum.wings.pokedex.persistence.entities.PokedexUser;
 import de.kubbillum.wings.pokedex.persistence.entities.Pokemon;
 
+/**
+ * Implementation of the REST endpoints for the operations on the User object.
+ * 
+ * @author Martin Kubbillum <m.kubbillum@stud.hs-wismar.de> 
+ */
 @Path("/user")
 @Stateless
 public class UsersEndpoint {
@@ -22,6 +27,9 @@ public class UsersEndpoint {
 	@EJB
 	private PokedexUserDAO pokedexUserDAO;
 
+	/** 
+	 * Add a new user.
+	 */
 	@PUT
 	@Path("/add")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -29,11 +37,20 @@ public class UsersEndpoint {
 		PokedexUser resultUser = pokedexUserDAO.create(user);
 		return resultUser;
 	}
+		
+	/** 
+	 * Get a list of all existing users.
+	 */
+	@GET
+	@Path("/list")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<PokedexUser> getAll() {
+		List<PokedexUser> users = pokedexUserDAO.getAllPokedexUsers();
+		return users;
+	}
 	
-	/**
-	 * m.kubbillum
-	 * @param userName
-	 * @return
+	/** 
+	 * Get a single user by username.
 	 */
 	@GET
 	@Path("/{userName}")
@@ -43,14 +60,9 @@ public class UsersEndpoint {
 		return user;
 	}
 	
-	@GET
-	@Path("/list")
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<PokedexUser> getAll() {
-		List<PokedexUser> users = pokedexUserDAO.getAllPokedexUsers();
-		return users;
-	}
-	
+	/** 
+	 * Get a single user by userId.
+	 */
 	@GET
 	@Path("/pokemon/list/{userId}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -59,6 +71,9 @@ public class UsersEndpoint {
 		return pokemons;
 	}
 	
+	/** 
+	 * Add a pokemon to the collection of an user.
+	 */
 	@PUT
 	@Path("/pokemon/list/add/{userId}")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -69,6 +84,9 @@ public class UsersEndpoint {
 		return resultUser.getPokemons();
 	}
 	
+	/** 
+	 * Remove a pokemon from the collection of an user.
+	 */
 	@DELETE
 	@Path("/pokemon/list/remove/{userId}-{dex}-{shiny}")
 	public List<Pokemon> removePokemon(@PathParam("userId") Integer userId, @PathParam("dex") Integer dex, @PathParam("shiny") Boolean shiny) {

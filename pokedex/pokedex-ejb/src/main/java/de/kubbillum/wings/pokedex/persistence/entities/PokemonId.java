@@ -2,6 +2,12 @@ package de.kubbillum.wings.pokedex.persistence.entities;
 
 import java.io.Serializable;
 
+/**
+ * Class for the composite primary key of the Entity Pokemon. 
+ * The composite primary key is a combination of the two columns dex and shiny.
+ * 
+ * @author Martin Kubbillum <m.kubbillum@stud.hs-wismar.de> 
+ */
 public class PokemonId implements Serializable {
 	
 	private static final long serialVersionUID = 1L;

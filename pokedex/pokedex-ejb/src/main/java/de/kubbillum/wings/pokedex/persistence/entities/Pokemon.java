@@ -1,14 +1,12 @@
 package de.kubbillum.wings.pokedex.persistence.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.*;
 
 /**
- * Entity implementation class for Entity: Pokemon
- *
+ * Entity implementation class for Entity Pokemon.
+ * 
+ * @author Martin Kubbillum <m.kubbillum@stud.hs-wismar.de> 
  */
 @Entity
 @IdClass(PokemonId.class)

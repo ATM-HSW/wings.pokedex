@@ -1,16 +1,19 @@
 package de.kubbillum.wings.pokedex.ejb.beans;
 
 import java.util.List;
-
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
 import de.kubbillum.wings.pokedex.ejb.interfaces.PokemonDAO;
 import de.kubbillum.wings.pokedex.persistence.entities.Pokemon;
 import de.kubbillum.wings.pokedex.persistence.entities.PokemonId;
 
+/**
+ * Stateless Session Bean Class for data access using Dependency Injection and Java Persistence API
+ * 
+ * @author Martin Kubbillum <m.kubbillum@stud.hs-wismar.de> 
+ */
 @Stateless
 @Remote(PokemonDAO.class)
 public class PokemonBean implements PokemonDAO {
