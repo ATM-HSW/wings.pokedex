@@ -1,9 +1,7 @@
 package de.kubbillum.wings.pokedex.ejb.interfaces;
 
 import java.util.List;
-
 import de.kubbillum.wings.pokedex.persistence.entities.PokedexUser;
-
 
 public interface PokedexUserDAO {
 

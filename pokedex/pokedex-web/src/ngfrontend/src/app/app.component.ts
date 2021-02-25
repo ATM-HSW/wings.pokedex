@@ -62,7 +62,6 @@ export class AppComponent implements OnInit {
 
   public logoutUser() {
     this.globalFunctions.loginUsername = null;
-    //this.componentReference.usersPokemons = [];
     localStorage.removeItem("stLoginUser");
     this.componentReference.clearUsersPokemon();
   }
@@ -102,7 +101,6 @@ export class AppComponent implements OnInit {
           resolve();
         },
           err => {
-            // Error
             reject(err);
           }
         );

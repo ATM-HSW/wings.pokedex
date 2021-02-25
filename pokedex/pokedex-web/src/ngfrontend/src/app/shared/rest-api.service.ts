@@ -7,16 +7,10 @@ import { Pokemon } from './pokemon';
 })
 export class RestApiService {
 
-  // Define API 
   apiURL = "";
-  //apiURL = 'http://localhost:3000';
-  //apiURL = 'http://localhost:8080/pokedex-web/api/v1/users';
   maxFetch :  number = 400 ; //898
-  constructor(private httpClient: HttpClient) { }
 
-  /*========================================
-    CRUD Methods for consuming RESTful API
-  =========================================*/
+  constructor(private httpClient: HttpClient) { }
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -24,6 +18,10 @@ export class RestApiService {
     })
   }
 
+  /*========================================
+    CRUD Methods for consuming RESTful API
+  =========================================*/
+  
   public getUser(userName: String) {
     return this.httpClient.get(this.apiURL + `api/v1/user/${userName}`);
   }

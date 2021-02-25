@@ -23,6 +23,5 @@ div.pokemon-selected.filter-shiny-true > div {
 
 .filter-inCollection-true  > div {
     border: 3px solid #ffc107;
-    border-left:12px solid #ffc107 !important;
-   
+    border-left:12px solid #ffc107 !important;   
 }

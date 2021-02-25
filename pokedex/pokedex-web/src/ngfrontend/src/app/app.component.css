@@ -3,8 +3,6 @@
 @import url(https://fonts.googleapis.com/css?family=Sigmar+One);
 .pokemon-font {
     font: 20px 'Pokemon'
-    /**;
-    font-weight:normal;**/  
   }
 
   .sidebar .nav-item .collapse .collapse-inner .collapse-item.selected, .sidebar .nav-item .collapsing .collapse-inner .collapse-item.selected {

@@ -13,17 +13,19 @@ import { RestApiService } from "../shared/rest-api.service";
   styleUrls: ['./full-pokedex.component.css']
 })
 
-export class FullPokedexComponent implements OnInit, OnChanges {
-  constructor(private http: HttpClient, public restApi: RestApiService, public globalFunctions: GlobalFunctionsService) {
-    this.pokemons = new Array<Array<Pokemon>>()
-  }
-  ngOnChanges(changes: SimpleChanges): void {
-    throw new Error('Method not implemented.');
-  }
+export class FullPokedexComponent implements OnInit {
 
   pokemons!: Pokemon[][];
   usersPokemons: Pokemon[] = [];
   textValue = '';
+
+  constructor(private http: HttpClient, public restApi: RestApiService, public globalFunctions: GlobalFunctionsService) {
+    this.pokemons = new Array<Array<Pokemon>>()
+  }
+
+  ngOnInit(): void {
+    this.getAllPokemons();
+  }
 
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
@@ -248,11 +250,6 @@ export class FullPokedexComponent implements OnInit, OnChanges {
       }
       this.globalFunctions.toggleSelection(false, null);
     });
-  }
-
-  ngOnInit(): void {
-    this.getAllPokemons();
-
   }
 
   searchByNrName(value: string): void {

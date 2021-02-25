@@ -10,7 +10,6 @@ import javax.persistence.*;
  * Entity implementation class for Entity: Pokemon
  *
  */
-
 @Entity
 @IdClass(PokemonId.class)
 @NamedQuery(name = Pokemon.QUERY_GETALL, query = "SELECT c FROM Pokemon c")
@@ -26,14 +25,6 @@ public class Pokemon implements Serializable {
 
 	@Id
 	private Boolean shiny;
-
-//	@Version
-//	@Column(name = "version")
-//	private int version;
-
-	//@ManyToMany(mappedBy = "pokemons",  fetch = FetchType.EAGER);
-//	@ManyToMany(cascade=CascadeType.ALL, mappedBy = "pokemons", fetch = FetchType.EAGER)
-//	List<PokedexUser> users = new ArrayList<PokedexUser>();
 	
 	public Integer getDex() {
 		return dex;
@@ -54,12 +45,4 @@ public class Pokemon implements Serializable {
 	public void setShiny(Boolean shiny) {
 		this.shiny = shiny;
 	}
-	
-//	public List<PokedexUser> getUsers() {
-//		return users;
-//	}
-//
-//	public void setUsers(List<PokedexUser> users) {
-//		this.users = users;
-//	}
 }

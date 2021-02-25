@@ -2,13 +2,8 @@ package de.kubbillum.wings.pokedex.persistence.entities;
 
 import java.io.Serializable;
 
-//@Embeddable
-
 public class PokemonId implements Serializable {
-
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 
 	public Integer dex;

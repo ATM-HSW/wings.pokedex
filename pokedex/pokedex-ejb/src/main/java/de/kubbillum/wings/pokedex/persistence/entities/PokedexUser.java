@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -54,10 +53,6 @@ public class PokedexUser implements Serializable {
 	
 	private String emailAdress;
 
-	// @OneToMany(cascade = CascadeType.ALL)
-	// private List<Pokemon> userPokedex;
-
-	// @Version
 	@Version
 	@Column(name = "version")
 	private int version;
@@ -110,14 +105,6 @@ public class PokedexUser implements Serializable {
 	public void setGender(Gender gender) {
 		this.gender = gender;
 	}
-//
-//	public List<Pokemon> getUserPokedex() {
-//		return userPokedex;
-//	}
-//
-//	public void setUserPokedex(List<Pokemon> userPokedex) {
-//		this.userPokedex = userPokedex;
-//	}
 
 	public String getUserName() {
 		return userName;
