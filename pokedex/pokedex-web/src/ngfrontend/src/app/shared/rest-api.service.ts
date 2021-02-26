@@ -5,9 +5,17 @@ import { Pokemon } from './pokemon';
 @Injectable({
   providedIn: 'root'
 })
+
+/**
+ * Definition of all CRUD methods for consuming the RESTful APIs
+ * 
+ * @author Martin Kubbillum <m.kubbillum@stud.hs-wismar.de>
+ */
 export class RestApiService {
 
   apiURL = "";
+  
+  // The maximum number of Pokemons to be fetched via the PokeApi.
   maxFetch :  number = 400 ; //898
 
   constructor(private httpClient: HttpClient) { }
@@ -18,10 +26,6 @@ export class RestApiService {
     })
   }
 
-  /*========================================
-    CRUD Methods for consuming RESTful API
-  =========================================*/
-  
   public getUser(userName: String) {
     return this.httpClient.get(this.apiURL + `api/v1/user/${userName}`);
   }

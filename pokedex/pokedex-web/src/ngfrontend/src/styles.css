@@ -1,5 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 
+ /* Global CSS definitions to override the Bootstrap CSS.
+
+    @author Martin Kubbillum <m.kubbillum@stud.hs-wismar.de> */
+
 .sidebar .sidebar-brand {
     height: 4.375rem;
     text-decoration: none;
@@ -11,9 +15,6 @@
     letter-spacing: .15rem;
     z-index: 1;
 } 
-
-
-
 
 .scroll-to-top {
     position: fixed;
@@ -28,8 +29,4 @@
     line-height: 46px;
     font-size: 42px !important;
     padding-top: 8px !important;
-}
-
-.sidebar-dark .sidebar-brand {
-    /**color: #efff00 !important;**/
 }

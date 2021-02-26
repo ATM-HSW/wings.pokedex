@@ -1,3 +1,11 @@
+ /* The customized CSS for the FullPokedexComponent.    
+ 
+    CSS classes are assigned to the Pokémon-Div-containers for filtering. 
+    When filtering, the Pokémons are shown and hidden using these CSS classes (hidden-false, hidden-true).
+    By default, shinys are hidden.
+ 
+    @author Martin Kubbillum <m.kubbillum@stud.hs-wismar.de> */
+
 .hidden {
     display:none !important;
 }

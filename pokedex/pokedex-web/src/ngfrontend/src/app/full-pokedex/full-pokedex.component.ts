@@ -15,8 +15,14 @@ import { RestApiService } from "../shared/rest-api.service";
 
 export class FullPokedexComponent implements OnInit {
 
+  // Global variable in which a list of the Pokemon is stored. 
+  // The HTML for the Pokemons list is generated from this list. 
+  // The array is two-dimensional so that a regular and a shiny pokemon can be stored for the same dex-id
   pokemons!: Pokemon[][];
+
+  // Global variable in which the pokemons collection of the logged in user is stored.
   usersPokemons: Pokemon[] = [];
+
   textValue = '';
 
   constructor(private http: HttpClient, public restApi: RestApiService, public globalFunctions: GlobalFunctionsService) {
@@ -27,6 +33,7 @@ export class FullPokedexComponent implements OnInit {
     this.getAllPokemons();
   }
 
+  // Event listener that expects escape.
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
     if (event.key === "Escape") {
@@ -34,6 +41,11 @@ export class FullPokedexComponent implements OnInit {
     }
   }
 
+  /**  
+  * By calling this function the local web storage is used. All pokemons will be stored,
+  * 
+  * @author Martin Kubbillum <m.kubbillum@stud.hs-wismar.de>   
+  */
   useLocalStorage() {
     console.log("useLocalStorage");
     var stPokemons = JSON.parse(JSON.stringify(this.pokemons));
@@ -49,6 +61,14 @@ export class FullPokedexComponent implements OnInit {
     localStorage.setItem("stUsersPokemons", JSON.stringify(this.usersPokemons));
   }
 
+  /**  
+  * This function adds a new Pokemon to a user's collection. For this purpose the REST API is called.
+  * The Pokemon object to be stored needs only 2 attributes, which are passed to the method as parameters.
+  * 
+  * @param {string} dex - dex-ID of the Pokemon
+  * @param {string} shiny - is the Pokemon a regular (false) or a shiny (true)
+  * @author Martin Kubbillum <m.kubbillum@stud.hs-wismar.de>   
+  */
   addUserPokemon(dex: string | undefined, shiny: boolean) {
     var index: number = parseInt(dex!) - 1;
     if (shiny) {
@@ -66,6 +86,15 @@ export class FullPokedexComponent implements OnInit {
     });
   }
 
+
+  /**  
+  * This function removes a Pokemon from a user's collection. For this purpose the REST API is called.
+  * After that the user collection will be updated and based on that also the filter selection.
+  * 
+  * @param {string} dex - dex-ID of the Pokemon
+  * @param {string} shiny - is the Pokemon a regular (false) or a shiny (true)
+  * @author Martin Kubbillum <m.kubbillum@stud.hs-wismar.de>   
+  */
   removeUserPokemon(dex: string | undefined, shiny: boolean) {
     console.log("removeUserPokemon");
     var index: number = parseInt(dex!) - 1;
@@ -82,6 +111,14 @@ export class FullPokedexComponent implements OnInit {
     });
   }
 
+  /**  
+  * This function enriches the Pokemons of the Pokedex with additional information. 
+  * For this, the RESTful PokApi is called.
+  * It adds the name of a Pokemon in the different languages.
+  * 
+  * @param {string} pokemon - Pokemon to be enriched
+  * @author Martin Kubbillum <m.kubbillum@stud.hs-wismar.de>   
+  */
   public getPokemonSpeciesDetails(pokemon: Pokemon) {
     if (pokemon.shiny) {
       let dex: number = parseInt(pokemon.dex!);
@@ -127,6 +164,16 @@ export class FullPokedexComponent implements OnInit {
     }
   }
 
+  /**  
+  * This function enriches the Pokemons of the Pokedex with additional information. 
+  * For this, the RESTful PokApi is called.
+  * 
+  * Property like size and weight are added.
+  * It will also check if there is a shiny image to create then also a shiny Pokemon.
+  * 
+  * @param {string} pokemon - Pokemon to be enriched
+  * @author Martin Kubbillum <m.kubbillum@stud.hs-wismar.de>   
+  */
   public setPokemonDetails(pokemon: Pokemon, index: number) {
     this.restApi.getPokemonDetails(pokemon.dex).subscribe((data: any) => {
       let types: string[] = ['', '', '', '', '', ''];
@@ -159,6 +206,15 @@ export class FullPokedexComponent implements OnInit {
     });
   }
 
+  /**  
+  * This function fetches all pokemons of the pokedex and stores them in the global variable pokemons.
+  * Then the functions for enriching the pokekoms with details are called.
+  * 
+  * For all this, the RESTful PokeApi is consumed.
+  * The information is all stored in the local web storage, so that when the page is reloaded, the information is loaded directly from there.
+  * 
+  * @author Martin Kubbillum <m.kubbillum@stud.hs-wismar.de>   
+  */
   getAllPokemons() {
     console.log("getAllPokemons...");
     var stFetchMax = localStorage.getItem("stFetchMax");
@@ -204,6 +260,15 @@ export class FullPokedexComponent implements OnInit {
     }
   }
 
+  /**  
+  * This function determines the associated Pokemon to a region. 
+  * The Pokemons are enriched with the region information so that it can be displayed and the Pokemon can be filtered by it.
+  * For this, the RESTful PokApi is called.
+  * 
+  * @param {string} regionName - name of the region
+  * @param {string} url - url for des REST-Api-Call
+  * @author Martin Kubbillum <m.kubbillum@stud.hs-wismar.de>   
+  */
   getSpeciesByRegion(url: string, regionName: string) {
     this.restApi.getRegionDetails(url).subscribe((data: any) => {
       document.getElementById("pokemonCounter")!.innerHTML = this.globalFunctions.spinnerIcon;
@@ -221,8 +286,13 @@ export class FullPokedexComponent implements OnInit {
     });
   }
 
+  /**  
+  * The function empties the Pokemon collection of a the logged-in user.
+  * After that, the filter display is reset.
+  * 
+  * @author Martin Kubbillum <m.kubbillum@stud.hs-wismar.de>   
+  */
   clearUsersPokemon() {
-    console.log("clearUsersPokemon");
     for (var pokemon_entry of this.pokemons) {
       pokemon_entry[0].inCollection = false;
       pokemon_entry[1].inCollection = false;
@@ -234,6 +304,13 @@ export class FullPokedexComponent implements OnInit {
     filterRegular.click();
   }
 
+  /**  
+  * This function fetches the Pokemon collection of the logged in user.
+  * After that, the filter display will be updated and the Pokemons in the user's collection will be highlighted.
+  * 
+  * @param {number} id - id of the user whose pokemons are to be fetched
+  * @author Martin Kubbillum <m.kubbillum@stud.hs-wismar.de>   
+  */
   getUsersPokemons(id: number) {
     console.log("getUsersPokemons.");
     this.usersPokemons = [];
@@ -255,6 +332,14 @@ export class FullPokedexComponent implements OnInit {
     });
   }
 
+  /**  
+  * This function searches for a pokemon using the parameter 'value'. 
+  * If the value is a number, it searches for the dex-id, otherwise it searches for the name of the pokemon. 
+  * If there was a hit, it scrolls directly to the Pokemon you were looking for.  * 
+  * 
+  * @param {string} value - either the dex-id or the name of the pokemon you are looking for
+  * @author Martin Kubbillum <m.kubbillum@stud.hs-wismar.de>   
+  */
   searchByNrName(value: string): void {
     document.querySelectorAll('.pokemons').forEach(element => element.classList.remove('pokemon-selected'));
 
@@ -287,6 +372,12 @@ export class FullPokedexComponent implements OnInit {
     }
   }
 
+  /**  
+    * This function scrolls up this page until you see the search box again. 
+    * The cursor will be placed in the search field again, so that you can start a new search.
+    * 
+    * @author Martin Kubbillum <m.kubbillum@stud.hs-wismar.de>   
+    */
   newSearch(): void {
     var element = document.getElementById("searchNrName");
     const y = element!.getBoundingClientRect().top;
@@ -294,6 +385,11 @@ export class FullPokedexComponent implements OnInit {
     element!.focus();
   }
 
+  /**  
+   * A selected Pokomen will be highlighted by adding a CSS-class.     
+   * 
+   * @author Martin Kubbillum <m.kubbillum@stud.hs-wismar.de>   
+   */
   markPokemon(event: any): void {
     if (!event.srcElement.closest(".pokemons").classList.contains('pokemon-selected')) {
       document.querySelectorAll('.pokemons').forEach(element => element.classList.remove('pokemon-selected'));
@@ -301,6 +397,12 @@ export class FullPokedexComponent implements OnInit {
     }
   }
 
+  /**  
+   * Shows or hides the Shiny or Regular variant of the selected Pokemon by adding a CSS class (hidden-true)    
+   * 
+   * @param {any} pSelector - CSS selector of the pokemon to be shown/hidden.
+   * @author Martin Kubbillum <m.kubbillum@stud.hs-wismar.de>   
+   */
   toggleShinyRegular(pSelector: any) {
     document.querySelectorAll(pSelector).forEach(element => {
       if (element.classList.contains('hidden-true')) {
@@ -313,6 +415,11 @@ export class FullPokedexComponent implements OnInit {
     this.globalFunctions.updateCounter(true, 400);
   }
 
+  /**  
+   * This function is updating the Pokemon counter.   
+   * 
+   * @author Martin Kubbillum <m.kubbillum@stud.hs-wismar.de>   
+   */
   onImageLoad() {
     var pokemonCounter = document.querySelectorAll('.filter-all').length - document.querySelectorAll('.filter-all.hidden-true').length;
     document.getElementById("pokemonCounter")!.innerText = `${pokemonCounter}`;

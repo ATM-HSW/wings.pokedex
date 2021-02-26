@@ -1,11 +1,15 @@
+ /* The customized CSS for the AppComponent. 
+    @author Martin Kubbillum <m.kubbillum@stud.hs-wismar.de> */
+
 @import url(https://fonts.googleapis.com/css?family=Sigmar+One);
 @import url(//db.onlinewebfonts.com/c/f4d1593471d222ddebd973210265762a?family=Pokemon);
 @import url(https://fonts.googleapis.com/css?family=Sigmar+One);
+
 .pokemon-font {
     font: 20px 'Pokemon'
   }
 
-  .sidebar .nav-item .collapse .collapse-inner .collapse-item.selected, .sidebar .nav-item .collapsing .collapse-inner .collapse-item.selected {
+.sidebar .nav-item .collapse .collapse-inner .collapse-item.selected, .sidebar .nav-item .collapsing .collapse-inner .collapse-item.selected {
     background-color: #b3c4f7 !important;
     font-weight: bold;
     border: 2px solid white;

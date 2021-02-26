@@ -1,3 +1,8 @@
+/**
+ * Class to type pokemons coming from the REST Api.
+ * 
+ * @author Martin Kubbillum <m.kubbillum@stud.hs-wismar.de>
+ */
 export class Pokemon {
     dex: string | undefined;
     shiny: boolean = false;

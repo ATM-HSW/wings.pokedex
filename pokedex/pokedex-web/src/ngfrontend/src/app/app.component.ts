@@ -11,8 +11,13 @@ import { RestApiService } from './shared/rest-api.service';
   styleUrls: ['./app.component.css']
 })
 
+/**  
+* AppComponent is rendering the main layout of the application. 
+* The login is also done here.
+* 
+* @author Martin Kubbillum <m.kubbillum@stud.hs-wismar.de>   .  
+*/
 export class AppComponent implements OnInit {
-  types: any = [];
 
   constructor(private ngxFavicon: AngularFaviconService, private http: HttpClient, public globalFunctions: GlobalFunctionsService, public restApi: RestApiService) { }
   ngOnInit(): void {
@@ -26,6 +31,14 @@ export class AppComponent implements OnInit {
     this.componentReference = pComponentReference;
   }
 
+  /**  
+    * With this function the user is logged in.
+    * After login, the user is stored in the local web storage, so that the user remains logged in when the page is reloaded.
+    * If the user does not exist yet, the option to create the user is offered. 
+    * 
+    * @author Martin Kubbillum <m.kubbillum@stud.hs-wismar.de>   
+    * @param {String} username - Username of the user to be logged in.
+    */
   public loginUser(username: String) {
     if (username.length > 0) {
       this.restApi.getUser(username).subscribe((data: any) => {
@@ -52,6 +65,12 @@ export class AppComponent implements OnInit {
     }
   }
 
+  /**  
+  * This function creates a new user in the backend. The REST Api is called for this purpose.
+  * 
+  * @author Martin Kubbillum <m.kubbillum@stud.hs-wismar.de>   
+  * @param {Object} user - New user to be created.
+  */
   public addUser(user: Object) {
     this.restApi.addUser(user).subscribe((data: any) => {
       this.globalFunctions.loginUsername = data.userName;
@@ -60,12 +79,24 @@ export class AppComponent implements OnInit {
     });
   }
 
+  /**  
+  * This function logs out the use from the App.
+  * The user is also removed from the local web storage.
+  * 
+  * @author Martin Kubbillum <m.kubbillum@stud.hs-wismar.de>   
+  */
   public logoutUser() {
     this.globalFunctions.loginUsername = null;
     localStorage.removeItem("stLoginUser");
     this.componentReference.clearUsersPokemon();
   }
 
+  /**  
+  * This function changes the language in which the names of the Pokemons are displayed.
+  * 
+  * @author Martin Kubbillum <m.kubbillum@stud.hs-wismar.de>   
+  * @param {string} lang - The abbreviation for the language. From this the CSS class for showing and hiding the name is generated..
+  */
   changeLanguage(lang: string) {
     document.querySelectorAll<HTMLElement>('.language').forEach(element => element.style.display = 'none');
     document.querySelectorAll<HTMLElement>(`.language_${lang}`).forEach(element => element.style.display = 'inline');
@@ -73,18 +104,17 @@ export class AppComponent implements OnInit {
     this.componentReference.test123();
   }
 
-  fullPokedex() {
-    document.querySelectorAll<HTMLElement>("#accordionSidebar a.filter.selected").forEach(element => element.classList.remove("selected"));
-    document.querySelectorAll<HTMLElement>('.filter-all').forEach(element => element.classList.remove("hidden")); //.display = 'block');
-    document.getElementById("a-filter")!.classList.add("collapsed");
-    document.getElementById("collapseTwo")!.classList.remove("show");
-    document.getElementById("pokemonCounter")!.innerHTML = `${document.querySelectorAll<HTMLElement>('.filter-all').length}`;
-    var element = document.getElementById("searchNrName");
-    const y = element!.getBoundingClientRect().top;
-    window.scrollTo({ top: y, behavior: 'smooth' })
-    element!.focus();
-  }
+  // Global variable in which a list of the Pokemons types are held. The HTML for the type filter is generated from this list. 
+  types: any = [];
 
+  /**  
+  * This function fetches all Pokemon types and initializes the global variable types by calling the REST Api.
+  * 
+  * The types are stored as Object.An additional attribute 'class' is added to the type-object. 
+  * This 'class' attribute is the CSS selector that is used to show and hide the Pokemons when filtering them by type. 
+  *  
+  * @author Martin Kubbillum <m.kubbillum@stud.hs-wismar.de>   
+  */
   getTypes() {
     const promise = new Promise<void>((resolve, reject) => {
       const url = `https://pokeapi.co/api/v2/type`;
@@ -106,9 +136,5 @@ export class AppComponent implements OnInit {
         );
     });
     return promise;
-  }
-
-  capitalizeFirstLetter(string: any) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
   }
 }
