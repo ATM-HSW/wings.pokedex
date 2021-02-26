@@ -7,6 +7,7 @@
     </button>
 
     <!-- Topbar Search -->
+    <!-- m.kubbillum@stud.hs-wismar.de: search-field to search for names or ids -->
     <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
         <div class="input-group">
             <input #textbox type="text" [(ngModel)]="textValue" required class="form-control bg-light border-2 small"
@@ -57,6 +58,7 @@
                     style="color: #4e73df; font-size: 2rem;"></i></span>&nbsp;&nbsp;Pokémon</h1>
     </div>
     <div class="row">
+        <!-- m.kubbillum@stud.hs-wismar.de: HTML template for pokemons -->
         <ng-container *ngFor="let pokemonVariants of pokemons; index as iV;">
             <ng-container *ngFor="let pokemon of pokemonVariants; index as i;">
                 <div class="col-xl-2 col-md-6 mb-4 pokemons pokemon-{{pokemon.de}} pokemon-{{pokemon.en}} pokemon-{{pokemon.es}} pokemon-{{pokemon.fr}} pokemon-{{pokemon.it}} pokemon-{{pokemon.ja}} pokemon-{{pokemon.ko}}  pokemon-{{pokemon.dex}} filter-all filter-type-{{pokemon.types[0]}} filter-type-{{pokemon.types[1]}} filter-shiny-{{pokemon.shiny}}  filter-region-{{pokemon.regions[0]}} filter-region-{{pokemon.regions[1]}} filter-region-{{pokemon.regions[2]}} hidden-{{pokemon.shiny}} filter-region-{{pokemon.regions[3]}} filter-region-{{pokemon.regions[4]}} filter-region-{{pokemon.regions[5]}} filter-region-{{pokemon.regions[6]}} filter-region-{{pokemon.regions[7]}} filter-inCollection-{{pokemon.inCollection}}"
@@ -75,8 +77,8 @@
                                         <span class="language language_ja" style="display:none;">{{pokemon.ja}}</span>
                                         <span class="language language_ko" style="display:none;">{{pokemon.ko}}</span>
                                     </div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800"><img alt='' (load)="onImageLoad()"
-                                            id="img-pokemon-{{pokemon.dex}}" class="img-pokemon"
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800"><img alt=''
+                                            (load)="onImageLoad()" id="img-pokemon-{{pokemon.dex}}" class="img-pokemon"
                                             style="width:120px; height:7.5rem" src="{{pokemon.url_front}}" />
                                     </div>
                                     <div _ngcontent-nlx-c101="" _ngcontent-rgn-c101=""
@@ -178,7 +180,7 @@
                                                     class="fas fa-times-circle" style="font-size:24px;"></i></button>
                                         </ng-template>
                                         <ng-template #noLogin3>
-                                            <button style="height:2.4rem; margin-top: 5px;" data-placement="right"                                               
+                                            <button style="height:2.4rem; margin-top: 5px;" data-placement="right"
                                                 class="btn btn-facebook btn-block" data-toggle="tooltip"
                                                 data-placement="right"
                                                 title="You must log in first to manage your own collection!<br/><br/>Remove Pokémon from Your Collection!"><i
@@ -195,7 +197,7 @@
                                                 <i class="fas fa-compress-arrows-alt"
                                                     style="font-size:23px;color:#ffc107;"></i></button>
                                         </ng-template>
-                                        <ng-template #noLogin4> 
+                                        <ng-template #noLogin4>
                                             <button style="height:2.4rem; margin-top: 5px;" data-placement="right"
                                                 class="btn btn-facebook btn-block" data-toggle="tooltip"
                                                 data-placement="right" data-html="true"

@@ -373,7 +373,7 @@ export class FullPokedexComponent implements OnInit {
   }
 
   /**  
-    * This function scrolls up this page until you see the search box again. 
+    * This function scrolls up thE page until you see the search box again. 
     * The cursor will be placed in the search field again, so that you can start a new search.
     * 
     * @author Martin Kubbillum <m.kubbillum@stud.hs-wismar.de>   

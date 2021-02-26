@@ -111,7 +111,7 @@
                     <a class="collapse-item filter" data-filterclass="filter-all" [routerLink]=""
                         (click)="globalFunctions.toggleSelection(true, $event)"><i class="fas fa-globe"></i>&nbsp;
                         Full Pokedex</a>
-                </div> 
+                </div>
                 <div class="bg-white py-2 collapse-inner rounded" data-toggle="tooltip" data-placement="right"
                     title="You must log in first to manage your own collection!">
                     <ng-template [ngIf]="globalFunctions.loginUsername" [ngIfElse]="noLogin2">
@@ -178,6 +178,7 @@
 <!-- End of Page Wrapper -->
 
 <!-- Scroll to Top Button-->
+<!-- m.kubbillum@stud.hs-wismar.de: button to scroll to the top -->
 <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
     <div style="margin-top: -31px;font-size: 12px;">ESC</div>
