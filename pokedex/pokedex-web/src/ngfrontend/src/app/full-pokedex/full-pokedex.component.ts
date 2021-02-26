@@ -182,7 +182,6 @@ export class FullPokedexComponent implements OnInit {
           lcAr.push(lcPokemon);
           this.pokemons.push(lcAr);
         }
-
         for (let i = 0; i < this.pokemons.length; i++) {
           this.setPokemonDetails(this.pokemons[i][0], i);
         }
@@ -195,9 +194,6 @@ export class FullPokedexComponent implements OnInit {
       });
     } else {
       this.pokemons = lcPokemons;
-      console.log("ELSE => this.pokemons");
-      console.log(this.pokemons);
-
       var stLoginUser = localStorage.getItem("stLoginUser");
       if (stLoginUser != null) {
         this.globalFunctions.loginUser = JSON.parse(stLoginUser);
@@ -232,7 +228,10 @@ export class FullPokedexComponent implements OnInit {
       pokemon_entry[1].inCollection = false;
     }
     this.usersPokemons = [];
-    this.globalFunctions.toggleSelection(true, null);
+    var filterAll = <HTMLElement>document.querySelectorAll("[data-filterclass='filter-all']")[0];
+    filterAll.click();
+    var filterRegular = <HTMLElement>document.querySelectorAll("[data-filterclass='filter-shiny-false']")[0];
+    filterRegular.click();
   }
 
   getUsersPokemons(id: number) {
@@ -248,7 +247,11 @@ export class FullPokedexComponent implements OnInit {
         }
         this.pokemons[index1][index2].inCollection = true;
       }
-      this.globalFunctions.toggleSelection(false, null);
+      //this.globalFunctions.toggleSelection(false, null);
+      var filterAll = <HTMLElement>document.querySelectorAll("[data-filterclass='filter-all']")[0];
+      filterAll.click();
+      var filterInCollection = <HTMLElement>document.querySelectorAll("[data-filterclass='filter-shiny-false']")[0];
+      filterInCollection.click();
     });
   }
 

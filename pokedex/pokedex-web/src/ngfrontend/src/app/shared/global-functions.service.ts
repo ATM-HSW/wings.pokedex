@@ -56,7 +56,6 @@ export class GlobalFunctionsService {
 
   pokedexRegions: any;
   getRegions() {
-    //this.pokemons = [898][2]; 
     var stPokedexRegions = localStorage.getItem("stPokedexRegions");
     if (stPokedexRegions != null) {
       this.pokedexRegions = JSON.parse(stPokedexRegions);
